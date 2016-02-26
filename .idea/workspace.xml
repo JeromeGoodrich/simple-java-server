@@ -2,15 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b6d9ea40-77be-4ee0-a1dd-df22e1007b39" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/HTTPServer/Responder.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/test/java/HTTPServer/ResponderTest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/HTTPServer/Request.class" afterPath="$PROJECT_DIR$/target/classes/HTTPServer/Request.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/test-classes/HTTPServer/RequestTest.class" afterPath="$PROJECT_DIR$/target/test-classes/HTTPServer/RequestTest.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/HTTPServer/Request.java" afterPath="$PROJECT_DIR$/src/main/java/HTTPServer/Request.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/HTTPServer/RequestTest.java" afterPath="$PROJECT_DIR$/src/test/java/HTTPServer/RequestTest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/surefire-reports/HTTPServer.RequestTest.txt" afterPath="$PROJECT_DIR$/target/surefire-reports/HTTPServer.RequestTest.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-HTTPServer.RequestTest.xml" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-HTTPServer.RequestTest.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/HTTPServer/Responder.java" afterPath="$PROJECT_DIR$/src/main/java/HTTPServer/Responder.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/HTTPServer/ResponderTest.java" afterPath="$PROJECT_DIR$/src/test/java/HTTPServer/ResponderTest.java" />
     </list>
     <ignored path="HTTPServer.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -37,7 +31,7 @@
         <entry file="file://$PROJECT_DIR$/src/main/java/HTTPServer/Request.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="52" column="5" selection-start-line="52" selection-start-column="5" selection-end-line="52" selection-end-column="5" />
+              <caret line="19" column="32" selection-start-line="19" selection-start-column="32" selection-end-line="19" selection-end-column="32" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -45,11 +39,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ResponderTest.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="ResponderTest.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/test/java/HTTPServer/ResponderTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.8629442">
-              <caret line="34" column="33" selection-start-line="34" selection-start-column="33" selection-end-line="34" selection-end-column="33" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="58" column="0" selection-start-line="58" selection-start-column="0" selection-end-line="58" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -57,16 +51,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Responder.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Responder.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/HTTPServer/Responder.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="27" column="5" selection-start-line="27" selection-start-column="5" selection-end-line="27" selection-end-column="5" />
+            <state vertical-scroll-proportion="0.6852792">
+              <caret line="51" column="31" selection-start-line="51" selection-start-column="31" selection-end-line="51" selection-end-column="31" />
               <folding>
-                <element signature="e#142#143#0" expanded="true" />
-                <element signature="e#178#179#0" expanded="true" />
-                <element signature="e#215#216#0" expanded="true" />
-                <element signature="e#244#245#0" expanded="true" />
+                <element signature="imports" expanded="true" />
+                <element signature="e#264#265#0" expanded="true" />
+                <element signature="e#300#301#0" expanded="true" />
+                <element signature="e#359#360#0" expanded="true" />
+                <element signature="e#407#408#0" expanded="true" />
+                <element signature="e#444#445#0" expanded="true" />
+                <element signature="e#473#474#0" expanded="true" />
+                <element signature="e#515#516#0" expanded="true" />
+                <element signature="e#550#551#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -108,8 +107,8 @@
         <option value="$PROJECT_DIR$/src/test/java/HTTPServer/RequestParserTest.java" />
         <option value="$PROJECT_DIR$/src/main/java/HTTPServer/Request.java" />
         <option value="$PROJECT_DIR$/src/test/java/HTTPServer/RequestTest.java" />
-        <option value="$PROJECT_DIR$/src/main/java/HTTPServer/Responder.java" />
         <option value="$PROJECT_DIR$/src/test/java/HTTPServer/ResponderTest.java" />
+        <option value="$PROJECT_DIR$/src/main/java/HTTPServer/Responder.java" />
       </list>
     </option>
   </component>
@@ -619,7 +618,7 @@
     <entry file="file://$PROJECT_DIR$/src/main/java/HTTPServer/Request.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="52" column="5" selection-start-line="52" selection-start-column="5" selection-end-line="52" selection-end-column="5" />
+          <caret line="19" column="32" selection-start-line="19" selection-start-column="32" selection-end-line="19" selection-end-column="32" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -634,25 +633,30 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/HTTPServer/Responder.java">
+    <entry file="file://$PROJECT_DIR$/src/test/java/HTTPServer/ResponderTest.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="27" column="5" selection-start-line="27" selection-start-column="5" selection-end-line="27" selection-end-column="5" />
+          <caret line="58" column="0" selection-start-line="58" selection-start-column="0" selection-end-line="58" selection-end-column="0" />
           <folding>
-            <element signature="e#142#143#0" expanded="true" />
-            <element signature="e#178#179#0" expanded="true" />
-            <element signature="e#215#216#0" expanded="true" />
-            <element signature="e#244#245#0" expanded="true" />
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/HTTPServer/ResponderTest.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/HTTPServer/Responder.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.8629442">
-          <caret line="34" column="33" selection-start-line="34" selection-start-column="33" selection-end-line="34" selection-end-column="33" />
+        <state vertical-scroll-proportion="0.6852792">
+          <caret line="51" column="31" selection-start-line="51" selection-start-column="31" selection-end-line="51" selection-end-column="31" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#264#265#0" expanded="true" />
+            <element signature="e#300#301#0" expanded="true" />
+            <element signature="e#359#360#0" expanded="true" />
+            <element signature="e#407#408#0" expanded="true" />
+            <element signature="e#444#445#0" expanded="true" />
+            <element signature="e#473#474#0" expanded="true" />
+            <element signature="e#515#516#0" expanded="true" />
+            <element signature="e#550#551#0" expanded="true" />
           </folding>
         </state>
       </provider>
