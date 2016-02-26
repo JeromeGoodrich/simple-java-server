@@ -9,6 +9,7 @@ public class Responder {
 
     private String status;
     private ArrayList responseBody;
+    private String contentType;
 
     public void setStatusLine(String status) {
         this.status = status;
@@ -18,12 +19,20 @@ public class Responder {
         this.responseBody = responseBody;
     }
 
+    public void setContentType(String contentType) {
+        this.contentType = contentType;
+    }
+
     public String getStatusLine() {
         return status;
     }
 
     public ArrayList getResponseBody() {
         return responseBody;
+    }
+
+    public String getContentType() {
+        return contentType;
     }
 
     public void createStatusLine(String path, String version) {
@@ -70,5 +79,12 @@ public class Responder {
                 }
             }
         }
+    public void parseContentType(String path) {
+        String fileName = path.replaceFirst("/","");
+        String[] splitFileName = fileName.split(".");
+        String mimeType = splitFileName[1];
+        String contentType = getmimeTypeMap().get(mimeType);
+        setContentType(contentType);
+    }
     }
 

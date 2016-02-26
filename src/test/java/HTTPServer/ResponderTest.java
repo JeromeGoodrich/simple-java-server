@@ -74,6 +74,15 @@ public class ResponderTest {
         assertThat(responder.getResponseBody(), is(body));
     }
 
+    @Test
+    public void testContentType() {
+        Request request = new Request();
+        Responder responder = new Responder();
+        request.setPath("/src/test/fixture/my_file.txt");
+        responder.parseContentType(request.getPath());
+        assertThat(responder.getContentType(), is("text/plain"));
+    }
+
 }
 
 //* create map of statuses and reason_phrases,
