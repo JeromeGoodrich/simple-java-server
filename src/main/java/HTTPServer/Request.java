@@ -45,18 +45,26 @@ public class Request {
         return this.headers;
     }
 
-    public void parse(String rawRequest) throws Exception {
-        String[] rawRequestArray = rawRequest.split("\n");
-        String[] requestString = rawRequestArray[0].split(" ");
-        setMethod(requestString[0]);
-        setPath(requestString[1]);
-        setVersion(requestString[2].substring(5,8));
+    private void parseRequestLine (String requestLine) {
+        String[] splitRequestLine = requestLine.split(" ");
+        setMethod(splitRequestLine[0]);
+        setPath(splitRequestLine[1]);
+        setVersion(splitRequestLine[2].substring(5,8));
+    }
+
+    private void parseHeaders (String[] rawRequestArray) {
         HashMap newMap = new HashMap<String, String>();
         for (int i = 1; i < rawRequestArray.length; i++) {
-           String[] splitHeaderArray = rawRequestArray[i].split(":");
-            newMap.put(splitHeaderArray[0],splitHeaderArray[1]);
+            String[] splitHeaderArray = rawRequestArray[i].split(":");
+            newMap.put(splitHeaderArray[0], splitHeaderArray[1]);
             setHeaders(newMap);
         }
+    }
+
+    public void parse(String rawRequest) throws Exception {
+        String[] rawRequestArray = rawRequest.split("\n");
+        parseRequestLine(rawRequestArray[0]);
+        parseHeaders(rawRequestArray);
 
     }
 }

@@ -17,20 +17,25 @@ public class RequestTest {
     }
 
     @Test
-        public void testParse () throws Exception {
-            String rawRequest = "GET / HTTP/1.1\nHost: www.example.com\nAccept: */*";
-            testHeaders.put("Host"," www.example.com");
-            testHeaders.put("Accept", " */*");
-            Request request = new Request();
-            request.parse(rawRequest);
-            assertThat(request.getMethod(), is("GET"));
-            assertThat(request.getPath(), is("/"));
-            assertThat(request.getVersion(), is("1.1"));
-            assertThat(request.getHeaders(), is(testHeaders));
-
-
-        }
+    public void testParseRequestLine() throws Exception {
+        String rawRequest = "GET / HTTP/1.1\n";
+        Request request = new Request();
+        request.parse(rawRequest);
+        assertThat(request.getMethod(), is("GET"));
+        assertThat(request.getPath(), is("/"));
+        assertThat(request.getVersion(), is("1.1"));
     }
+
+    @Test
+    public void testParseHeaders() throws Exception {
+        String rawRequest = "GET / HTTP/1.1\nHost: www.example.com\nAccept: */*";
+        testHeaders.put("Host", " www.example.com");
+        testHeaders.put("Accept", " */*");
+        Request request = new Request();
+        request.parse(rawRequest);
+        assertThat(request.getHeaders(), is(testHeaders));
+    }
+}
 
 
 
