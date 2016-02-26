@@ -51,6 +51,18 @@ public class ResponderTest {
     }
 
     @Test
+    public void testResponseBodyDir() {
+        Request request = new Request();
+        Responder responder = new Responder();
+        request.setPath("/src/test/fixtures");
+        responder.createResponseBody(request.getPath());
+        ArrayList body = new ArrayList<String>();
+        body.add("my_file.txt");
+        assertThat(responder.getResponseBody(), is(body));
+    }
+
+
+    @Test
     public void testResponseBodyFile() {
         Request request = new Request();
         Responder responder = new Responder();
