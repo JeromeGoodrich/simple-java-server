@@ -7,7 +7,7 @@ public class Request {
     private String method;
     private String path;
     private String version;
-    private Map headers;
+    private Map<String, String> headers;
 
     public Request() {
         this.headers = new HashMap<String, String>();
@@ -41,8 +41,8 @@ public class Request {
         return this.version;
     }
 
-    public Map getHeaders() {
-        return this.headers;
+    public String getHeader(String key) {
+        return this.headers.get(key);
     }
 
     private void parseRequestLine (String requestLine) {
@@ -53,7 +53,7 @@ public class Request {
     }
 
     private void parseHeaders (String[] rawRequestArray) {
-        HashMap newMap = new HashMap<String, String>();
+        HashMap<String, String> newMap = new HashMap<String, String>();
         for (int i = 1; i < rawRequestArray.length; i++) {
             String[] splitHeaderArray = rawRequestArray[i].split(":");
             newMap.put(splitHeaderArray[0], splitHeaderArray[1]);

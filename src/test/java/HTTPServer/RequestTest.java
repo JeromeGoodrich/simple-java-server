@@ -13,7 +13,6 @@ public class RequestTest {
     private Map testHeaders;
 
     public RequestTest() {
-        this.testHeaders = new HashMap<String, String>();
     }
 
     @Test
@@ -29,11 +28,11 @@ public class RequestTest {
     @Test
     public void testParseHeaders() throws Exception {
         String rawRequest = "GET / HTTP/1.1\nHost: www.example.com\nAccept: */*";
-        testHeaders.put("Host", " www.example.com");
-        testHeaders.put("Accept", " */*");
         Request request = new Request();
         request.parse(rawRequest);
-        assertThat(request.getHeaders(), is(testHeaders));
+
+        assertThat(request.getHeader("Host"), is(" www.example.com"));
+        assertThat(request.getHeader("Accept"), is(" */*"));
     }
 }
 
