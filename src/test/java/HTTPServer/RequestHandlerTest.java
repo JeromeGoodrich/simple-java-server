@@ -21,5 +21,3 @@ public class RequestHandlerTest {
         assertThat(new String(response.getBody()), is("Hello World"));
     }
 }
-
-git
