@@ -1,6 +1,9 @@
 package HTTPServer;
 
 import org.junit.Test;
+
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Map;
 import java.util.HashMap;
 
@@ -20,8 +23,9 @@ public class RequestTest {
         String rawRequest = "GET / HTTP/1.1\n";
         Request request = new Request();
         request.parse(rawRequest);
+        Path root = Paths.get("/");
         assertThat(request.getMethod(), is("GET"));
-        assertThat(request.getPath(), is("/"));
+        assertThat(request.getPath(), is(root));
         assertThat(request.getVersion(), is("1.1"));
     }
 

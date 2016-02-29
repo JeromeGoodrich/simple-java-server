@@ -1,11 +1,13 @@
 package HTTPServer;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Map;
 import java.util.HashMap;
 
 public class Request {
     private String method;
-    private String path;
+    private Path path;
     private String version;
     private Map<String, String> headers;
 
@@ -17,7 +19,7 @@ public class Request {
         this.method = method;
     }
 
-    public void setPath(String path) {
+    public void setPath(Path path) {
         this.path = path;
     }
 
@@ -33,7 +35,7 @@ public class Request {
         return this.method;
     }
 
-    public String getPath() {
+    public Path getPath() {
         return this.path;
     }
 
@@ -48,7 +50,7 @@ public class Request {
     private void parseRequestLine (String requestLine) {
         String[] splitRequestLine = requestLine.split(" ");
         setMethod(splitRequestLine[0]);
-        setPath(splitRequestLine[1]);
+        setPath(Paths.get(splitRequestLine[1]));
         setVersion(splitRequestLine[2].substring(5,8));
     }
 

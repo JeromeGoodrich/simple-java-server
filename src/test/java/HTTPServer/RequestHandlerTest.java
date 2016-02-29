@@ -2,6 +2,8 @@ package HTTPServer;
 
 import org.junit.Test;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -15,9 +17,11 @@ public class RequestHandlerTest {
     public void testHandleRoot() {
         Request request = new Request();
         RequestHandler handler = new RequestHandler();
-        request.setPath("/");
+        request.setPath(Paths.get("/"));
         Response response = handler.handle(request);
         assertThat(response.getStatusCode(), is(200));
         assertThat(new String(response.getBody()), is("Hello World"));
     }
+
+
 }

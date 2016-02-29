@@ -2,13 +2,15 @@ package HTTPServer;
 
 import org.hamcrest.Matcher;
 
-/**
- * Created by admin on 2/29/16.
- */
 public class Response {
     private int statusCode;
-    private String reasonStatement;
     private byte[] body;
+
+    public Response(ResponseBuilder builder) {
+        statusCode = builder.statusCode;
+        body = builder.body;
+
+    }
 
     public Response(int statusCode, String body) {
         this.statusCode = statusCode;
