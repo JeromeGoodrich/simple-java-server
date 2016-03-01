@@ -1,29 +1,19 @@
 package HTTPServer;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
+import java.io.*;
+import java.nio.file.Files;
 
-/**
- * Created by admin on 2/29/16.
 
 public class FileHandler implements Handler {
 
     public Response handle(Request request) {
-        /*String path = request.getPath();
-        String fileName = path.replaceFirst("/","");
+            byte[] bytes = null;
         try {
-            FileReader fileReader = new FileReader(fileName);
-            BufferedReader bufferedReader = new BufferedReader(fileReader);
-            String line = null;
-            ArrayList lines = new ArrayList<String>();
-            while ((line = bufferedReader.readLine()) != null) {
-                lines.add(line);
-            }
-            setResponseBody(lines);
-        } catch (Exception e) {
+            bytes = Files.readAllBytes(request.getPath().toAbsolutePath());
+        } catch (IOException e) {
             e.printStackTrace();
         }
-        return new
+        ResponseBuilder builder = new ResponseBuilder(200);
+        return builder.body(bytes).reasonPhrase().build();
     }
 }
-*/

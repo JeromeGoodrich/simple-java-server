@@ -6,12 +6,12 @@ import java.util.Arrays;
 
 public class DirectoryHandler implements Handler {
     public Response handle(Request request) {
-        File dir = request.getPath().toFile();
+        File dir = request.getPath().toAbsolutePath().toFile();
         String[] dirListing = dir.list();
         String stringDirListing = Arrays.toString(dirListing);
         stringDirListing = stringDirListing.substring(1, stringDirListing.length()-1);
         byte[] data = stringDirListing.getBytes();
         ResponseBuilder builder = new ResponseBuilder(200);
-        return builder.body(data).build();
+        return builder.body(data).reasonPhrase().build();
     }
 }
