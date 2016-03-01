@@ -1,12 +1,17 @@
 package HTTPServer;
 
-/**
- * Created by admin on 2/29/16.
- */
+import java.io.File;
+import java.nio.charset.Charset;
+import java.util.Arrays;
+
 public class DirectoryHandler implements Handler {
     public Response handle(Request request) {
-        Builder<Response> builder = new ResponseBuilder(200);
-        return builder.build();
-
+        File dir = request.getPath().toFile();
+        String[] dirListing = dir.list();
+        String stringDirListing = Arrays.toString(dirListing);
+        stringDirListing = stringDirListing.substring(1, stringDirListing.length()-1);
+        byte[] data = stringDirListing.getBytes();
+        ResponseBuilder builder = new ResponseBuilder(200);
+        return builder.body(data).build();
     }
 }

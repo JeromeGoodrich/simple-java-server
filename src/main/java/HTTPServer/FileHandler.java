@@ -5,7 +5,7 @@ import java.io.FileReader;
 
 /**
  * Created by admin on 2/29/16.
- */
+
 public class FileHandler implements Handler {
 
     public Response handle(Request request) {
@@ -22,7 +22,8 @@ public class FileHandler implements Handler {
             setResponseBody(lines);
         } catch (Exception e) {
             e.printStackTrace();
-        }*/
-        return new Response(200, "Hello World");
+        }
+        return new
     }
 }
+*/

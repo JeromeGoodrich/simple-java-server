@@ -23,5 +23,15 @@ public class RequestHandlerTest {
         assertThat(new String(response.getBody()), is("Hello World"));
     }
 
+    @Test
+    public void testHandleDir() {
+        Request request = new Request();
+        RequestHandler handler = new RequestHandler();
+        request.setPath(Paths.get("/src/test/fixtures"));
+        Response response = handler.handle(request);
+        assertThat(response.getStatusCode(), is(200));
+        assertThat(new String(response.getBody()), is("my-file.txt"));
+    }
+
 
 }
