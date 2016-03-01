@@ -4,6 +4,7 @@ public class ResponseBuilder implements Builder<Response> {
     public int statusCode;
     public byte[] body;
     public String reasonPhrase;
+    public String version;
 
     public ResponseBuilder (int statusCode) {
         this.statusCode = statusCode;
@@ -16,6 +17,12 @@ public class ResponseBuilder implements Builder<Response> {
 
     public ResponseBuilder reasonPhrase() {
         reasonPhrase = Status.statusCodes.get(statusCode);
+        return this;
+    }
+
+    public ResponseBuilder version() {
+        Request request = new Request();
+        version = request.getVersion();
         return this;
     }
 
