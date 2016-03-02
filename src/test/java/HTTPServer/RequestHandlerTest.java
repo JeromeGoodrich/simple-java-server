@@ -34,7 +34,7 @@ public class RequestHandlerTest {
         Response response = handler.handle(request);
         assertThat(response.getStatusCode(), is(200));
         assertThat(response.getReasonPhrase(), is("OK"));
-        assertThat(new String(response.getBody()), is("my_file.txt"));
+        assertThat(new String(response.getBody()), is("<!DOCTYPE html>\n<html>\n<body>\n<ol>\n<li><a href=\"my_file.txt\">my_file.txt</a></li>\n</ol>\n<body>"));
     }
 
     @Test
