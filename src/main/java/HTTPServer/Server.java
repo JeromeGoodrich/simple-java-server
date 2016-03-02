@@ -9,8 +9,9 @@ public class Server {
     public void main() {
         try {
             ServerSocket serverSocket = new ServerSocket(5000);
+            Boolean listening = true;
 
-            while (true) {
+            while (listening) {
                 Socket clientSocket = serverSocket.accept();
 
                 DataOutputStream outToClient = new DataOutputStream(clientSocket.getOutputStream());
@@ -26,6 +27,7 @@ public class Server {
                 byte[] formattedResponse = formatter.format(response);
 
                 outToClient.write(formattedResponse);
+                outToClient.flush();
             }
         } catch (Exception e) {
             e.printStackTrace();}
