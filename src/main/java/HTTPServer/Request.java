@@ -7,7 +7,7 @@ import java.util.HashMap;
 
 public class Request {
     private String method;
-    private Path path;
+    private String path;
     private String version;
     private Map<String, String> headers;
 
@@ -19,7 +19,7 @@ public class Request {
         this.method = method;
     }
 
-    public void setPath(Path path) {
+    public void setPath(String path) {
         this.path = path;
     }
 
@@ -35,7 +35,7 @@ public class Request {
         return this.method;
     }
 
-    public Path getPath() {
+    public String getPath() {
         return this.path;
     }
 
@@ -50,8 +50,12 @@ public class Request {
     private void parseRequestLine (String requestLine) {
         String[] splitRequestLine = requestLine.split(" ");
         setMethod(splitRequestLine[0]);
-        setPath(Paths.get(splitRequestLine[1]));
-        setVersion(splitRequestLine[2].substring(5,8));
+        if (splitRequestLine[1].equals("/")) {
+            setPath(splitRequestLine[1]);
+        } else {
+            setPath(splitRequestLine[1].replaceFirst("/",""));
+        }
+        setVersion(splitRequestLine[2].substring(0, 8));
     }
 
     private void parseHeaders (String[] rawRequestArray) {

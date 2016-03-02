@@ -20,13 +20,12 @@ public class RequestTest {
 
     @Test
     public void testParseRequestLine() throws Exception {
-        String rawRequest = "GET / HTTP/1.1\n";
+        String rawRequest = "GET /src/test/fixtures HTTP/1.1\r\n";
         Request request = new Request();
         request.parse(rawRequest);
-        Path root = Paths.get("/");
         assertThat(request.getMethod(), is("GET"));
-        assertThat(request.getPath(), is(root));
-        assertThat(request.getVersion(), is("1.1"));
+        assertThat(request.getPath(), is("src/test/fixtures"));
+        assertThat(request.getVersion(), is("HTTP/1.1"));
     }
 
     @Test
@@ -34,7 +33,6 @@ public class RequestTest {
         String rawRequest = "GET / HTTP/1.1\nHost: www.example.com\nAccept: */*";
         Request request = new Request();
         request.parse(rawRequest);
-
         assertThat(request.getHeader("Host"), is(" www.example.com"));
         assertThat(request.getHeader("Accept"), is(" */*"));
     }

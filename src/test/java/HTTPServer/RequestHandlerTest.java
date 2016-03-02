@@ -17,9 +17,11 @@ public class RequestHandlerTest {
     public void testHandleRoot() {
         Request request = new Request();
         RequestHandler handler = new RequestHandler();
-        request.setPath(Paths.get("/"));
+        request.setVersion("HTTP/1.1");
+        request.setPath("/");
         Response response = handler.handle(request);
         assertThat(response.getStatusCode(), is(200));
+        assertThat(response.getVersion(), is("HTTP/1.1"));
         assertThat(response.getReasonPhrase(), is("OK"));
         assertThat(new String(response.getBody()), is("Hello World"));
     }
@@ -28,7 +30,7 @@ public class RequestHandlerTest {
     public void testHandleDir() {
         Request request = new Request();
         RequestHandler handler = new RequestHandler();
-        request.setPath(Paths.get("./src/test/fixtures"));
+        request.setPath("src/test/fixtures");
         Response response = handler.handle(request);
         assertThat(response.getStatusCode(), is(200));
         assertThat(response.getReasonPhrase(), is("OK"));
@@ -39,7 +41,7 @@ public class RequestHandlerTest {
     public void testHandleFile() {
         Request request = new Request();
         RequestHandler handler = new RequestHandler();
-        request.setPath(Paths.get("./src/test/fixtures/my_file.txt"));
+        request.setPath("src/test/fixtures/my_file.txt");
         Response response = handler.handle(request);
         assertThat(response.getStatusCode(), is(200));
         assertThat(response.getReasonPhrase(), is("OK"));
@@ -50,7 +52,7 @@ public class RequestHandlerTest {
     public void testHandleError() {
         Request request = new Request();
         RequestHandler handler = new RequestHandler();
-        request.setPath(Paths.get("./this/is/not/a/path"));
+        request.setPath("this/is/not/a/path");
         Response response = handler.handle(request);
         assertThat(response.getStatusCode(), is(404));
         assertThat(response.getReasonPhrase(), is("Not Found"));

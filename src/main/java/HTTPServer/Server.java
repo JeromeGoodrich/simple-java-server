@@ -6,13 +6,22 @@ import java.net.Socket;
 
 public class Server {
 
-    public void main() {
+    public static void main(String[] args) throws IOException {
+
+        if (args.length != 1) {
+            System.out.println("Port Number Required");
+            System.exit(1);
+        }
+
+        Integer portNumber = Integer.parseInt(args[0]);
+
         try {
-            ServerSocket serverSocket = new ServerSocket(5000);
+            ServerSocket serverSocket = new ServerSocket(portNumber);
             Boolean listening = true;
 
             while (listening) {
                 Socket clientSocket = serverSocket.accept();
+                System.out.println("Connected to Server");
 
                 DataOutputStream outToClient = new DataOutputStream(clientSocket.getOutputStream());
                 InputStreamReader inputReader = new InputStreamReader(clientSocket.getInputStream());
@@ -28,6 +37,7 @@ public class Server {
 
                 outToClient.write(formattedResponse);
                 outToClient.flush();
+                listening = false;
             }
         } catch (Exception e) {
             e.printStackTrace();}

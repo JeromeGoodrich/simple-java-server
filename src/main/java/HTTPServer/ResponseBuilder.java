@@ -20,9 +20,8 @@ public class ResponseBuilder implements Builder<Response> {
         return this;
     }
 
-    public ResponseBuilder version() {
-        Request request = new Request();
-        version = request.getVersion();
+    public ResponseBuilder version(String val) {
+        version = val;
         return this;
     }
 
