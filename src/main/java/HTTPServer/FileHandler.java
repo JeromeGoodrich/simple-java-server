@@ -15,6 +15,7 @@ public class FileHandler implements Handler {
             e.printStackTrace();
         }
         ResponseBuilder builder = new ResponseBuilder(200);
+        System.out.println(Paths.get(request.getPath()));
         return builder.body(bytes).reasonPhrase().version(request.getVersion()).build();
     }
 }

@@ -37,7 +37,8 @@ public class Server {
 
                 outToClient.write(formattedResponse);
                 outToClient.flush();
-                listening = false;
+
+                clientSocket.close();
             }
         } catch (Exception e) {
             e.printStackTrace();}
