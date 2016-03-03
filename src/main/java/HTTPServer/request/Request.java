@@ -1,7 +1,5 @@
-package HTTPServer;
+package httpserver.request;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Map;
 import java.util.HashMap;
 

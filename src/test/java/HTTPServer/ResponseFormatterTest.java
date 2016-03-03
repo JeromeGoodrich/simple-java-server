@@ -1,5 +1,8 @@
-package HTTPServer;
+package httpserver;
 
+import httpserver.response.Response;
+import httpserver.response.ResponseBuilder;
+import httpserver.views.ResponseFormatter;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.is;

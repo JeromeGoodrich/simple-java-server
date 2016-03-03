@@ -1,4 +1,6 @@
-package HTTPServer;
+package httpserver.views;
+
+import httpserver.response.Response;
 
 public class ResponseFormatter {
     public byte[] format(Response response) {

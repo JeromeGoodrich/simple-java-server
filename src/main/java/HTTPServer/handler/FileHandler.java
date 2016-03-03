@@ -1,4 +1,8 @@
-package HTTPServer;
+package httpserver.handler;
+
+import httpserver.request.Request;
+import httpserver.response.Response;
+import httpserver.response.ResponseBuilder;
 
 import java.io.*;
 import java.nio.file.Files;

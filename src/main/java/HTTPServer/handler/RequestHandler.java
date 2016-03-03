@@ -1,10 +1,13 @@
-package HTTPServer;
+package httpserver.handler;
+
+import httpserver.request.Request;
+import httpserver.response.Response;
+import httpserver.response.ResponseBuilder;
 
 import java.io.File;
-import java.nio.file.Paths;
 
 public class RequestHandler {
-    Response handle(Request request) {
+    public Response handle(Request request) {
         if (request.getPath().equals("/")) {
             String greeting = "Hello World";
             ResponseBuilder builder = new ResponseBuilder(200);
@@ -18,7 +21,7 @@ public class RequestHandler {
         } else {
             System.out.println(request.getPath());
             ResponseBuilder builder = new ResponseBuilder(404);
-            return builder.reasonPhrase().version(request.getVersion()).build();
+            return builder.reasonPhrase().version(request.getVersion()).body("Sorry, we couldn't find what you were looking for".getBytes()).build();
         }
     }
 }

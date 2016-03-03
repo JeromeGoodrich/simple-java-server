@@ -1,15 +1,12 @@
-package HTTPServer;
+package httpserver;
 
 import org.junit.Test;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Map;
-import java.util.HashMap;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
-import HTTPServer.Request;
+import httpserver.request.Request;
 
 public class RequestTest {
 

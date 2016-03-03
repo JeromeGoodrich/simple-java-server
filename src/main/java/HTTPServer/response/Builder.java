@@ -1,4 +1,4 @@
-package HTTPServer;
+package httpserver.response;
 
 /**
  * Created by admin on 2/29/16.

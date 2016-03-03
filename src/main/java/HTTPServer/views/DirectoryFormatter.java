@@ -1,9 +1,6 @@
-package HTTPServer;
+package httpserver.views;
 
-import javafx.scene.shape.Path;
-
-import java.io.File;
-import java.nio.file.Paths;
+import httpserver.request.Request;
 
 
 public class DirectoryFormatter {

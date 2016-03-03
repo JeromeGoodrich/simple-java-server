@@ -1,6 +1,4 @@
-package HTTPServer;
-
-import org.hamcrest.Matcher;
+package httpserver.response;
 
 import java.util.Map;
 
@@ -18,7 +16,7 @@ public class Response {
         version = builder.version;
     }
 
-    byte[] getBody() {
+    public byte[] getBody() {
         return body;
     }
 

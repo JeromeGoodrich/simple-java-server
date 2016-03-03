@@ -1,13 +1,10 @@
-package HTTPServer;
+package httpserver;
 
+import httpserver.handler.RequestHandler;
+import httpserver.request.Request;
+import httpserver.response.Response;
 import org.junit.Test;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.junit.Assert.assertThat;
 import static org.hamcrest.CoreMatchers.is;
 

@@ -1,8 +1,11 @@
-package HTTPServer;
+package httpserver.handler;
+
+import httpserver.request.Request;
+import httpserver.response.Response;
+import httpserver.response.ResponseBuilder;
+import httpserver.views.DirectoryFormatter;
 
 import java.io.File;
-import java.nio.charset.Charset;
-import java.util.Arrays;
 
 public class DirectoryHandler implements Handler {
     public Response handle(Request request) {

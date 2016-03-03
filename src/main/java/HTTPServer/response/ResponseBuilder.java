@@ -1,4 +1,4 @@
-package HTTPServer;
+package httpserver.response;
 
 public class ResponseBuilder implements Builder<Response> {
     public int statusCode;
