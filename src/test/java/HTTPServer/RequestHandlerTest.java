@@ -1,6 +1,8 @@
 package httpserver;
 
 import httpserver.handler.RequestHandler;
+import httpserver.request.HTTPRequest;
+import httpserver.request.HTTPRequestBuilder;
 import httpserver.request.Request;
 import httpserver.response.Response;
 import org.junit.Test;
@@ -12,10 +14,9 @@ public class RequestHandlerTest {
 
     @Test
     public void testHandleRoot() {
-        Request request = new Request();
+        HTTPRequestBuilder builder = new HTTPRequestBuilder();
+        Request request = builder.path("/").version("HTTP/1.1").build();
         RequestHandler handler = new RequestHandler();
-        request.setVersion("HTTP/1.1");
-        request.setPath("/");
         Response response = handler.handle(request);
         assertThat(response.getStatusCode(), is(200));
         assertThat(response.getVersion(), is("HTTP/1.1"));

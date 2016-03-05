@@ -8,9 +8,6 @@ import org.junit.Test;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-/**
- * Created by admin on 3/1/16.
- */
 public class ResponseFormatterTest {
 
     @Test

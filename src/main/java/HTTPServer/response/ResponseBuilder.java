@@ -5,6 +5,7 @@ public class ResponseBuilder implements Builder<Response> {
     public byte[] body;
     public String reasonPhrase;
     public String version;
+    public String yarrrr;
 
     public ResponseBuilder (int statusCode) {
         this.statusCode = statusCode;
@@ -22,6 +23,11 @@ public class ResponseBuilder implements Builder<Response> {
 
     public ResponseBuilder version(String val) {
         version = val;
+        return this;
+    }
+
+    public ResponseBuilder yarrrr (String val) {
+        yarrrr = val;
         return this;
     }
 

@@ -1,9 +1,14 @@
 package httpserver.server;
 
+import httpserver.handler.Handler;
 import httpserver.handler.RequestHandler;
+import httpserver.request.HTTPParser;
+import httpserver.request.HTTPRequest;
+import httpserver.request.Parser;
 import httpserver.request.Request;
 import httpserver.response.Response;
 import httpserver.views.ResponseFormatter;
+
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -26,8 +31,9 @@ public class Server {
             System.out.println("Waiting...");
             Socket clientSocket = serverSocket.accept();
             System.out.println("Accepted Connection: " + clientSocket);
-
-            WebService webService = new WebService(clientSocket);
+            Handler handler = new RequestHandler();
+            Parser parser = new HTTPParser();
+            WebService webService = new WebService(clientSocket, handler, parser);
             Thread thread = new Thread(webService);
             thread.start();
         }

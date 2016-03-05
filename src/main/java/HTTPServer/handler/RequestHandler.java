@@ -1,12 +1,14 @@
 package httpserver.handler;
 
+import httpserver.request.HTTPRequest;
 import httpserver.request.Request;
 import httpserver.response.Response;
 import httpserver.response.ResponseBuilder;
 
 import java.io.File;
 
-public class RequestHandler {
+public class RequestHandler implements Handler {
+
     public Response handle(Request request) {
         if (request.getPath().equals("/")) {
             String greeting = "Hello World";
