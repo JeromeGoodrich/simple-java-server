@@ -16,18 +16,14 @@ public class HTTPParser implements Parser {
         StringBuilder stringBuilder = new StringBuilder();
         int charRead;
         try {
-            while ((charRead = reader.read()) > -1) {
+            while ((charRead = reader.read()) != -1) {
                     stringBuilder.append((char) charRead);
-                    if ((char) charRead == '\n') {
-                        charRead = reader.read();
-                        if ((char) charRead == '\r') {
-                            break;
-                        }
-                    }
+                    if ((char) charRead == '\n') break;
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         return stringBuilder.toString();
     }
 
@@ -40,10 +36,10 @@ public class HTTPParser implements Parser {
 
     private void parseHeaders(String header) {
         String[] splitHeader = header.split(":");
-        builder.headers(splitHeader[1], splitHeader[2]);
+        builder.headers(splitHeader[0], splitHeader[1]);
     }
 
-    public HTTPRequest parse(InputStream rawRequest) {git
+    public HTTPRequest parse(InputStream rawRequest) {
         String requestLine = readRequest(rawRequest);
         parseRequestLine(requestLine);
 

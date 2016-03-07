@@ -1,13 +1,16 @@
 package httpserver.request;
 
 import httpserver.response.Builder;
+
+import java.util.HashMap;
 import java.util.Map;
 
 public class HTTPRequestBuilder implements Builder<HTTPRequest> {
     public String method;
     public String path;
     public String version;
-    public Map<String, String> headers;
+    public Map<String, String> headers = new HashMap<String, String>();
+
 
     public HTTPRequestBuilder method(String method) {
         this.method = method;
@@ -26,6 +29,7 @@ public class HTTPRequestBuilder implements Builder<HTTPRequest> {
     }
 
     public void headers(String headerFieldName, String headerValue) {
+        System.out.println(headerFieldName + headerValue);
         headers.put(headerFieldName, headerValue);
     }
 
