@@ -6,8 +6,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.Map;
-import java.util.HashMap;
 
 public class HTTPParser implements Parser {
 
@@ -19,14 +17,13 @@ public class HTTPParser implements Parser {
         int charRead;
         try {
             while ((charRead = reader.read()) > -1) {
-                if ((char) charRead == '\n') break;
-                if ((char) charRead == '\r') {
-                    charRead = reader.read();
-                    if ((charRead < 0) || ((char) charRead == '\n')) break;
-                    stringBuilder.append('\r');
-                } else {
                     stringBuilder.append((char) charRead);
-                }
+                    if ((char) charRead == '\n') {
+                        charRead = reader.read();
+                        if ((char) charRead == '\r') {
+                            break;
+                        }
+                    }
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -46,7 +43,7 @@ public class HTTPParser implements Parser {
         builder.headers(splitHeader[1], splitHeader[2]);
     }
 
-    public HTTPRequest parse(InputStream rawRequest) {
+    public HTTPRequest parse(InputStream rawRequest) {git
         String requestLine = readRequest(rawRequest);
         parseRequestLine(requestLine);
 

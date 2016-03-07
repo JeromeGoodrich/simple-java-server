@@ -16,22 +16,6 @@ public class HTTPRequest extends Request {
         headers = builder.headers;
     }
 
-    public void setMethod(String method) {
-        this.method = method;
-    }
-
-    public void setPath(String path) {
-        this.path = path;
-    }
-
-    public void setVersion(String version) {
-        this.version = version;
-    }
-
-    public void setHeaders(HashMap headers) {
-        this.headers = headers;
-    }
-
     public String getMethod() {
         return this.method;
     }

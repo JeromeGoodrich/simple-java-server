@@ -25,11 +25,12 @@ public class HTTPRequestBuilder implements Builder<HTTPRequest> {
 
     }
 
+    public void headers(String headerFieldName, String headerValue) {
+        headers.put(headerFieldName, headerValue);
+    }
+
     public HTTPRequest build() {
         return new HTTPRequest(this);
     }
 
-    public void headers(String headerFieldName, String headerValue) {
-        headers.put(headerFieldName, headerValue);
-    }
 }

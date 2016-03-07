@@ -1,38 +1,41 @@
 package httpserver;
 
+import httpserver.request.*;
 import org.junit.Test;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.Map;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
-import httpserver.request.Request;
 
 public class RequestTest {
 
-    private Map testHeaders;
-
-    public RequestTest() {
-    }
-
     @Test
     public void testParseRequestLine() throws Exception {
-        String rawRequest = "GET /src/test/fixtures HTTP/1.1\r\n";
-        Request request = new Request();
-        request.parse(rawRequest);
+        Parser parser = new HTTPParser();
+        byte[] data = "GET /src/test/fixtures HTTP/1.1".getBytes();
+        InputStream input = new ByteArrayInputStream(data);
+        Request request = parser.parse(input);
         assertThat(request.getMethod(), is("GET"));
         assertThat(request.getPath(), is("src/test/fixtures"));
         assertThat(request.getVersion(), is("HTTP/1.1"));
     }
 
-    @Test
+   @Test
     public void testParseHeaders() throws Exception {
-        String rawRequest = "GET / HTTP/1.1\nHost: www.example.com\nAccept: */*";
-        Request request = new Request();
-        request.parse(rawRequest);
+        Parser parser = new HTTPParser();
+        byte[] data = "GET /src/test/fixtures HTTP/1.1\r\nHost: www.example.com\r\nAccept: */*\r\n".getBytes();
+        InputStream input = new ByteArrayInputStream(data);
+        Request request = parser.parse(input);
+        assertThat(request.getMethod(), is("GET"));
+        assertThat(request.getPath(), is("src/test/fixtures"));
+        assertThat(request.getVersion(), is("HTTP/1.1"));
         assertThat(request.getHeader("Host"), is(" www.example.com"));
         assertThat(request.getHeader("Accept"), is(" */*"));
     }
+
 }
 
 

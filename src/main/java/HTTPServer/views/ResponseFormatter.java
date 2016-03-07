@@ -10,7 +10,6 @@ public class ResponseFormatter {
         body = new String(response.getBody());
         }
         String formattedResponse = statusLine + "\r\n" + body;
-        System.out.println(formattedResponse);
         return formattedResponse.getBytes();
     }
 }

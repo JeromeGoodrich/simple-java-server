@@ -31,9 +31,8 @@ public class Server {
             System.out.println("Waiting...");
             Socket clientSocket = serverSocket.accept();
             System.out.println("Accepted Connection: " + clientSocket);
-            Handler handler = new RequestHandler();
-            Parser parser = new HTTPParser();
-            WebService webService = new WebService(clientSocket, handler, parser);
+            ServiceFactory factory = new ServiceFactory();
+            Service webService = factory.createHTTPService(clientSocket);
             Thread thread = new Thread(webService);
             thread.start();
         }

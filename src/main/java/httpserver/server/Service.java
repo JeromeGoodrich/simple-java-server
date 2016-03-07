@@ -14,15 +14,15 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.Socket;
 
-public class WebService implements Runnable {
+public class Service implements Runnable {
 
-    private Socket clientSocket;
     private Parser parser;
     private Handler handler;
+    private ClientServerIO io;
     private Request request;
 
-    public WebService(Socket clientSocket, Handler handler, Parser parser) {
-        this.clientSocket = clientSocket;
+    public Service(ClientServerIO io, Handler handler, Parser parser) {
+        this.io = io;
         this.parser = parser;
         this.handler = handler;
 
@@ -30,18 +30,16 @@ public class WebService implements Runnable {
 
     public void run() {
         try {
-            DataOutputStream outToClient = new DataOutputStream(clientSocket.getOutputStream());
-            InputStream inputFromClient = clientSocket.getInputStream();
 
-            request = parser.parse(inputFromClient);
+            request = parser.parse(io.inFromClient());
             Response response = handler.handle(request);
             ResponseFormatter formatter = new ResponseFormatter();
             byte[] formattedResponse = formatter.format(response);
 
-            outToClient.write(formattedResponse);
-            outToClient.flush();
+            io.outToClient().write(formattedResponse);
+            io.outToClient().flush();
 
-            clientSocket.close();
+            io.close();
 
         } catch (Exception e) {
             e.printStackTrace();
