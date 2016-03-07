@@ -9,11 +9,12 @@ import java.io.InputStreamReader;
 
 public class HTTPParser implements Parser {
 
-    HTTPRequestBuilder builder = new HTTPRequestBuilder();
+    private Boolean bodyRequired = false;
+    private int contentLength;
+    private HTTPRequestBuilder builder = new HTTPRequestBuilder();
     private InputStreamReader reader;
 
-
-    private String readLine(InputStream rawRequest) {
+    private String readLine() {
         StringBuilder stringBuilder = new StringBuilder();
         int charRead;
         try {
@@ -24,36 +25,58 @@ public class HTTPParser implements Parser {
         } catch (Exception e) {
             e.printStackTrace();
         }
-equals()
         return stringBuilder.toString();
     }
 
     private void parseRequestLine(String requestLine) {
         String[] splitRequestLine = requestLine.split(" ");
         builder.method(splitRequestLine[0]);
-        builder.path(splitRequestLine[1].replaceFirst("/",""));
+        if (splitRequestLine[1].equals("/")) {
+            builder.path(splitRequestLine[1]);
+        } else {
+            builder.path(splitRequestLine[1].replaceFirst("/", ""));
+        }
         builder.version(splitRequestLine[2].substring(0, 8));
+        if (splitRequestLine[0].equals("PUT")) {
+            bodyRequired = true;
+        }
     }
 
     private void parseHeaders(String header) {
+        System.out.println(header);
         String[] splitHeader = header.split(":");
         builder.headers(splitHeader[0], splitHeader[1].trim());
+        if (splitHeader[0].equals("Content-Length")) {
+            contentLength = Integer.parseInt(splitHeader[1].trim());
+        }
     }
 
     public HTTPRequest parse(InputStream rawRequest) {
         this.reader = new InputStreamReader(rawRequest);
-        String requestLine = readLine(rawRequest);
+        String requestLine = readLine();
         parseRequestLine(requestLine);
 
         String header;
 
         do {
-            header = readLine(rawRequest);
-            if (header.isEmpty()) break;
+            header = readLine();
+            if (header.trim().isEmpty()) break;
             parseHeaders(header);
         } while (true);
 
+        if (bodyRequired) {
+            byte[] bytes = new byte[1024];
+            try {
+                rawRequest.read(bytes, 0, contentLength);
+                builder.body(bytes);
+                System.out.println(new String(bytes));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
         return builder.build();
+
     }
 }
 

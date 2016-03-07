@@ -24,20 +24,22 @@ public class RequestHandlerTest {
         assertThat(new String(response.getBody()), is("Hello World"));
     }
 
-   /* @Test
+    @Test
     public void testHandleDir() {
+        HTTPRequestBuilder builder = new HTTPRequestBuilder();
+        Request request = builder.path("src/test/fixtures").build();
         RequestHandler handler = new RequestHandler();
         Response response = handler.handle(request);
         assertThat(response.getStatusCode(), is(200));
         assertThat(response.getReasonPhrase(), is("OK"));
-        assertThat(new String(response.getBody()), is("<!DOCTYPE html>\n<html>\n<body>\n<ol>\n<li><a href=\"/src/test/fixtures/my_file.txt\">my_file.txt</a></li>\n</ol>\n<body>"));
+        assertThat(new String(response.getBody()), is("<!DOCTYPE html>\n<html>\n<body>\n<ol>\n<li><a href=\"/src/test/fixtures/form.html\">form.html</a></li>\n<li><a href=\"/src/test/fixtures/my_file.txt\">my_file.txt</a></li>\n</ol>\n<body>"));
         }
 
     @Test
     public void testHandleFile() {
-
+        HTTPRequestBuilder builder = new HTTPRequestBuilder();
+        Request request = builder.path("src/test/fixtures/my_file.txt").build();
         RequestHandler handler = new RequestHandler();
-        request.setPath("src/test/fixtures/my_file.txt");
         Response response = handler.handle(request);
         assertThat(response.getStatusCode(), is(200));
         assertThat(response.getReasonPhrase(), is("OK"));
@@ -46,11 +48,11 @@ public class RequestHandlerTest {
 
     @Test
     public void testHandleError() {
-        Request request = new Request();
+        HTTPRequestBuilder builder = new HTTPRequestBuilder();
+        Request request = builder.path("this/is/not/a/path").build();
         RequestHandler handler = new RequestHandler();
-        request.setPath("this/is/not/a/path");
         Response response = handler.handle(request);
         assertThat(response.getStatusCode(), is(404));
         assertThat(response.getReasonPhrase(), is("Not Found"));
-    }*/
+    }
 }

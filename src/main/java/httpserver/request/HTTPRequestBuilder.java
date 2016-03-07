@@ -9,6 +9,7 @@ public class HTTPRequestBuilder implements Builder<HTTPRequest> {
     public String method;
     public String path;
     public String version;
+    public byte[] body;
     public Map<String, String> headers = new HashMap<String, String>();
 
 
@@ -28,9 +29,14 @@ public class HTTPRequestBuilder implements Builder<HTTPRequest> {
 
     }
 
-    public void headers(String headerFieldName, String headerValue) {
-        System.out.println(headerFieldName + headerValue);
+    public HTTPRequestBuilder headers(String headerFieldName, String headerValue) {
         headers.put(headerFieldName, headerValue);
+        return this;
+    }
+
+    public HTTPRequestBuilder body(byte[] bytes) {
+        this.body = bytes;
+        return this;
     }
 
     public HTTPRequest build() {
