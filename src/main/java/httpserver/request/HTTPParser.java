@@ -10,9 +10,10 @@ import java.io.InputStreamReader;
 public class HTTPParser implements Parser {
 
     HTTPRequestBuilder builder = new HTTPRequestBuilder();
+    private InputStreamReader reader;
 
-    private String readRequest(InputStream rawRequest) {
-        InputStreamReader reader = new InputStreamReader(rawRequest);
+
+    private String readLine(InputStream rawRequest) {
         StringBuilder stringBuilder = new StringBuilder();
         int charRead;
         try {
@@ -23,7 +24,7 @@ public class HTTPParser implements Parser {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
+equals()
         return stringBuilder.toString();
     }
 
@@ -36,17 +37,18 @@ public class HTTPParser implements Parser {
 
     private void parseHeaders(String header) {
         String[] splitHeader = header.split(":");
-        builder.headers(splitHeader[0], splitHeader[1]);
+        builder.headers(splitHeader[0], splitHeader[1].trim());
     }
 
     public HTTPRequest parse(InputStream rawRequest) {
-        String requestLine = readRequest(rawRequest);
+        this.reader = new InputStreamReader(rawRequest);
+        String requestLine = readLine(rawRequest);
         parseRequestLine(requestLine);
 
         String header;
 
         do {
-            header = readRequest(rawRequest);
+            header = readLine(rawRequest);
             if (header.isEmpty()) break;
             parseHeaders(header);
         } while (true);
