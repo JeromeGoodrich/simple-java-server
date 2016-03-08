@@ -37,17 +37,25 @@ public class HTTPParser implements Parser {
             builder.path(splitRequestLine[1].replaceFirst("/", ""));
         }
         builder.version(splitRequestLine[2].substring(0, 8));
-        if (splitRequestLine[0].equals("PUT")) {
+        if (splitRequestLine[0].equals("POST")) {
             bodyRequired = true;
         }
     }
 
     private void parseHeaders(String header) {
-        System.out.println(header);
         String[] splitHeader = header.split(":");
         builder.headers(splitHeader[0], splitHeader[1].trim());
         if (splitHeader[0].equals("Content-Length")) {
             contentLength = Integer.parseInt(splitHeader[1].trim());
+        }
+    }
+
+    private void parseBody(char[] body) {
+        String stringBody = new String(body);
+        String[] splitStringBody = stringBody.split("&");
+        for (int i = 0; i < splitStringBody.length ; i++) {
+            String[] keyValue = splitStringBody[i].split("=");
+            builder.body(keyValue[0], keyValue[1]);
         }
     }
 
@@ -63,13 +71,11 @@ public class HTTPParser implements Parser {
             if (header.trim().isEmpty()) break;
             parseHeaders(header);
         } while (true);
-
         if (bodyRequired) {
-            byte[] bytes = new byte[1024];
+            char[] body = new char[1024];
             try {
-                rawRequest.read(bytes, 0, contentLength);
-                builder.body(bytes);
-                System.out.println(new String(bytes));
+                reader.read(body, 0, contentLength);
+                parseBody(body);
             } catch (IOException e) {
                 e.printStackTrace();
             }

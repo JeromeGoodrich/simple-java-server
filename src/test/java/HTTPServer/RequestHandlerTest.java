@@ -15,7 +15,7 @@ public class RequestHandlerTest {
     @Test
     public void testHandleRoot() {
         HTTPRequestBuilder builder = new HTTPRequestBuilder();
-        Request request = builder.path("/").version("HTTP/1.1").build();
+        Request request = builder.method("GET").path("/").version("HTTP/1.1").build();
         RequestHandler handler = new RequestHandler();
         Response response = handler.handle(request);
         assertThat(response.getStatusCode(), is(200));
@@ -27,7 +27,7 @@ public class RequestHandlerTest {
     @Test
     public void testHandleDir() {
         HTTPRequestBuilder builder = new HTTPRequestBuilder();
-        Request request = builder.path("src/test/fixtures").build();
+        Request request = builder.method("GET").path("src/test/fixtures").build();
         RequestHandler handler = new RequestHandler();
         Response response = handler.handle(request);
         assertThat(response.getStatusCode(), is(200));
@@ -38,7 +38,7 @@ public class RequestHandlerTest {
     @Test
     public void testHandleFile() {
         HTTPRequestBuilder builder = new HTTPRequestBuilder();
-        Request request = builder.path("src/test/fixtures/my_file.txt").build();
+        Request request = builder.method("GET").path("src/test/fixtures/my_file.txt").build();
         RequestHandler handler = new RequestHandler();
         Response response = handler.handle(request);
         assertThat(response.getStatusCode(), is(200));
@@ -49,7 +49,7 @@ public class RequestHandlerTest {
     @Test
     public void testHandleError() {
         HTTPRequestBuilder builder = new HTTPRequestBuilder();
-        Request request = builder.path("this/is/not/a/path").build();
+        Request request = builder.method("GET").path("this/is/not/a/path").build();
         RequestHandler handler = new RequestHandler();
         Response response = handler.handle(request);
         assertThat(response.getStatusCode(), is(404));

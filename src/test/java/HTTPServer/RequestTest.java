@@ -37,7 +37,11 @@ public class RequestTest {
         assertThat(request.getHeader("Accept"), is("*/*"));
     }
 
-
+    /*@Test
+    public void testParseBody() {
+        byte[] data = "POST /form HTTP/1.1\r\nHost: www.example.come\r\nContent-Length: mvn test" +
+                ""
+    }*/
 }
 
 

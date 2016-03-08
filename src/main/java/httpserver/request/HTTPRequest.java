@@ -7,6 +7,7 @@ public class HTTPRequest extends Request {
     private String method;
     private String path;
     private String version;
+    private Map<String, String> body;
     private Map<String, String> headers;
 
     public HTTPRequest(HTTPRequestBuilder builder) {
@@ -14,6 +15,7 @@ public class HTTPRequest extends Request {
         path = builder.path;
         version = builder.version;
         headers = builder.headers;
+        body = builder.body;
     }
 
     public String getMethod() {
@@ -30,5 +32,9 @@ public class HTTPRequest extends Request {
 
     public String getHeader(String key) {
         return this.headers.get(key);
+    }
+
+    public String getBodyVal(String key) {
+        return this.body.get(key);
     }
 }

@@ -13,19 +13,53 @@ import java.nio.file.Paths;
 public class RequestHandler implements Handler {
 
     public Response handle(Request request) {
-        if (request.getPath().equals("/")) {
-            String greeting = "Hello World";
-            ResponseBuilder builder = new ResponseBuilder(200);
-            return builder.reasonPhrase().version(request.getVersion()).body(greeting.getBytes()).build();
-        } else if (new File(request.getPath()).isDirectory()) {
-            return handleDir(request);
-        } else if (new File(request.getPath()).isFile()) {
-            return handleFile(request);
+        System.out.println(request.getPath());
+        if (request.getMethod().equals("POST")) {
+            if (request.getPath().equals("form")) {
+                return handlePost(request);
+            } else {
+                ResponseBuilder builder = new ResponseBuilder(404);
+                return builder.reasonPhrase().version(request.getVersion()).body("Sorry, we couldn't find what you were looking for".getBytes()).build();
+            }
+        } else if (request.getMethod().equals("GET")) {
+            if (request.getPath().equals("/")) {
+                String greeting = "Hello World";
+                ResponseBuilder builder = new ResponseBuilder(200);
+                return builder.reasonPhrase().version(request.getVersion()).body(greeting.getBytes()).build();
+            } else if (request.getPath().equals("form")) {
+                return handleForm(request);
+            } else if (new File(request.getPath()).isDirectory()) {
+                return handleDir(request);
+            } else if (new File(request.getPath()).isFile()) {
+                return handleFile(request);
+            } else {
+                ResponseBuilder builder = new ResponseBuilder(404);
+                return builder.reasonPhrase().version(request.getVersion()).body("Sorry, we couldn't find what you were looking for".getBytes()).build();
+            }
         } else {
-            System.out.println(request.getPath());
             ResponseBuilder builder = new ResponseBuilder(404);
             return builder.reasonPhrase().version(request.getVersion()).body("Sorry, we couldn't find what you were looking for".getBytes()).build();
         }
+    }
+
+    private Response handlePost(Request request) {
+        String val1 = request.getBodyVal("firstname");
+        String val2 = request.getBodyVal("lastname");
+        String htmlContent = "<!DOCTYPE html>\n<html>\n<header>\n</header>\n<body>\n"+ val1 + " " + val2 + "\n</body>\n</html>";
+        ResponseBuilder builder = new ResponseBuilder(200);
+        return builder.body(htmlContent.getBytes()).reasonPhrase().version(request.getVersion()).build();
+    }
+
+    private Response handleForm(Request request) {
+        String HTMLBoilerPlate = "<!DOCTYPE html>\n<html>\n<header>\n</header>\n<body>\n";
+        String openFormTag = "<form method=\"post\">";
+        String firstField = "First Name:\n<input type=\"text\" name=\"firstname\">\n";
+        String secondField = "Last Name:\n<input type=\"text\" name=\"lastname\">\n";
+        String submit = "<input type=\"submit\" value=\"Submit\">\n</form>\n</body>\n<html>";
+        String htmlContent = HTMLBoilerPlate + openFormTag + firstField + secondField + submit;
+        byte[] data = htmlContent.getBytes();
+        ResponseBuilder builder = new ResponseBuilder(200);
+        return builder.body(data).reasonPhrase().version(request.getVersion()).build();
     }
 
     private Response handleFile(Request request) {
@@ -36,7 +70,6 @@ public class RequestHandler implements Handler {
             e.printStackTrace();
         }
         ResponseBuilder builder = new ResponseBuilder(200);
-        System.out.println(Paths.get(request.getPath()));
         return builder.body(bytes).reasonPhrase().version(request.getVersion()).build();
     }
 
