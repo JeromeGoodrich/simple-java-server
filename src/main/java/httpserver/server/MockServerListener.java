@@ -7,7 +7,7 @@ public class MockServerListener implements ServerListener {
     private int callCounter = 0;
 
     public ClientSocketInterface accept() throws IOException {
-        return new MockClientSocket();
+        return new MockClientSocket("data");
     }
 
     public Boolean isOpen() {

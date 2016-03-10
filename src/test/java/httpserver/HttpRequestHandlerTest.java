@@ -1,7 +1,6 @@
 package httpserver;
 
-import httpserver.handler.RequestHandler;
-import httpserver.request.HTTPRequest;
+import httpserver.handler.HttpRequestHandler;
 import httpserver.request.HTTPRequestBuilder;
 import httpserver.request.Request;
 import httpserver.response.Response;
@@ -12,13 +11,13 @@ import static org.hamcrest.Matchers.contains;
 import static org.junit.Assert.assertThat;
 import static org.hamcrest.CoreMatchers.is;
 
-public class RequestHandlerTest {
+public class HttpRequestHandlerTest {
 
     @Test
     public void testHandleRoot() {
         HTTPRequestBuilder builder = new HTTPRequestBuilder();
         Request request = builder.method("GET").path("/").version("HTTP/1.1").build();
-        RequestHandler handler = new RequestHandler();
+        HttpRequestHandler handler = new HttpRequestHandler();
         Response response = handler.handle(request);
         assertThat(response.getStatusCode(), is(200));
         assertThat(response.getVersion(), is("HTTP/1.1"));
@@ -30,7 +29,7 @@ public class RequestHandlerTest {
     public void testHandleDir() {
         HTTPRequestBuilder builder = new HTTPRequestBuilder();
         Request request = builder.method("GET").path("src/test/fixtures").build();
-        RequestHandler handler = new RequestHandler();
+        HttpRequestHandler handler = new HttpRequestHandler();
         Response response = handler.handle(request);
         assertThat(response.getStatusCode(), is(200));
         assertThat(response.getReasonPhrase(), is("OK"));
@@ -41,7 +40,7 @@ public class RequestHandlerTest {
     public void testHandleFile() {
         HTTPRequestBuilder builder = new HTTPRequestBuilder();
         Request request = builder.method("GET").path("src/test/fixtures/my_file.txt").build();
-        RequestHandler handler = new RequestHandler();
+        HttpRequestHandler handler = new HttpRequestHandler();
         Response response = handler.handle(request);
         assertThat(response.getStatusCode(), is(200));
         assertThat(response.getReasonPhrase(), is("OK"));
@@ -52,7 +51,7 @@ public class RequestHandlerTest {
     public void testGetError() {
         HTTPRequestBuilder builder = new HTTPRequestBuilder();
         Request request = builder.method("GET").path("this/is/not/a/path").build();
-        RequestHandler handler = new RequestHandler();
+        HttpRequestHandler handler = new HttpRequestHandler();
         Response response = handler.handle(request);
         assertThat(response.getStatusCode(), is(404));
         assertThat(response.getReasonPhrase(), is("Not Found"));
@@ -62,7 +61,7 @@ public class RequestHandlerTest {
     public void testHandleForm() {
         HTTPRequestBuilder builder = new HTTPRequestBuilder();
         Request request = builder.method("GET").path("form").build();
-        RequestHandler handler = new RequestHandler();
+        HttpRequestHandler handler = new HttpRequestHandler();
         Response response = handler.handle(request);
         assertThat(response.getStatusCode(), is(200));
         assertThat(new String(response.getBody()), containsString("</form>"));
@@ -72,7 +71,7 @@ public class RequestHandlerTest {
     public void testHandlePost() {
         HTTPRequestBuilder builder = new HTTPRequestBuilder();
         Request request = builder.method("POST").path("form").body("firstname", "Jerome").body("lastname", "Goodrich").build();
-        RequestHandler handler = new RequestHandler();
+        HttpRequestHandler handler = new HttpRequestHandler();
         Response response = handler.handle(request);
         assertThat(response.getStatusCode(), is(200));
         assertThat(new String(response.getBody()), containsString("Jerome"));
@@ -83,7 +82,7 @@ public class RequestHandlerTest {
     public void testPostError() {
         HTTPRequestBuilder builder = new HTTPRequestBuilder();
         Request request = builder.method("POST").path("this/is/not/a/path").build();
-        RequestHandler handler = new RequestHandler();
+        HttpRequestHandler handler = new HttpRequestHandler();
         Response response = handler.handle(request);
         assertThat(response.getStatusCode(), is(404));
         assertThat(response.getReasonPhrase(), is("Not Found"));
@@ -93,7 +92,7 @@ public class RequestHandlerTest {
     public void testUnsupportedMethod() {
         HTTPRequestBuilder builder = new HTTPRequestBuilder();
         Request request = builder.method("CONNECT").path("/").build();
-        RequestHandler handler = new RequestHandler();
+        HttpRequestHandler handler = new HttpRequestHandler();
         Response response = handler.handle(request);
         assertThat(response.getStatusCode(), is(404));
         assertThat(response.getReasonPhrase(), is("Not Found"));

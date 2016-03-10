@@ -1,5 +1,6 @@
 package httpserver.request;
 
+import java.io.InputStream;
 import java.util.Map;
 
 public class HTTPRequest extends Request {
@@ -35,5 +36,9 @@ public class HTTPRequest extends Request {
 
     public String getBodyVal(String key) {
         return this.body.get(key);
+    }
+
+    public InputStream getRawRequest() {
+        return null;
     }
 }

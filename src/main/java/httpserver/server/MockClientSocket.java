@@ -1,19 +1,24 @@
 package httpserver.server;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 
 public class MockClientSocket implements ClientSocketInterface {
 
+    private String input;
+    public OutputStream output;
+
+    public MockClientSocket(String input) {
+        this.input = input;
+    }
+
     public InputStream getInputStream() {
-        byte[] data = "data".getBytes();
+        byte[] data = input.getBytes();
         return new ByteArrayInputStream(data);
     }
 
     public OutputStream getOutputStream(){
-        return null;
+        this.output = new ByteArrayOutputStream();
+        return output;
     }
 
     public void close() {

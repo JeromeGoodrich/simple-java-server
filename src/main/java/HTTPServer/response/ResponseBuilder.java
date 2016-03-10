@@ -26,7 +26,7 @@ public class ResponseBuilder implements Builder<Response> {
     }
 
     public Response build() {
-        return new Response(this);
+        return new HttpResponse(this);
     }
 
 }

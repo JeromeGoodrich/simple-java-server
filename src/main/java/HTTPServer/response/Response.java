@@ -1,35 +1,15 @@
 package httpserver.response;
 
-import java.util.Map;
+import java.io.InputStream;
 
-public class Response {
-    private int statusCode;
-    private byte[] body;
-    private String reasonPhrase;
-    private String version;
-    private Map<String, String> headers;
+public interface Response {
+    InputStream getRawRequest();
 
-    public Response(ResponseBuilder builder) {
-        statusCode = builder.statusCode;
-        body = builder.body;
-        reasonPhrase = builder.reasonPhrase;
-        version = builder.version;
-    }
+    String getVersion();
 
-    public byte[] getBody() {
-        return body;
-    }
+    int getStatusCode();
 
-    public int getStatusCode() {
-        return statusCode;
-    }
+    String getReasonPhrase();
 
-    public String getReasonPhrase() {
-        return reasonPhrase;
-    }
-
-    public String getVersion () {
-        return version;
-    }
-
+    byte[] getBody();
 }
