@@ -1,4 +1,6 @@
-package httpserver.request;
+package httpserver.parser;
+
+import httpserver.request.Request;
 
 import java.io.InputStream;
 

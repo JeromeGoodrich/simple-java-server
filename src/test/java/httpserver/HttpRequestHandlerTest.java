@@ -1,6 +1,6 @@
 package httpserver;
 
-import httpserver.handler.HttpRequestHandler;
+import httpserver.handler.requesthandler.HttpRequestHandler;
 import httpserver.request.HTTPRequestBuilder;
 import httpserver.request.Request;
 import httpserver.response.Response;

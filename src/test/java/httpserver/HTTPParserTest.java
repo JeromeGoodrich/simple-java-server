@@ -1,12 +1,12 @@
 package httpserver;
 
+import httpserver.parser.HTTPParser;
+import httpserver.parser.Parser;
 import httpserver.request.*;
 import org.junit.Test;
-import org.junit.validator.ValidateWith;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-import java.util.Map;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.equalToIgnoringWhiteSpace;

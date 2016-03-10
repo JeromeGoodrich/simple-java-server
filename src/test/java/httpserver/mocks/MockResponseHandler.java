@@ -1,5 +1,6 @@
-package httpserver.handler;
+package httpserver.mocks;
 
+import httpserver.handler.responsehandler.ResponseHandler;
 import httpserver.response.Response;
 import httpserver.server.ClientSocketInterface;
 
@@ -11,7 +12,7 @@ public class MockResponseHandler implements ResponseHandler {
 
     public String outputString;
 
-    public InputStream handle(Response response, ClientSocketInterface socket) {
+    public InputStream handle(Response response) {
         InputStream in = response.getRawRequest();
         return in;
 

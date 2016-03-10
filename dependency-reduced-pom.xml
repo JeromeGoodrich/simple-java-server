@@ -20,7 +20,7 @@
             <configuration>
               <transformers>
                 <transformer>
-                  <mainClass>httpserver.server.Server</mainClass>
+                  <mainClass>httpserver.server.Main</mainClass>
                 </transformer>
               </transformers>
             </configuration>

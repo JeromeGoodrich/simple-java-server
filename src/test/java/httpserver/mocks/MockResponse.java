@@ -1,5 +1,7 @@
-package httpserver.response;
+package httpserver.mocks;
 
+
+import httpserver.response.Response;
 
 import java.io.InputStream;
 

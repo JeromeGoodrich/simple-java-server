@@ -1,8 +1,9 @@
 package httpserver;
 
-import httpserver.handler.MockRequestHandler;
-import httpserver.handler.MockResponseHandler;
-import httpserver.request.MockParser;
+import httpserver.mocks.MockClientSocket;
+import httpserver.mocks.MockRequestHandler;
+import httpserver.mocks.MockResponseHandler;
+import httpserver.mocks.MockParser;
 import httpserver.server.*;
 import org.junit.Test;
 

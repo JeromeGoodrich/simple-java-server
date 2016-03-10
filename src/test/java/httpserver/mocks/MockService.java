@@ -1,4 +1,7 @@
-package httpserver.server;
+package httpserver.mocks;
+
+import httpserver.server.ClientSocketInterface;
+import httpserver.server.Service;
 
 import java.io.BufferedReader;
 import java.io.IOException;

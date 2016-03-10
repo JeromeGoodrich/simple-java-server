@@ -1,10 +1,8 @@
 package httpserver.server;
 
-import httpserver.handler.HttpRequestHandler;
-import httpserver.handler.RequestHandler;
-import httpserver.handler.ResponseHandler;
-import httpserver.request.HTTPRequest;
-import httpserver.request.Parser;
+import httpserver.handler.requesthandler.RequestHandler;
+import httpserver.handler.responsehandler.ResponseHandler;
+import httpserver.parser.Parser;
 import httpserver.request.Request;
 import httpserver.response.Response;
 
@@ -33,7 +31,7 @@ public class HttpService extends Service implements Runnable {
 
             request = parser.parse(socket.getInputStream());
             Response response = requestHandler.handle(request);
-            InputStream in = responseHandler.handle(response, socket);
+            InputStream in = responseHandler.handle(response);
             responseHandler.sendToClient(in, socket.getOutputStream(), new byte[1024]);
 
         } catch (Exception e) {

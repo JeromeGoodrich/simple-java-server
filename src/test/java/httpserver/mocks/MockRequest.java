@@ -1,4 +1,6 @@
-package httpserver.request;
+package httpserver.mocks;
+
+import httpserver.request.Request;
 
 import java.io.InputStream;
 

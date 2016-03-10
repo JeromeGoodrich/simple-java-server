@@ -1,8 +1,8 @@
 package httpserver.server;
 
-import httpserver.handler.HttpRequestHandler;
-import httpserver.handler.HttpResponseHandler;
-import httpserver.request.HTTPParser;
+import httpserver.handler.requesthandler.HttpRequestHandler;
+import httpserver.handler.responsehandler.HttpResponseHandler;
+import httpserver.parser.HTTPParser;
 
 public class Main {
 

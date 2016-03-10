@@ -1,8 +1,7 @@
 package httpserver;
 
-import httpserver.server.MockClientSocket;
-import httpserver.server.MockServerListener;
-import httpserver.server.MockService;
+import httpserver.mocks.MockServerListener;
+import httpserver.mocks.MockService;
 import httpserver.server.Server;
 import org.junit.Test;
 

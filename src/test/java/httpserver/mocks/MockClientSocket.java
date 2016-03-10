@@ -1,4 +1,6 @@
-package httpserver.server;
+package httpserver.mocks;
+
+import httpserver.server.ClientSocketInterface;
 
 import java.io.*;
 

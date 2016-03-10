@@ -1,8 +1,9 @@
-package httpserver.request;
+package httpserver.parser;
 
-import sun.nio.cs.StandardCharsets;
+import httpserver.parser.Parser;
+import httpserver.request.HTTPRequest;
+import httpserver.request.HTTPRequestBuilder;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -19,8 +20,8 @@ public class HTTPParser implements Parser {
         int charRead;
         try {
             while ((charRead = reader.read()) != -1) {
-                    stringBuilder.append((char) charRead);
-                    if ((char) charRead == '\n') break;
+                stringBuilder.append((char) charRead);
+                if ((char) charRead == '\n') break;
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -28,6 +29,7 @@ public class HTTPParser implements Parser {
         return stringBuilder.toString();
     }
 
+    //Occasionaly gets index OutofBounds error - think it has something to do with buf not being clean
     private void parseRequestLine(String requestLine) {
         String[] splitRequestLine = requestLine.split(" ");
         builder.method(splitRequestLine[0]);

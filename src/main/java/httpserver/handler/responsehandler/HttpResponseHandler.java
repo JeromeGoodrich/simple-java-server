@@ -1,6 +1,5 @@
-package httpserver.handler;
+package httpserver.handler.responsehandler;
 
-import httpserver.handler.ResponseHandler;
 import httpserver.response.Response;
 import httpserver.server.ClientSocketInterface;
 
@@ -11,7 +10,7 @@ import java.io.OutputStream;
 
 public class HttpResponseHandler implements ResponseHandler {
 
-    public InputStream handle(Response response, ClientSocketInterface socket) {
+    public InputStream handle(Response response) {
         String statusLine = response.getVersion() + " " + response.getStatusCode() + " " + response.getReasonPhrase() + "\r\n";
         String body = "";
         if (response.getBody() != null) {

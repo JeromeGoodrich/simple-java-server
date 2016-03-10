@@ -1,7 +1,7 @@
-package httpserver.handler;
+package httpserver.mocks;
 
+import httpserver.handler.requesthandler.RequestHandler;
 import httpserver.request.Request;
-import httpserver.response.MockResponse;
 import httpserver.response.Response;
 
 public class MockRequestHandler implements RequestHandler {
