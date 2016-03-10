@@ -8,5 +8,5 @@ public interface ClientSocketInterface {
 
     public InputStream getInputStream();
     public OutputStream getOutputStream();
-    public void close();
+    public void close() throws IOException;
 }

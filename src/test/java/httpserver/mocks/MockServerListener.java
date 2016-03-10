@@ -14,7 +14,7 @@ public class MockServerListener implements ServerListener {
     }
 
     public Boolean isOpen() {
-        if (callCounter <= 3) {
+        if (callCounter <= 1) {
             callCounter ++;
             return true;
         } else {

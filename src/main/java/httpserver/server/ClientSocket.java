@@ -10,22 +10,13 @@ public class ClientSocket implements ClientSocketInterface {
 
     private Socket socket;
 
-    public ClientSocket(ServerSocket serverSocket){
-        try {
-            this.socket = serverSocket.accept();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public ClientSocket(Socket socket){
+            this.socket = socket;
     }
 
     public InputStream getInputStream() {
-        InputStream in = null;
-        try {
-            in = socket.getInputStream();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return in;
+        return InputStream in = socket.getInputStream();
+
     }
 
     public OutputStream getOutputStream(){
@@ -38,5 +29,7 @@ public class ClientSocket implements ClientSocketInterface {
         return out;
     }
 
-    public void close() {}
+    public void close() throws IOException {
+        socket.close();
+    }
 }
