@@ -13,7 +13,6 @@ import java.nio.file.Paths;
 public class RequestHandler implements Handler {
 
     public Response handle(Request request) {
-        System.out.println(request.getPath());
         if (request.getMethod().equals("POST")) {
             if (request.getPath().equals("form")) {
                 return handlePost(request);

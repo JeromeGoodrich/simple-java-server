@@ -7,6 +7,8 @@ import httpserver.request.Request;
 import httpserver.response.Response;
 import org.junit.Test;
 
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.Matchers.contains;
 import static org.junit.Assert.assertThat;
 import static org.hamcrest.CoreMatchers.is;
 
@@ -47,12 +49,54 @@ public class RequestHandlerTest {
     }
 
     @Test
-    public void testHandleError() {
+    public void testGetError() {
         HTTPRequestBuilder builder = new HTTPRequestBuilder();
         Request request = builder.method("GET").path("this/is/not/a/path").build();
         RequestHandler handler = new RequestHandler();
         Response response = handler.handle(request);
         assertThat(response.getStatusCode(), is(404));
         assertThat(response.getReasonPhrase(), is("Not Found"));
+    }
+
+    @Test
+    public void testHandleForm() {
+        HTTPRequestBuilder builder = new HTTPRequestBuilder();
+        Request request = builder.method("GET").path("form").build();
+        RequestHandler handler = new RequestHandler();
+        Response response = handler.handle(request);
+        assertThat(response.getStatusCode(), is(200));
+        assertThat(new String(response.getBody()), containsString("</form>"));
+    }
+
+    @Test
+    public void testHandlePost() {
+        HTTPRequestBuilder builder = new HTTPRequestBuilder();
+        Request request = builder.method("POST").path("form").body("firstname", "Jerome").body("lastname", "Goodrich").build();
+        RequestHandler handler = new RequestHandler();
+        Response response = handler.handle(request);
+        assertThat(response.getStatusCode(), is(200));
+        assertThat(new String(response.getBody()), containsString("Jerome"));
+        assertThat(new String(response.getBody()), containsString("Goodrich"));
+    }
+
+    @Test
+    public void testPostError() {
+        HTTPRequestBuilder builder = new HTTPRequestBuilder();
+        Request request = builder.method("POST").path("this/is/not/a/path").build();
+        RequestHandler handler = new RequestHandler();
+        Response response = handler.handle(request);
+        assertThat(response.getStatusCode(), is(404));
+        assertThat(response.getReasonPhrase(), is("Not Found"));
+
+    }
+    @Test
+    public void testUnsupportedMethod() {
+        HTTPRequestBuilder builder = new HTTPRequestBuilder();
+        Request request = builder.method("CONNECT").path("/").build();
+        RequestHandler handler = new RequestHandler();
+        Response response = handler.handle(request);
+        assertThat(response.getStatusCode(), is(404));
+        assertThat(response.getReasonPhrase(), is("Not Found"));
+
     }
 }

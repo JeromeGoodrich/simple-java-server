@@ -9,9 +9,10 @@ import java.io.InputStream;
 import java.util.Map;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.equalToIgnoringWhiteSpace;
 import static org.junit.Assert.assertThat;
 
-public class RequestTest {
+public class HTTPParserTest {
 
     @Test
     public void testParseRequestLine() throws Exception {
@@ -37,11 +38,23 @@ public class RequestTest {
         assertThat(request.getHeader("Accept"), is("*/*"));
     }
 
-    /*@Test
+    @Test
     public void testParseBody() {
-        byte[] data = "POST /form HTTP/1.1\r\nHost: www.example.come\r\nContent-Length: mvn test" +
-                ""
-    }*/
+        byte[] data = "POST /form HTTP/1.1\r\nHost: www.example.com\r\nContent-Length: 31\r\n\r\nfirstname=hello&lastname=jerome".getBytes();
+        InputStream input = new ByteArrayInputStream(data);
+        Parser parser = new HTTPParser();
+        Request request = parser.parse(input);
+        assertThat(request.getMethod(), is("POST"));
+        assertThat(request.getVersion(), is("HTTP/1.1"));
+        assertThat(request.getPath(), is("form"));
+        assertThat(request.getHeader("Host"), is("www.example.com"));
+        assertThat(request.getHeader("Content-Length"), is("31"));
+        assertThat(request.getBodyVal("firstname"), is("hello"));
+        assertThat(request.getBodyVal("lastname"), equalToIgnoringWhiteSpace("jerome"));
+
+    }
+
+
 }
 
 
