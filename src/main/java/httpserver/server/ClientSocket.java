@@ -14,19 +14,13 @@ public class ClientSocket implements ClientSocketInterface {
             this.socket = socket;
     }
 
-    public InputStream getInputStream() {
-        return InputStream in = socket.getInputStream();
+    public InputStream getInputStream() throws IOException {
+        return socket.getInputStream();
 
     }
 
-    public OutputStream getOutputStream(){
-        OutputStream out = null;
-        try {
-            out = socket.getOutputStream();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return out;
+    public OutputStream getOutputStream() throws IOException {
+        return socket.getOutputStream();
     }
 
     public void close() throws IOException {

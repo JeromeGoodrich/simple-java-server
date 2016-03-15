@@ -17,7 +17,6 @@ public class HttpResponse implements Response {
         version = builder.version;
     }
 
-    //getbody should be input stream
     public byte[] getBody() {
         return body;
     }

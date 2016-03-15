@@ -14,7 +14,7 @@ public class Main {
         }
 
         Integer portNumber = Integer.parseInt(args[0]);
-        Server server = new Server(new RealServerListener(portNumber), new HttpService(new HttpRequestHandler(), new HTTPParser(), new HttpResponseHandler()));
+        Server server = new Server(new RealServerListener(portNumber), new HttpServiceFactory(new HttpRequestHandler(), new HTTPParser(), new HttpResponseHandler()));
         server.startServer();
     }
 

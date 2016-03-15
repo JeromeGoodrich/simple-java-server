@@ -22,7 +22,7 @@ public class RealServerListener implements ServerListener{
         return new ClientSocket(socket);
     }
 
-    public Boolean isOpen() {
+    public boolean isOpen() {
         return true;
     }
 }

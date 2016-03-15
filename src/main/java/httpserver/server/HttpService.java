@@ -16,13 +16,10 @@ public class HttpService extends Service implements Runnable {
     private ClientSocketInterface socket;
     private Request request;
 
-    public HttpService(RequestHandler requestHandler, Parser parser, ResponseHandler responseHandler) {
+    public HttpService(RequestHandler requestHandler, Parser parser, ResponseHandler responseHandler, ClientSocketInterface socket) {
         this.parser = parser;
         this.requestHandler = requestHandler;
         this.responseHandler = responseHandler;
-    }
-
-    public void setSocket(ClientSocketInterface socket) {
         this.socket = socket;
     }
 
@@ -33,6 +30,7 @@ public class HttpService extends Service implements Runnable {
             Response response = requestHandler.handle(request);
             InputStream in = responseHandler.handle(response);
             responseHandler.sendToClient(in, socket.getOutputStream(), new byte[1024]);
+            socket.close();
 
         } catch (Exception e) {
             e.printStackTrace();

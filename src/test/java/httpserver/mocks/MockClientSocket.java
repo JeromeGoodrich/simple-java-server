@@ -6,21 +6,13 @@ import java.io.*;
 
 public class MockClientSocket implements ClientSocketInterface {
 
-    private String input;
-    public OutputStream output;
-
-    public MockClientSocket(String input) {
-        this.input = input;
-    }
 
     public InputStream getInputStream() {
-        byte[] data = input.getBytes();
-        return new ByteArrayInputStream(data);
+        return null;
     }
 
     public OutputStream getOutputStream(){
-        this.output = new ByteArrayOutputStream();
-        return output;
+        return null;
     }
 
     public void close() {

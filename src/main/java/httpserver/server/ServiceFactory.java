@@ -1,7 +1,5 @@
 package httpserver.server;
 
-/**
- * Created by admin on 3/14/16.
- */
-public class ServiceFactory {
+public abstract class ServiceFactory {
+    public abstract Service createService(ClientSocketInterface clientSocket);
 }

@@ -11,8 +11,14 @@ import java.io.OutputStream;
 public class MockResponseHandler implements ResponseHandler {
 
     public String outputString;
+    private int callsToHandle = 0;
+
+    public int getCallsToHandle() {
+        return callsToHandle;
+    }
 
     public InputStream handle(Response response) {
+        callsToHandle ++;
         InputStream in = response.getRawRequest();
         return in;
 

@@ -14,14 +14,15 @@ public class HttpServiceTest {
 
     @Test
     public void testServiceInputOutput() {
-        String input = "Hello World";
-        MockClientSocket socket = new MockClientSocket(input);
+        MockClientSocket socket = new MockClientSocket();
         MockRequestHandler requestHandler = new MockRequestHandler();
         MockParser parser = new MockParser();
         MockResponseHandler responseHandler = new MockResponseHandler();
-        Service service = new HttpService(requestHandler, parser, responseHandler);
-        service.setSocket(socket);
+        HttpServiceFactory factory = new HttpServiceFactory(requestHandler, parser, responseHandler);
+        Service service = factory.createService(socket);
         service.run();
-        assertThat(responseHandler.outputString, is(input));
+        assertThat(parser.getCallsToParse(), is(1));
+        assertThat(requestHandler.getCallsToHandle(), is(1));
+        assertThat(responseHandler.getCallsToHandle(), is(1));
     }
 }

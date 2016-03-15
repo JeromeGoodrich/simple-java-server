@@ -6,7 +6,7 @@ import java.io.OutputStream;
 
 public interface ClientSocketInterface {
 
-    public InputStream getInputStream();
-    public OutputStream getOutputStream();
+    public InputStream getInputStream() throws IOException;
+    public OutputStream getOutputStream() throws IOException;
     public void close() throws IOException;
 }
