@@ -21,13 +21,12 @@ public class Server {
     }
 
     public void startServer() throws Exception {
-
+        ExecutorService pool = Executors.newCachedThreadPool();
         while (serverListener.isOpen()) {
             System.out.println("Waiting...");
             clientSocket = serverListener.accept();
             service = factory.createService(clientSocket);
             System.out.println("Accepted Connection");
-            ExecutorService pool = Executors.newCachedThreadPool();
             pool.execute(service);
         }
     }

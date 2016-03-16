@@ -1,10 +1,14 @@
 package httpserver.response;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class ResponseBuilder implements Builder<Response> {
     public int statusCode;
     public byte[] body;
     public String reasonPhrase;
     public String version;
+    public Map<String, String> headers = new HashMap<String, String>();
 
     public ResponseBuilder (int statusCode) {
         this.statusCode = statusCode;
@@ -29,4 +33,8 @@ public class ResponseBuilder implements Builder<Response> {
         return new HttpResponse(this);
     }
 
+    public void addHeader(String s, String s1) {
+        System.out.println(s + ": " + s1);
+        headers.put(s, s1);
+    }
 }

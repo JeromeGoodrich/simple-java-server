@@ -1,6 +1,7 @@
 package httpserver.response;
 
 import java.io.InputStream;
+import java.util.Map;
 
 public interface Response {
     InputStream getRawRequest();
@@ -12,4 +13,8 @@ public interface Response {
     String getReasonPhrase();
 
     byte[] getBody();
+
+    Map<String, String> getHeaders();
+
+    String getHeaderValue(String s);
 }

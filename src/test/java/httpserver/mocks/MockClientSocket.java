@@ -18,4 +18,8 @@ public class MockClientSocket implements ClientSocketInterface {
     public void close() {
 
     }
+
+    public boolean isClosed() {
+        return false;
+    }
 }

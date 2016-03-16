@@ -11,7 +11,7 @@ import java.io.OutputStream;
 public class MockResponseHandler implements ResponseHandler {
 
     public String outputString;
-    private int callsToHandle = 0;
+    private int callsToHandle;
 
     public int getCallsToHandle() {
         return callsToHandle;
@@ -25,11 +25,6 @@ public class MockResponseHandler implements ResponseHandler {
     }
 
     public void sendToClient(InputStream in, OutputStream out, byte[] buf) throws IOException {
-        int numRead;
-        while((numRead = in.read(buf)) >= 0) {
-            out.write(buf, 0, numRead);
-        }
-        outputString = out.toString();
     }
 }
 

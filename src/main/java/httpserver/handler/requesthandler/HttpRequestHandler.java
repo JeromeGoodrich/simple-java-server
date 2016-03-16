@@ -5,10 +5,17 @@ import httpserver.request.Request;
 import httpserver.response.Response;
 import httpserver.response.ResponseBuilder;
 
+import javax.activation.MimetypesFileTypeMap;
 import java.io.File;
 import java.io.IOException;
+import java.net.URLConnection;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.spi.FileTypeDetector;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.regex.Pattern;
 
 public class HttpRequestHandler implements RequestHandler {
 
@@ -63,12 +70,15 @@ public class HttpRequestHandler implements RequestHandler {
 
     private Response handleFile(Request request) {
         byte[] bytes = null;
+        String mimeType = URLConnection.guessContentTypeFromName(request.getPath());
+        ResponseBuilder builder = new ResponseBuilder(200);
+        builder.addHeader("Content-Type", mimeType);
         try {
             bytes = Files.readAllBytes(Paths.get(request.getPath()));
         } catch (IOException e) {
             e.printStackTrace();
         }
-        ResponseBuilder builder = new ResponseBuilder(200);
+        builder.addHeader("Content-Length", Integer.toString(bytes.length));
         return builder.body(bytes).reasonPhrase().version(request.getVersion()).build();
     }
 

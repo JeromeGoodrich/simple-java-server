@@ -4,6 +4,7 @@ package httpserver.mocks;
 import httpserver.response.Response;
 
 import java.io.InputStream;
+import java.util.Map;
 
 public class MockResponse implements Response {
 
@@ -31,6 +32,14 @@ public class MockResponse implements Response {
 
     public byte[] getBody() {
         return new byte[0];
+    }
+
+    public Map<String, String> getHeaders() {
+        return null;
+    }
+
+    public String getHeaderValue(String s) {
+        return null;
     }
 }
 

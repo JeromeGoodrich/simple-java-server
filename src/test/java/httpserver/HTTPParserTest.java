@@ -6,6 +6,7 @@ import httpserver.request.*;
 import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -16,7 +17,7 @@ public class HTTPParserTest {
 
     @Test
     public void testParseRequestLine() throws Exception {
-        byte[] data = "GET / HTTP/1.1".getBytes();
+        byte[] data = "GET / HTTP/1.1\r\nHost: www.example.com\r\n\r\n".getBytes();
         InputStream input = new ByteArrayInputStream(data);
         Parser parser = new HTTPParser();
         Request request = parser.parse(input);
@@ -27,7 +28,7 @@ public class HTTPParserTest {
 
    @Test
     public void testParseHeaders() throws Exception {
-        byte[] data = "GET /src/test/fixtures HTTP/1.1\r\nHost: www.example.com\r\nAccept: */*\r\n".getBytes();
+        byte[] data = "GET /src/test/fixtures HTTP/1.1\r\nHost: www.example.com\r\nAccept: */*\r\n\r\n".getBytes();
         InputStream input = new ByteArrayInputStream(data);
         Parser parser = new HTTPParser();
         Request request = parser.parse(input);
@@ -39,7 +40,7 @@ public class HTTPParserTest {
     }
 
     @Test
-    public void testParseBody() {
+    public void testParseBody() throws IOException {
         byte[] data = "POST /form HTTP/1.1\r\nHost: www.example.com\r\nContent-Length: 31\r\n\r\nfirstname=hello&lastname=jerome".getBytes();
         InputStream input = new ByteArrayInputStream(data);
         Parser parser = new HTTPParser();

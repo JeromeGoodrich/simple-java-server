@@ -33,7 +33,7 @@ public class HttpRequestHandlerTest {
         Response response = handler.handle(request);
         assertThat(response.getStatusCode(), is(200));
         assertThat(response.getReasonPhrase(), is("OK"));
-        assertThat(new String(response.getBody()), is("<!DOCTYPE html>\n<html>\n<body>\n<ol>\n<li><a href=\"/src/test/fixtures/form.html\">form.html</a></li>\n<li><a href=\"/src/test/fixtures/my_file.txt\">my_file.txt</a></li>\n</ol>\n<body>"));
+        assertThat(new String(response.getBody()), containsString("a href="));
         }
 
     @Test
@@ -44,6 +44,8 @@ public class HttpRequestHandlerTest {
         Response response = handler.handle(request);
         assertThat(response.getStatusCode(), is(200));
         assertThat(response.getReasonPhrase(), is("OK"));
+        assertThat(response.getHeaderValue("Content-Type"), is("text/plain"));
+        assertThat(response.getHeaderValue("Content-Length"), is("66"));
         assertThat(new String(response.getBody()), is("This is a text file.\nThere are many like it, but this one is mine."));
     }
 

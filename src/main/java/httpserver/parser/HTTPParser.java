@@ -1,6 +1,5 @@
 package httpserver.parser;
 
-import httpserver.parser.Parser;
 import httpserver.request.HTTPRequest;
 import httpserver.request.HTTPRequestBuilder;
 
@@ -19,9 +18,9 @@ public class HTTPParser implements Parser {
         StringBuilder stringBuilder = new StringBuilder();
         int charRead;
         try {
-            while ((charRead = reader.read()) != -1) {
+            while ((charRead = reader.read()) >= 0 || stringBuilder.length() < 1) {
                 stringBuilder.append((char) charRead);
-                if ((char) charRead == '\n') break;
+                if ((char) charRead == '\n') break ;
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -31,6 +30,7 @@ public class HTTPParser implements Parser {
 
     //Occasionaly gets index OutofBounds error - think it has something to do with buf not being clean
     private void parseRequestLine(String requestLine) {
+        System.out.println(requestLine);
         String[] splitRequestLine = requestLine.split(" ");
         builder.method(splitRequestLine[0]);
         if (splitRequestLine[1].equals("/")) {
@@ -61,7 +61,7 @@ public class HTTPParser implements Parser {
         }
     }
 
-    public HTTPRequest parse(InputStream rawRequest) {
+    public synchronized HTTPRequest parse(InputStream rawRequest) throws IOException {
         this.reader = new InputStreamReader(rawRequest);
         String requestLine = readLine();
         parseRequestLine(requestLine);
@@ -81,8 +81,8 @@ public class HTTPParser implements Parser {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }
 
+        }
         return builder.build();
 
     }

@@ -15,6 +15,7 @@ public class HttpResponse implements Response {
         body = builder.body;
         reasonPhrase = builder.reasonPhrase;
         version = builder.version;
+        headers = builder.headers;
     }
 
     public byte[] getBody() {
@@ -36,5 +37,11 @@ public class HttpResponse implements Response {
     public String getVersion () {
         return version;
     }
+    public String getHeaderValue(String headerKey) {
+        return headers.get(headerKey);
+    }
 
+    public Map<String, String> getHeaders() {
+        return headers;
+    }
 }

@@ -9,9 +9,7 @@ import java.io.InputStreamReader;
 
 public class MockService extends Service implements Runnable {
 
-    public ClientSocketInterface socket;
-    public boolean running;
-    public String output;
+    public  boolean running;
 
     public void run() {
         running = true;

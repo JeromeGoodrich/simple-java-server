@@ -26,4 +26,8 @@ public class ClientSocket implements ClientSocketInterface {
     public void close() throws IOException {
         socket.close();
     }
+
+    public boolean isClosed() {
+        return socket.isClosed();
+    }
 }
