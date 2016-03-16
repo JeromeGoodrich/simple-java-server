@@ -7,15 +7,20 @@ import java.io.IOException;
 
 public class MockServerListener implements ServerListener {
 
+
+    private ClientSocketInterface socket;
     private int callCounter = 0;
 
+    public MockServerListener(ClientSocketInterface socket) {
+        this.socket = socket;
+    }
 
     public ClientSocketInterface accept() throws IOException {
-        return new MockClientSocket();
+        return socket;
     }
 
     public boolean isOpen() {
-        if (callCounter <= 1) {
+        if (callCounter == 0) {
             callCounter ++;
             return true;
         } else {
