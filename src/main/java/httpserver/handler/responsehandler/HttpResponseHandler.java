@@ -3,15 +3,12 @@ package httpserver.handler.responsehandler;
 import httpserver.response.Response;
 import httpserver.server.ClientSocketInterface;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.util.Map;
 
 public class HttpResponseHandler implements ResponseHandler {
 
-    public InputStream handle(Response response) {
+    public InputStream handle(Response response) throws IOException {
         String statusLine = response.getVersion() + " " + response.getStatusCode() + " " + response.getReasonPhrase() + "\r\n";
         String headers = "";
         for(Map.Entry<String, String> entry : response.getHeaders().entrySet()) {
@@ -19,13 +16,13 @@ public class HttpResponseHandler implements ResponseHandler {
             String value = entry.getValue();
             headers += key + ": " + value + "\r\n";
         }
-        String body = "";
-        if (response.getBody() != null) {
-            body = new String(response.getBody());
-        }
-        String formattedResponse = statusLine + headers + "\r\n" + body;
+        String formattedResponse = statusLine + headers + "\r\n";
         byte[] bytes = formattedResponse.getBytes();
-        ByteArrayInputStream inputStream = new ByteArrayInputStream(bytes);
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        out.write(bytes);
+        out.write(response.getBody());
+        byte [] combinedBytes = out.toByteArray();
+        ByteArrayInputStream inputStream = new ByteArrayInputStream(combinedBytes);
         return inputStream;
     }
 

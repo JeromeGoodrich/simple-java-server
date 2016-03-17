@@ -56,7 +56,7 @@ public class HttpRequestHandler implements RequestHandler {
         String openFormTag = "<form method=\"post\">";
         String firstField = "First Name:\n<input type=\"text\" name=\"firstname\">\n";
         String secondField = "Last Name:\n<input type=\"text\" name=\"lastname\">\n";
-        String submit = "<input type=\"submit\" value=\"Submit\">\n</form>\n</body>\n<html>";
+        String submit = "<input type=\"submit\" value=\"Submit\">\n</form>\n</body>\n</html>";
         String htmlContent = HTMLBoilerPlate + openFormTag + firstField + secondField + submit;
         byte[] data = htmlContent.getBytes();
         ResponseBuilder builder = new ResponseBuilder(200);
@@ -68,17 +68,17 @@ public class HttpRequestHandler implements RequestHandler {
         String mimeType = URLConnection.guessContentTypeFromName(request.getPath());
         ResponseBuilder builder = new ResponseBuilder(200);
         builder.addHeader("Content-Type", mimeType);
-        try {
-            bytes = Files.readAllBytes(Paths.get(request.getPath()));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+            try {
+                bytes = Files.readAllBytes(Paths.get(request.getPath()));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         builder.addHeader("Content-Length", Integer.toString(bytes.length));
         return builder.body(bytes).reasonPhrase().version(request.getVersion()).build();
     }
 
     private Response handleDir(Request request) {
-        byte[] data = null;
+        byte[] data;
         File dir = new File(request.getPath());
         String[] dirListing = dir.list();
         ResponseBuilder builder = new ResponseBuilder(200);
@@ -130,17 +130,4 @@ public class HttpRequestHandler implements RequestHandler {
     }
     private int jsonDirCounter = 1;
     private int jsonFileCounter = 1;
-
-//    private JsonObject createJsonDirObject(String dir) {
-//        System.out.println(dir);
-//        JsonObject object = Json.createObjectBuilder().add(Integer.toString(jsonDirCounter) , dir);
-//        jsonDirCounter ++;
-//        return object;
-//    }
-//    private JsonObject createJsonFileObject(String file) {
-//        JsonObject object = Json.createObjectBuilder().add(Integer.toString(jsonFileCounter), file).build();
-//        jsonFileCounter ++;
-//        return object;
-//
-//    }
 }
