@@ -28,7 +28,7 @@ public class HttpRequestHandlerTest {
     @Test
     public void testHandleDir() {
         HTTPRequestBuilder builder = new HTTPRequestBuilder();
-        Request request = builder.method("GET").path("src/test/fixtures").build();
+        Request request = builder.method("GET").path("src/test/fixtures").headers("Accept","*/*").build();
         HttpRequestHandler handler = new HttpRequestHandler();
         Response response = handler.handle(request);
         assertThat(response.getStatusCode(), is(200));

@@ -1,21 +1,16 @@
 package httpserver.handler.requesthandler;
 
-import httpserver.handler.requesthandler.RequestHandler;
 import httpserver.request.Request;
 import httpserver.response.Response;
 import httpserver.response.ResponseBuilder;
+import org.json.simple.JSONObject;
 
-import javax.activation.MimetypesFileTypeMap;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.net.URLConnection;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.spi.FileTypeDetector;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.regex.Pattern;
 
 public class HttpRequestHandler implements RequestHandler {
 
@@ -83,11 +78,18 @@ public class HttpRequestHandler implements RequestHandler {
     }
 
     private Response handleDir(Request request) {
+        byte[] data = null;
         File dir = new File(request.getPath());
         String[] dirListing = dir.list();
-        String formattedDirListing = format(dirListing, request);
-        byte[] data = formattedDirListing.getBytes();
         ResponseBuilder builder = new ResponseBuilder(200);
+        if (request.getHeader("Accept").equals("application/json")) {
+            data = createJSONContent(dirListing, request);
+            builder.addHeader("Content-Type", "application/json");
+            builder.addHeader("Content-Length", Integer.toString(data.length));
+        } else {
+            String formattedDirListing = format(dirListing, request);
+            data = formattedDirListing.getBytes();
+        }
         return builder.body(data).reasonPhrase().version(request.getVersion()).build();
     }
 
@@ -107,4 +109,38 @@ public class HttpRequestHandler implements RequestHandler {
         }
         return HTMLContent;
     }
+
+    private byte[] createJSONContent(String[] dirListing, Request request) {
+        JSONObject directories = new JSONObject();
+        JSONObject files = new JSONObject();
+        for (int i = 0; i < dirListing.length; i++) {
+            if (new File(request.getPath() + "/" + dirListing[i]).isDirectory()) {
+                directories.put(Integer.toString(jsonDirCounter), dirListing[i]);
+                jsonDirCounter ++;
+            } else if (new File(dirListing[i]).isFile()) {
+                files.put(Integer.toString(jsonFileCounter), dirListing[i]);
+                jsonFileCounter ++;
+            }
+        }
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        JSONObject content = new JSONObject();
+                content.put("directories", directories);
+                content.put("files", files);
+        return content.toJSONString().getBytes();
+    }
+    private int jsonDirCounter = 1;
+    private int jsonFileCounter = 1;
+
+//    private JsonObject createJsonDirObject(String dir) {
+//        System.out.println(dir);
+//        JsonObject object = Json.createObjectBuilder().add(Integer.toString(jsonDirCounter) , dir);
+//        jsonDirCounter ++;
+//        return object;
+//    }
+//    private JsonObject createJsonFileObject(String file) {
+//        JsonObject object = Json.createObjectBuilder().add(Integer.toString(jsonFileCounter), file).build();
+//        jsonFileCounter ++;
+//        return object;
+//
+//    }
 }
