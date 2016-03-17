@@ -74,6 +74,9 @@ public class HttpRequestHandler implements RequestHandler {
                 e.printStackTrace();
             }
         builder.addHeader("Content-Length", Integer.toString(bytes.length));
+        if (builder.headers.get("Content-Type").equals("application/pdf") && Integer.parseInt(builder.headers.get("Content-Length")) > 10485760){
+            builder.addHeader("Content-Disposition", "attachment; filename=\"big-pdf.pdf\"");
+        }
         return builder.body(bytes).reasonPhrase().version(request.getVersion()).build();
     }
 
