@@ -19,10 +19,13 @@ public class HttpServiceTest {
         MockParser parser = new MockParser();
         MockResponseHandler responseHandler = new MockResponseHandler();
         HttpServiceFactory factory = new HttpServiceFactory(requestHandler, parser, responseHandler);
-        Service service = factory.createService(socket);
+        Runnable service = factory.createService(socket);
         service.run();
         assertThat(parser.getCallsToParse(), is(1));
         assertThat(requestHandler.getCallsToHandle(), is(1));
         assertThat(responseHandler.getCallsToHandle(), is(1));
+        //assert on argument passed to handle, and parse
+        // mockSocket.getInputStream for handle for instance
+        //add exception case
     }
 }

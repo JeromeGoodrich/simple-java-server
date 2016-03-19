@@ -2,17 +2,12 @@ package httpserver.request;
 
 import java.io.InputStream;
 
-public abstract class Request {
+public interface Request {
 
-public abstract String getMethod();
-
-public abstract String getPath();
-
-public abstract String getVersion();
-
-public abstract String getHeader(String key);
-
-public abstract String getBodyVal(String key);
-
-    public abstract InputStream getRawRequest();
+    String getMethod();
+    String getPath();
+    String getVersion();
+    String getHeader(String key);
+    String getBodyVal(String key);
+    InputStream getRawRequest();
 }

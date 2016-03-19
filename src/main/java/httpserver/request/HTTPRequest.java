@@ -3,13 +3,14 @@ package httpserver.request;
 import java.io.InputStream;
 import java.util.Map;
 
-public class HTTPRequest extends Request {
+public class HTTPRequest implements Request {
     private String method;
     private String path;
     private String version;
     private Map<String, String> body;
     private Map<String, String> headers;
 
+    //constructor is private builder is public builder is defined within class
     public HTTPRequest(HTTPRequestBuilder builder) {
         method = builder.method;
         path = builder.path;

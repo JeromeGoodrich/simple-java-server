@@ -5,10 +5,9 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 public interface ClientSocketInterface {
+    //rename
 
-    public InputStream getInputStream() throws IOException;
-    public OutputStream getOutputStream() throws IOException;
-    public void close() throws IOException;
-
-    boolean isClosed();
+    InputStream getInputStream() throws IOException;
+    OutputStream getOutputStream() throws IOException;
+    void close() throws IOException;
 }

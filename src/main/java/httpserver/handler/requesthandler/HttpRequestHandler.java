@@ -133,4 +133,6 @@ public class HttpRequestHandler implements RequestHandler {
     }
     private int jsonDirCounter = 1;
     private int jsonFileCounter = 1;
+    // these don't need to be properties
+    // any time a property is created use final keyword to make thme immutable
 }

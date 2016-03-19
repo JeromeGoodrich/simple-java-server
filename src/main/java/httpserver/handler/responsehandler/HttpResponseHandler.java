@@ -10,6 +10,7 @@ public class HttpResponseHandler implements ResponseHandler {
 
     public InputStream handle(Response response) throws IOException {
         String statusLine = response.getVersion() + " " + response.getStatusCode() + " " + response.getReasonPhrase() + "\r\n";
+        System.out.println(statusLine);
         String headers = "";
         for(Map.Entry<String, String> entry : response.getHeaders().entrySet()) {
             String key = entry.getKey();

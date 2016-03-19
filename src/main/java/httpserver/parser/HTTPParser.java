@@ -10,7 +10,7 @@ import java.io.InputStreamReader;
 public class HTTPParser implements Parser {
 
     private Boolean bodyRequired = false;
-    private int contentLength;
+    private int contentLength;//find a way to make all these not properties
     private HTTPRequestBuilder builder = new HTTPRequestBuilder();
     private InputStreamReader reader;
 
@@ -28,7 +28,6 @@ public class HTTPParser implements Parser {
         return stringBuilder.toString();
     }
 
-    //Occasionaly gets index OutofBounds error - think it has something to do with buf not being clean
     private void parseRequestLine(String requestLine) {
         System.out.println(requestLine);
         String[] splitRequestLine = requestLine.split(" ");

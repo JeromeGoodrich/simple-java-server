@@ -4,7 +4,7 @@ import httpserver.handler.requesthandler.RequestHandler;
 import httpserver.handler.responsehandler.ResponseHandler;
 import httpserver.parser.Parser;
 
-public class HttpServiceFactory extends ServiceFactory {
+public class HttpServiceFactory implements ServiceFactory {
 
     private RequestHandler requestHandler;
     private Parser parser;
@@ -16,8 +16,7 @@ public class HttpServiceFactory extends ServiceFactory {
         this.responseHandler = responseHandler;
     }
 
-    @Override
-    public Service createService(ClientSocketInterface clientSocket) {
+    public Runnable createService(ClientSocketInterface clientSocket) {
         return new HttpService(requestHandler, parser, responseHandler, clientSocket);
     }
 }

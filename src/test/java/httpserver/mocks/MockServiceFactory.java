@@ -1,21 +1,22 @@
 package httpserver.mocks;
 
+import httpserver.server.ClientSocket;
 import httpserver.server.ClientSocketInterface;
 import httpserver.server.Service;
 import httpserver.server.ServiceFactory;
 
-/**
- * Created by admin on 3/14/16.
- */
-public class MockServiceFactory extends ServiceFactory {
+public class MockServiceFactory implements ServiceFactory {
 
-    private Service service;
+    private MockService service;
+    private ClientSocketInterface socket;
 
-    public MockServiceFactory(Service service) {
+    public MockServiceFactory(MockService service, ClientSocketInterface socket) {
         this.service = service;
+        this.socket = socket;
     }
-    @Override
-    public Service createService(ClientSocketInterface clientSocket) {
+
+    public Runnable createService(ClientSocketInterface clientSocket) {
+        service.setSocket(socket);
         return service;
     }
 }

@@ -8,13 +8,13 @@ import httpserver.response.Response;
 
 import java.io.*;
 
-public class HttpService extends Service implements Runnable {
+public class HttpService implements Runnable {
 
-    private Parser parser;
-    private RequestHandler requestHandler;
-    private ResponseHandler responseHandler;
-    private ClientSocketInterface socket;
-    private Request request;
+    private final Parser parser;
+    private final RequestHandler requestHandler;
+    private final ResponseHandler responseHandler;
+    private final ClientSocketInterface socket;
+    private Request request; //doesn't need to be property
 
     public HttpService(RequestHandler requestHandler, Parser parser, ResponseHandler responseHandler, ClientSocketInterface socket) {
         this.parser = parser;
@@ -23,12 +23,16 @@ public class HttpService extends Service implements Runnable {
         this.socket = socket;
     }
 
+    public ClientSocketInterface getSocket() {
+        return socket;
+    }
+
     public void run() {
         try {
 
             request = parser.parse(socket.getInputStream());
             Response response = requestHandler.handle(request);
-            InputStream in = responseHandler.handle(response);
+            InputStream in = responseHandler.handle(response);//move logic from send to handle
             responseHandler.sendToClient(in, socket.getOutputStream(), new byte[1024]);
             socket.close();
 
@@ -36,5 +40,5 @@ public class HttpService extends Service implements Runnable {
             e.printStackTrace();
         }
 
-    }
+    }//intorduce finally block to ensure socket gets closed
 }

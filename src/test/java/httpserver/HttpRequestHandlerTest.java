@@ -36,6 +36,8 @@ public class HttpRequestHandlerTest {
         assertThat(new String(response.getBody()), containsString("a href="));
         }
 
+    //add test for JSonDirListing
+
     @Test
     public void testHandleFile() {
         HTTPRequestBuilder builder = new HTTPRequestBuilder();
