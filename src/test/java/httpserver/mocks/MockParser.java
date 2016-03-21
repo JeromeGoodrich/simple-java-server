@@ -1,6 +1,7 @@
 package httpserver.mocks;
 
 import httpserver.parser.Parser;
+import httpserver.request.Request;
 
 import java.io.InputStream;
 
@@ -13,7 +14,7 @@ public class MockParser implements Parser {
         return  callsToParse;
     }
 
-    public MockRequest parse(InputStream rawRequest) {
+    public Request parse(InputStream rawRequest) {
         callsToParse ++;
         return new MockRequest(rawRequest);
     }

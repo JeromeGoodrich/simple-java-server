@@ -2,7 +2,6 @@ package httpserver.mocks;
 
 import httpserver.handler.responsehandler.ResponseHandler;
 import httpserver.response.Response;
-import httpserver.server.ClientSocketInterface;
 
 import java.io.IOException;
 import java.io.InputStream;

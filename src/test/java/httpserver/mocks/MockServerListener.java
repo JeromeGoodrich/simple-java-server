@@ -1,6 +1,6 @@
 package httpserver.mocks;
 
-import httpserver.server.ClientSocketInterface;
+import httpserver.server.ClientConnection;
 import httpserver.server.ServerListener;
 
 import java.io.IOException;
@@ -8,14 +8,14 @@ import java.io.IOException;
 public class MockServerListener implements ServerListener {
 
 
-    private ClientSocketInterface socket;
+    private ClientConnection socket;
     private int callCounter = 0;
 
-    public MockServerListener(ClientSocketInterface socket) {
+    public MockServerListener(ClientConnection socket) {
         this.socket = socket;
     }
 
-    public ClientSocketInterface accept() throws IOException {
+    public ClientConnection accept() throws IOException {
         return socket;
     }
 

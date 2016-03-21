@@ -13,32 +13,35 @@ public class HttpService implements Runnable {
     private final Parser parser;
     private final RequestHandler requestHandler;
     private final ResponseHandler responseHandler;
-    private final ClientSocketInterface socket;
-    private Request request; //doesn't need to be property
+    private final ClientConnection socket;
 
-    public HttpService(RequestHandler requestHandler, Parser parser, ResponseHandler responseHandler, ClientSocketInterface socket) {
+    public HttpService(RequestHandler requestHandler, Parser parser, ResponseHandler responseHandler, ClientConnection socket) {
         this.parser = parser;
         this.requestHandler = requestHandler;
         this.responseHandler = responseHandler;
         this.socket = socket;
     }
 
-    public ClientSocketInterface getSocket() {
+    public ClientConnection getSocket() {
         return socket;
     }
 
     public void run() {
         try {
 
-            request = parser.parse(socket.getInputStream());
+            Request request = parser.parse(socket.getInputStream());
             Response response = requestHandler.handle(request);
             InputStream in = responseHandler.handle(response);//move logic from send to handle
             responseHandler.sendToClient(in, socket.getOutputStream(), new byte[1024]);
-            socket.close();
 
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            try {
+                socket.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
-
-    }//intorduce finally block to ensure socket gets closed
+    }
 }

@@ -1,22 +1,17 @@
 package httpserver.mocks;
 
-import httpserver.server.ClientSocketInterface;
-import httpserver.server.Service;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import httpserver.server.ClientConnection;
 
 public class MockService implements Runnable {
 
     public boolean running;
-    private ClientSocketInterface socket;
+    private ClientConnection socket;
 
-    public void setSocket(ClientSocketInterface socket) {
+    public void setSocket(ClientConnection socket) {
         this.socket = socket;
     }
 
-    public ClientSocketInterface getSocket() {
+    public ClientConnection getSocket() {
         return socket;
     }
 

@@ -1,14 +1,20 @@
 package httpserver.mocks;
 
-import httpserver.server.ClientSocketInterface;
+import httpserver.server.ClientConnection;
 
 import java.io.*;
 
-public class MockClientSocket implements ClientSocketInterface {
+public class MockClientSocket implements ClientConnection {
+
+    private InputStream inputStream;
+
+    public MockClientSocket(InputStream inputStream) {
+        this.inputStream = inputStream;
+    }
 
 
     public InputStream getInputStream() {
-        return null;
+        return inputStream;
     }
 
     public OutputStream getOutputStream(){

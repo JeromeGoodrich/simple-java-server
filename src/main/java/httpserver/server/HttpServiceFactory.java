@@ -16,7 +16,7 @@ public class HttpServiceFactory implements ServiceFactory {
         this.responseHandler = responseHandler;
     }
 
-    public Runnable createService(ClientSocketInterface clientSocket) {
+    public Runnable createService(ClientConnection clientSocket) {
         return new HttpService(requestHandler, parser, responseHandler, clientSocket);
     }
 }

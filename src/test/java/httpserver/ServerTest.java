@@ -4,12 +4,13 @@ import httpserver.mocks.MockClientSocket;
 import httpserver.mocks.MockServerListener;
 import httpserver.mocks.MockService;
 import httpserver.mocks.MockServiceFactory;
-import httpserver.server.ClientSocketInterface;
+import httpserver.server.ClientConnection;
 import httpserver.server.Server;
-import httpserver.server.Service;
 import org.junit.Test;
 
-import static org.hamcrest.CoreMatchers.instanceOf;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -19,7 +20,9 @@ public class ServerTest {
 
     @Test
     public void testServerLoop () throws Exception {
-        ClientSocketInterface mockSocket = new MockClientSocket();
+        byte[] bytes = new byte[1024];
+        InputStream inputStream = new ByteArrayInputStream(bytes);
+        ClientConnection mockSocket = new MockClientSocket(inputStream);
         MockServerListener listener = new MockServerListener(mockSocket);;
         MockService service = new MockService();
         MockServiceFactory factory = new MockServiceFactory(service, mockSocket);

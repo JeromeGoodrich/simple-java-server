@@ -5,9 +5,8 @@ import java.util.concurrent.Executors;
 
 public class Server {
 
-    private ServerListener serverListener;
-    private ClientSocketInterface clientSocket; // doesn't need to be property
-    private ServiceFactory factory;
+    private final ServerListener serverListener;
+    private final ServiceFactory factory;
 
     public Server(ServerListener serverListener, ServiceFactory factory) {
         this.serverListener = serverListener;
@@ -21,7 +20,7 @@ public class Server {
         ExecutorService pool = Executors.newCachedThreadPool();
         while (serverListener.isOpen()) {
             System.out.println("Waiting...");
-            clientSocket = serverListener.accept();
+            ClientConnection clientSocket = serverListener.accept();
             Runnable service = factory.createService(clientSocket);
             System.out.println("Accepted Connection");
             pool.execute(service);

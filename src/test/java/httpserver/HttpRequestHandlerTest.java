@@ -4,6 +4,7 @@ import httpserver.handler.requesthandler.HttpRequestHandler;
 import httpserver.request.HTTPRequestBuilder;
 import httpserver.request.Request;
 import httpserver.response.Response;
+import httpserver.server.HttpService;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.containsString;
@@ -26,7 +27,7 @@ public class HttpRequestHandlerTest {
     }
 
     @Test
-    public void testHandleDir() {
+    public void testHandleHTMLDir() {
         HTTPRequestBuilder builder = new HTTPRequestBuilder();
         Request request = builder.method("GET").path("src/test/fixtures").headers("Accept","*/*").build();
         HttpRequestHandler handler = new HttpRequestHandler();
@@ -36,7 +37,16 @@ public class HttpRequestHandlerTest {
         assertThat(new String(response.getBody()), containsString("a href="));
         }
 
-    //add test for JSonDirListing
+    @Test
+    public void handleJSONdirListing() {
+        HTTPRequestBuilder builder = new HTTPRequestBuilder();
+        Request request = builder.method("GET").path("src/").headers("Accept", "application/json").build();
+        HttpRequestHandler handler = new HttpRequestHandler();
+        Response response = handler.handle(request);
+        assertThat(response.getStatusCode(), is(200));
+        assertThat(response.getReasonPhrase(), is("OK"));
+        assertThat(new String(response.getBody()), containsString("{\"directories\":{"));
+    }
 
     @Test
     public void testHandleFile() {
