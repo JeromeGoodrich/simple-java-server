@@ -1,6 +1,6 @@
 package httpserver.server;
 
-import httpserver.handler.requesthandler.RequestHandler;
+import httpserver.handler.requesthandler.Handler;
 import httpserver.handler.responsehandler.ResponseHandler;
 import httpserver.parser.Parser;
 import httpserver.request.Request;
@@ -11,11 +11,11 @@ import java.io.*;
 public class HttpService implements Runnable {
 
     private final Parser parser;
-    private final RequestHandler requestHandler;
+    private final Handler requestHandler;
     private final ResponseHandler responseHandler;
     private final ClientConnection socket;
 
-    public HttpService(RequestHandler requestHandler, Parser parser, ResponseHandler responseHandler, ClientConnection socket) {
+    public HttpService(Handler requestHandler, Parser parser, ResponseHandler responseHandler, ClientConnection socket) {
         this.parser = parser;
         this.requestHandler = requestHandler;
         this.responseHandler = responseHandler;

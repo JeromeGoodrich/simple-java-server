@@ -1,6 +1,6 @@
 package httpserver.server;
 
-import httpserver.handler.requesthandler.HttpRequestHandler;
+import httpserver.handler.requesthandler.Router;
 import httpserver.handler.responsehandler.HttpResponseHandler;
 import httpserver.parser.HTTPParser;
 
@@ -14,7 +14,7 @@ public class Main {
         }
 
         Integer portNumber = Integer.parseInt(args[0]);
-        Server server = new Server(new RealServerListener(portNumber), new HttpServiceFactory(new HttpRequestHandler(), new HTTPParser(), new HttpResponseHandler()));
+        Server server = new Server(new RealServerListener(portNumber), new HttpServiceFactory(new Router(), new HTTPParser(), new HttpResponseHandler()));
         server.startServer();
     }
 

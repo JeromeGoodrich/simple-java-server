@@ -1,7 +1,6 @@
 package httpserver.parser;
 
-import httpserver.request.HTTPRequest;
-import httpserver.request.HTTPRequestBuilder;
+import httpserver.request.Request;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -9,12 +8,7 @@ import java.io.InputStreamReader;
 
 public class HTTPParser implements Parser {
 
-    private Boolean bodyRequired = false;
-    private int contentLength;//find a way to make all these not properties
-    private HTTPRequestBuilder builder = new HTTPRequestBuilder();
-    private InputStreamReader reader;
-
-    private String readLine() {
+    private String readLine(InputStreamReader reader) {
         StringBuilder stringBuilder = new StringBuilder();
         int charRead;
         try {
@@ -28,8 +22,7 @@ public class HTTPParser implements Parser {
         return stringBuilder.toString();
     }
 
-    private void parseRequestLine(String requestLine) {
-        System.out.println(requestLine);
+    private void parseRequestLine(String requestLine, Request.RequestBuilder builder) {
         String[] splitRequestLine = requestLine.split(" ");
         builder.method(splitRequestLine[0]);
         if (splitRequestLine[1].equals("/")) {
@@ -38,20 +31,19 @@ public class HTTPParser implements Parser {
             builder.path(splitRequestLine[1].replaceFirst("/", ""));
         }
         builder.version(splitRequestLine[2].substring(0, 8));
-        if (splitRequestLine[0].equals("POST")) {
-            bodyRequired = true;
-        }
     }
 
-    private void parseHeaders(String header) {
+    private int parseHeaders(String header, Request.RequestBuilder builder) {
         String[] splitHeader = header.split(":");
         builder.headers(splitHeader[0], splitHeader[1].trim());
         if (splitHeader[0].equals("Content-Length")) {
-            contentLength = Integer.parseInt(splitHeader[1].trim());
+            return Integer.parseInt(splitHeader[1].trim());
+        } else {
+            return 0;
         }
     }
 
-    private void parseBody(char[] body) {
+    private void parseBody(char[] body, Request.RequestBuilder builder) {
         String stringBody = new String(body);
         String[] splitStringBody = stringBody.split("&");
         for (int i = 0; i < splitStringBody.length ; i++) {
@@ -60,23 +52,27 @@ public class HTTPParser implements Parser {
         }
     }
 
-    public synchronized HTTPRequest parse(InputStream rawRequest) throws IOException {
-        this.reader = new InputStreamReader(rawRequest);
-        String requestLine = readLine();
-        parseRequestLine(requestLine);
-
+    public Request parse(InputStream rawRequest) throws IOException {
+        Request.RequestBuilder builder = new Request.RequestBuilder();
+        InputStreamReader reader = new InputStreamReader(rawRequest);
+        boolean bodyRequired = false;
+        int contentLength = 0;
         String header;
 
+        String requestLine = readLine(reader);
+        parseRequestLine(requestLine, builder);
+        if (requestLine.contains("POST")) bodyRequired = true;
+
         do {
-            header = readLine();
+            header = readLine(reader);
             if (header.trim().isEmpty()) break;
-            parseHeaders(header);
+            contentLength = parseHeaders(header, builder);
         } while (true);
         if (bodyRequired) {
             char[] body = new char[1024];
             try {
                 reader.read(body, 0, contentLength);
-                parseBody(body);
+                parseBody(body, builder);
             } catch (IOException e) {
                 e.printStackTrace();
             }

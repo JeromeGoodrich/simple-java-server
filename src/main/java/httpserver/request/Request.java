@@ -1,17 +1,57 @@
 package httpserver.request;
 
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.Map;
 
-public class Request implements Request {
-    private String method;
-    private String path;
-    private String version;
-    private Map<String, String> body;
-    private Map<String, String> headers;
+public class Request {
+    private final String method;
+    private final String path;
+    private final String version;
+    private final Map<String, String> body;
+    private final Map<String, String> headers;
 
-    //constructor is private builder is public builder is defined within class
-    public Request(HTTPRequestBuilder builder) {
+
+    public static class RequestBuilder {
+        private String method;
+        private String path;
+        private String version;
+        private Map<String, String> body = new HashMap<String, String>();
+        private Map<String, String> headers = new HashMap<String, String>();
+
+
+        public RequestBuilder method(String method) {
+            this.method = method;
+            return this;
+        }
+
+        public RequestBuilder path(String path) {
+            this.path = path;
+            return this;
+        }
+
+        public RequestBuilder version(String version) {
+            this.version = version;
+            return this;
+        }
+
+        public RequestBuilder headers(String headerFieldName, String headerValue) {
+            headers.put(headerFieldName, headerValue);
+            return this;
+        }
+
+        public RequestBuilder body(String key, String value) {
+            body.put(key, value);
+            return this;
+        }
+
+        public Request build() {
+            return new Request(this);
+        }
+
+    }
+
+    private Request(RequestBuilder builder) {
         method = builder.method;
         path = builder.path;
         version = builder.version;

@@ -1,7 +1,7 @@
 package httpserver;
 
 import httpserver.mocks.MockClientSocket;
-import httpserver.mocks.MockRequestHandler;
+import httpserver.mocks.MockHandler;
 import httpserver.mocks.MockResponseHandler;
 import httpserver.mocks.MockParser;
 import httpserver.request.Request;
@@ -22,7 +22,7 @@ public class HttpServiceTest {
         byte[] bytes = new byte [1024];
         InputStream inputStream = new ByteArrayInputStream(bytes);
         MockClientSocket socket = new MockClientSocket(inputStream);
-        MockRequestHandler requestHandler = new MockRequestHandler();
+        MockHandler requestHandler = new MockHandler();
         MockParser parser = new MockParser();
         MockResponseHandler responseHandler = new MockResponseHandler();
         HttpServiceFactory factory = new HttpServiceFactory(requestHandler, parser, responseHandler);

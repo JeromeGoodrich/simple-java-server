@@ -16,6 +16,7 @@ public class MockParser implements Parser {
 
     public Request parse(InputStream rawRequest) {
         callsToParse ++;
-        return new MockRequest(rawRequest);
+        Request.RequestBuilder builder = new Request.RequestBuilder();
+        return builder.build();
     }
 }
