@@ -8,17 +8,24 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URLConnection;
 import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.nio.file.Paths;;
 
 public class FileHandler implements Handler {
+
+    private final String rootDir;
+
+    public FileHandler(String rootDir) {
+        this.rootDir = rootDir;
+    }
 
     public Response handle(Request request) {
         byte[] bytes = null;
         String mimeType = URLConnection.guessContentTypeFromName(request.getPath());
+        if (mimeType == null) mimeType = "text/plain";
         ResponseBuilder builder = new ResponseBuilder(200);
         builder.addHeader("Content-Type", mimeType);
         try {
-            bytes = Files.readAllBytes(Paths.get(request.getPath()));
+            bytes = Files.readAllBytes(Paths.get(rootDir +request.getPath()));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -30,7 +37,7 @@ public class FileHandler implements Handler {
     }
 
     public boolean willHandle(String method, String path) {
-        if (method.equals("GET") && new File(path).isFile()) return true;
+        if (method.equals("GET") && new File(rootDir + path).isFile()) return true;
         return false;
     }
 }

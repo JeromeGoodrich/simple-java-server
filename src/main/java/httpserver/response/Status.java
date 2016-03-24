@@ -4,11 +4,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- A status object doesn't have any behavior it only has state,
-    - a code
-    - a reason statement
- */
 public class Status {
 
     public static Map<Integer, String> statusCodes;

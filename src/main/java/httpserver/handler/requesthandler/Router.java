@@ -2,31 +2,30 @@ package httpserver.handler.requesthandler;
 
 import httpserver.request.Request;
 import httpserver.response.Response;
-import httpserver.response.ResponseBuilder;
-import org.json.simple.JSONObject;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
-import java.net.URLConnection;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Router implements Handler {
 
-    private final List<Handler> handlers = new ArrayList<Handler>() {
-        {
-            add(new RootHandler());
-            add(new DirHandler());
-            add(new FileHandler());
-            add(new FormHandler());
-            add(new PostFormHandler());
-            add(new NotFoundHandler());
-        }
-    };
+    private final String rootDir;
+    private final List<Handler> handlers;
 
+    public Router(final String rootDir) {
+        this.rootDir = rootDir;
+        this.handlers = new ArrayList<Handler>() {
+            {
+                add(new DirHandler(rootDir));
+                add(new FileHandler(rootDir));
+                add(new FormHandler());
+                add(new PostFormHandler());
+                add(new ParamsHandler());
+                //add(new PatchHandler(rootDir));
+                add(new NotFoundHandler(rootDir));
+                add(new MethodNotAllowedHandler());
+            }
+        };
+    }
     public Response handle(Request request) {
         Response response = null;
         for (Handler handler : handlers) {

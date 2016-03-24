@@ -50,11 +50,8 @@ public class HTTPParserTest {
         assertThat(request.getPath(), is("form"));
         assertThat(request.getHeader("Host"), is("www.example.com"));
         assertThat(request.getHeader("Content-Length"), is("31"));
-        assertThat(request.getBodyVal("firstname"), is("hello"));
-        assertThat(request.getBodyVal("lastname"), equalToIgnoringWhiteSpace("jerome"));
-
+        //assertThat(request.getBody(), is("firstname=hello&lastname=jerome"));
     }
-
 
 }
 

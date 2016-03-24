@@ -8,13 +8,11 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
 
-        if (args.length != 1) {
-            System.out.println("Port Number Required");
-            System.exit(1);
-        }
 
-        Integer portNumber = Integer.parseInt(args[0]);
-        Server server = new Server(new RealServerListener(portNumber), new HttpServiceFactory(new Router(), new HTTPParser(), new HttpResponseHandler()));
+        ServerConfig config = new ServerConfig(args);
+        int portNumber = config.getPort();
+        String rootDir = config.getRootDir();
+        Server server = new Server(new RealServerListener(portNumber), new HttpServiceFactory(new Router(rootDir), new HTTPParser(), new HttpResponseHandler()));
         server.startServer();
     }
 
