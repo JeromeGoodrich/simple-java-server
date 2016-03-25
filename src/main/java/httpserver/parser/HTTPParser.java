@@ -86,15 +86,16 @@ public class HTTPParser implements Parser {
     }
 
 
-    private int parseHeaders(String header, Request.RequestBuilder builder) {
+    private void parseHeaders(String header, Request.RequestBuilder builder) {
         String[] splitHeader = header.split(":");
         builder.headers(splitHeader[0], splitHeader[1].trim());
-        if (splitHeader[0].equals("Content-Length")) {
-            return Integer.parseInt(splitHeader[1].trim());
-        } else {
-            return 0;
-        }
     }
+
+    private int setContentLength(String header) {
+       String length = header.split(":")[1].trim();
+        return Integer.parseInt(length);
+    }
+
 
     private void parseBody(char[] body, Request.RequestBuilder builder) {
         String stringBody = new String(body);
@@ -118,13 +119,18 @@ public class HTTPParser implements Parser {
 
         String requestLine = readLine(reader);
         parseRequestLine(requestLine, builder);
-        if (requestLine.contains("POST") || requestLine.contains("PATCH")) bodyRequired = true;
+        if (requestLine.contains("POST")) bodyRequired = true;
 
         do {
             header = readLine(reader);
             if (header.trim().isEmpty()) break;
-            contentLength = parseHeaders(header, builder);
+            parseHeaders(header, builder);
+            if (header.contains("Content-Length")) {
+                contentLength = setContentLength(header);
+                System.out.println(contentLength);
+            }
         } while (true);
+
         if (bodyRequired) {
             char[] body = new char[1024];
             try {

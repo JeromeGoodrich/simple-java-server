@@ -12,7 +12,6 @@ public class Request {
     private final Map<String, String> headers;
     private final Map<String, String> params;
 
-
     public static class RequestBuilder {
         private String method;
         private String path;

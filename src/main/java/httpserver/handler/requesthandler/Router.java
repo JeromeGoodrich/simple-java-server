@@ -20,7 +20,7 @@ public class Router implements Handler {
                 add(new FormHandler());
                 add(new PostFormHandler());
                 add(new ParamsHandler());
-                //add(new PatchHandler(rootDir));
+                add(new PatchHandler(rootDir));
                 add(new NotFoundHandler(rootDir));
                 add(new MethodNotAllowedHandler());
             }
