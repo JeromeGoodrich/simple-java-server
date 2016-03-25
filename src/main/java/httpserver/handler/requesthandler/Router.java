@@ -16,14 +16,14 @@ public class Router implements Handler {
         this.handlers = new ArrayList<Handler>() {
             {
                 add(new DirHandler(rootDir));
+                add(new PatchHandler(rootDir));
                 add(new FileHandler(rootDir));
-                add(new FormHandler());
-                add(new PostFormHandler());
+                add(new OldFormHandler());
+                add(new FormDataHandler());
                 add(new PutHandler());
                 add(new OptionsHandler());
                 add(new RedirectHandler());
                 add(new ParamsHandler());
-                add(new PatchHandler(rootDir));
                 add(new NotFoundHandler(rootDir));
                 add(new MethodNotAllowedHandler());
             }

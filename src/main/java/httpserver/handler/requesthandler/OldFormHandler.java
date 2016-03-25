@@ -4,9 +4,18 @@ import httpserver.request.Request;
 import httpserver.response.Response;
 import httpserver.response.ResponseBuilder;
 
-public class FormHandler implements Handler {
+public class OldFormHandler implements Handler {
+
 
     public Response handle(Request request) {
+        if (request.getMethod().equals("GET")) {
+            return handleGet(request);
+        } else {
+            return handlePost(request);
+        }
+    }
+
+    private Response handleGet(Request request) {
         String HTMLBoilerPlate = "<!DOCTYPE html>\n<html>\n<header>\n</header>\n<body>\n";
         String openFormTag = "<form method=\"post\">";
         String firstField = "First Name:\n<input type=\"text\" name=\"firstname\">\n";
@@ -18,8 +27,21 @@ public class FormHandler implements Handler {
         return builder.body(data).reasonPhrase().version(request.getVersion()).build();
     }
 
-    public boolean willHandle(String method, String path) {
-        if (method.equals("GET") && path.equals("form")) return true;
-        return false;
+    private Response handlePost(Request request) {
+        String body = request.getBody();
+        String[] splitBody = body.split("&");
+        String values = "";
+        for (String params: splitBody) {
+            String[] keyValue = params.split("=");
+            values += keyValue[1] + " ";
+        }
+        String htmlContent = "<!DOCTYPE html>\n<html>\n<header>\n</header>\n<body>\n"+ values + "\n</body>\n</html>";
+        ResponseBuilder builder = new ResponseBuilder(200);
+        return builder.body(htmlContent.getBytes()).reasonPhrase().version(request.getVersion()).build();
     }
+
+    public boolean willHandle(String method, String path) {
+        return path.equals("oldform");
+    }
+
 }

@@ -5,12 +5,9 @@ import httpserver.response.Response;
 import httpserver.response.ResponseBuilder;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
+
 
 public class PatchHandler implements Handler {
 
@@ -24,8 +21,8 @@ public class PatchHandler implements Handler {
         String requestEtag = request.getHeader("If-Match");
         ResponseBuilder builder = new ResponseBuilder(204);
         String fileName = rootDir + request.getPath();
-        String updatedContent = request.getBody();
-        writeToFile(fileName, updatedContent);
+        String patchContent = request.getBody();
+        writeToFile(fileName, patchContent);
         builder.addHeader("ETag", requestEtag);
         return builder.reasonPhrase().version(request.getVersion()).build();
     }
@@ -43,10 +40,6 @@ public class PatchHandler implements Handler {
     }
 
     public boolean willHandle(String method, String path) {
-        if (method.equals("PATCH")) {
-            return true;
-        } else {
-            return false;
-        }
+        return method.equals("PATCH");
     }
 }

@@ -99,7 +99,6 @@ public class HTTPParser implements Parser {
 
     private void parseBody(char[] body, Request.RequestBuilder builder) {
         String stringBody = new String(body);
-        System.out.println(stringBody);
         builder.body(stringBody);
     }
 
@@ -112,7 +111,7 @@ public class HTTPParser implements Parser {
 
         String requestLine = readLine(reader);
         parseRequestLine(requestLine, builder);
-        if (requestLine.contains("POST")|| requestLine.contains("PATCH")) bodyRequired = true;
+        if (requestLine.contains("POST")|| requestLine.contains("PATCH") || requestLine.contains("PUT")) bodyRequired = true;
 
         do {
             header = readLine(reader);
@@ -120,7 +119,6 @@ public class HTTPParser implements Parser {
             parseHeaders(header, builder);
             if (header.contains("Content-Length")) {
                 contentLength = setContentLength(header);
-                System.out.println(contentLength);
             }
         } while (true);
 
