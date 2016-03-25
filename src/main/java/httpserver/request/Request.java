@@ -8,7 +8,7 @@ public class Request {
     private final String method;
     private final String path;
     private final String version;
-    private final Map<String, String> body;
+    private final String body;
     private final Map<String, String> headers;
     private final Map<String, String> params;
 
@@ -16,7 +16,7 @@ public class Request {
         private String method;
         private String path;
         private String version;
-        private Map<String, String> body = new HashMap<String, String>();
+        private String body;
         private Map<String, String> headers = new HashMap<String, String>();
         private Map<String, String> params = new HashMap<String, String>();
 
@@ -41,8 +41,8 @@ public class Request {
             return this;
         }
 
-        public RequestBuilder body(String key, String value) {
-            body.put(key, value);
+        public RequestBuilder body(String body) {
+            this.body = body;
             return this;
         }
 
@@ -54,6 +54,7 @@ public class Request {
         public Request build() {
             return new Request(this);
         }
+
 
     }
 
@@ -82,8 +83,8 @@ public class Request {
         return this.headers.get(key);
     }
 
-    public String getBodyVal(String key) {
-        return this.body.get(key);
+    public String getBody() {
+        return this.body;
     }
 
     public InputStream getRawRequest() {

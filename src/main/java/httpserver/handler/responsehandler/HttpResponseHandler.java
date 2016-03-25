@@ -19,7 +19,7 @@ public class HttpResponseHandler implements ResponseHandler {
         byte[] bytes = formattedResponse.getBytes();
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         out.write(bytes);
-        out.write(response.getBody());
+        if (response.getBody() != null) out.write(response.getBody());
         byte [] combinedBytes = out.toByteArray();
         ByteArrayInputStream inputStream = new ByteArrayInputStream(combinedBytes);
         return inputStream;

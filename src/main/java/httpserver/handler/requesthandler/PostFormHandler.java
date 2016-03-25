@@ -9,9 +9,14 @@ import java.io.File;
 public class PostFormHandler implements Handler {
 
     public Response handle(Request request) {
-        String val1 = request.getBodyVal("firstname");
-        String val2 = request.getBodyVal("lastname");
-        String htmlContent = "<!DOCTYPE html>\n<html>\n<header>\n</header>\n<body>\n"+ val1 + " " + val2 + "\n</body>\n</html>";
+        String body = request.getBody();
+        String[] splitBody = body.split("&");
+        String values = "";
+        for (String params: splitBody) {
+            String[] keyValue = params.split("=");
+            values += keyValue[1] + " ";
+        }
+        String htmlContent = "<!DOCTYPE html>\n<html>\n<header>\n</header>\n<body>\n"+ values + "\n</body>\n</html>";
         ResponseBuilder builder = new ResponseBuilder(200);
         return builder.body(htmlContent.getBytes()).reasonPhrase().version(request.getVersion()).build();
     }

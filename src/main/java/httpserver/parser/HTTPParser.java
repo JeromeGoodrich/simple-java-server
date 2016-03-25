@@ -99,15 +99,8 @@ public class HTTPParser implements Parser {
 
     private void parseBody(char[] body, Request.RequestBuilder builder) {
         String stringBody = new String(body);
-        String[] splitStringBody = stringBody.split("&");
-        for (int i = 0; i < splitStringBody.length ; i++) {
-            String[] keyValue = splitStringBody[i].split("=");
-            if (keyValue.length < 2) {
-                builder.body("","");
-            } else {
-                builder.body(keyValue[0], keyValue[1]);
-            }
-        }
+        System.out.println(stringBody);
+        builder.body(stringBody);
     }
 
     public Request parse(InputStream rawRequest) throws IOException {
@@ -119,7 +112,7 @@ public class HTTPParser implements Parser {
 
         String requestLine = readLine(reader);
         parseRequestLine(requestLine, builder);
-        if (requestLine.contains("POST")) bodyRequired = true;
+        if (requestLine.contains("POST")|| requestLine.contains("PATCH")) bodyRequired = true;
 
         do {
             header = readLine(reader);

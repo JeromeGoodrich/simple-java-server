@@ -37,6 +37,7 @@ public class HttpResponse implements Response {
     public String getVersion () {
         return version;
     }
+
     public String getHeaderValue(String headerKey) {
         return headers.get(headerKey);
     }

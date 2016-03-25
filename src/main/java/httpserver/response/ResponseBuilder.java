@@ -34,7 +34,6 @@ public class ResponseBuilder implements Builder<Response> {
     }
 
     public void addHeader(String s, String s1) {
-        System.out.println(s + ": " + s1);
         headers.put(s, s1);
     }
 }

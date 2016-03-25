@@ -6,6 +6,7 @@ import httpserver.response.ResponseBuilder;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -32,15 +33,20 @@ public class PatchHandler implements Handler {
     private void writeToFile(String fileName, String content) {
         File file = new File(fileName);
         try {
-            FileOutputStream fileOutputStream = new FileOutputStream(file);
-            fileOutputStream.write(content.getBytes());
+            FileWriter writer = new FileWriter(file);
+            writer.write(content);
+            writer.flush();
+            writer.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     public boolean willHandle(String method, String path) {
-        if (method.equals("PATCH") && path.equals("patch-content.txt")) return true;
-        return false;
+        if (method.equals("PATCH")) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
