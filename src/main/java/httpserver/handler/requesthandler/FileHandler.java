@@ -10,7 +10,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URLConnection;
 import java.nio.file.Files;
-import java.nio.file.Paths;;
+import java.nio.file.Paths;
 
 public class FileHandler implements Handler {
 
@@ -60,29 +60,36 @@ public class FileHandler implements Handler {
         return fileContent;
     }
 
+    private Response handlePartialContent(Request request) {
+        String rawRange = request.getHeader("Range");
+        byte[] bytes = readPartiallyFromFile(rootDir + request.getPath(), rawRange);
+        return new ResponseBuilder(206).version(request.getVersion()).reasonPhrase().body(bytes).build();
+    }
+
+    private Response handleFile(Request request) {
+        byte[] bytes = null;
+        String mimeType = URLConnection.guessContentTypeFromName(request.getPath());
+        if (mimeType == null) mimeType = "text/plain";
+        ResponseBuilder builder = new ResponseBuilder(200);
+        builder.addHeader("Content-Type", mimeType);
+        try {
+            bytes = Files.readAllBytes(Paths.get(rootDir + request.getPath()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        builder.addHeader("Content-Length", Integer.toString(bytes.length));
+        if (builder.headers.get("Content-Type").equals("application/pdf") && Integer.parseInt(builder.headers.get("Content-Length")) > 10485760) {
+            builder.addHeader("Content-Disposition", "attachment; filename=\"big-pdf.pdf\"");
+        }
+        return builder.body(bytes).reasonPhrase().version(request.getVersion()).build();
+    }
+
     public Response handle(Request request) {
-        String fileName = rootDir + request.getPath();
         if (request.getMethod().equals("GET")) {
             if (request.getHeader("Range") != null) {
-                String rawRange = request.getHeader("Range");
-                byte[] bytes = readPartiallyFromFile(fileName, rawRange);
-                return new ResponseBuilder(206).version(request.getVersion()).reasonPhrase().body(bytes).build();
+               return handlePartialContent(request);
             } else {
-                byte[] bytes = null;
-                String mimeType = URLConnection.guessContentTypeFromName(request.getPath());
-                if (mimeType == null) mimeType = "text/plain";
-                ResponseBuilder builder = new ResponseBuilder(200);
-                builder.addHeader("Content-Type", mimeType);
-                try {
-                    bytes = Files.readAllBytes(Paths.get(rootDir + request.getPath()));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                builder.addHeader("Content-Length", Integer.toString(bytes.length));
-                if (builder.headers.get("Content-Type").equals("application/pdf") && Integer.parseInt(builder.headers.get("Content-Length")) > 10485760) {
-                    builder.addHeader("Content-Disposition", "attachment; filename=\"big-pdf.pdf\"");
-                }
-                return builder.body(bytes).reasonPhrase().version(request.getVersion()).build();
+                return handleFile(request);
             }
         } else {
             ResponseBuilder builder = new ResponseBuilder(405);

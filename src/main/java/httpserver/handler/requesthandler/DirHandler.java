@@ -18,22 +18,16 @@ public class DirHandler implements Handler {
 
     public Response handle(Request request) {
         byte[] data;
-        File dir;
-        if (request.getPath().equals("/")) {
-            dir = new File(rootDir);
-        } else {
-            dir = new File(rootDir + request.getPath());
-        }
+        File dir = new File(rootDir);
         String[] dirListing = dir.list();
         ResponseBuilder builder = new ResponseBuilder(200);
-        //if (request.getHeader("Accept").equals("application/json")) {
-          //  data = createJSONContent(dirListing, request);
-           // builder.addHeader("Content-Type", "application/json");
-           // builder.addHeader("Content-Length", Integer.toString(data.length));
-       // } else {
-            String formattedDirListing = format(dirListing, request);
-            data = formattedDirListing.getBytes();
-       // }
+        if (request.getHeader("Accept") != null && request.getHeader("Accept").equals("application/json")) {
+            data = createJSONContent(dirListing);
+            builder.addHeader("Content-Type", "application/json");
+            builder.addHeader("Content-Length", Integer.toString(data.length));
+        } else {
+            data = createHTMLContent(dirListing);
+        }
         return builder.body(data).reasonPhrase().version(request.getVersion()).build();
     }
 
@@ -42,38 +36,29 @@ public class DirHandler implements Handler {
         return false;
     }
 
-    private byte[] createJSONContent(String[] dirListing, Request request) {
-
-        JSONObject directories = new JSONObject();
-        int jsonDirCounter = 1;
-        int jsonFileCounter = 1;
-        JSONObject files = new JSONObject();
-        for (int i = 0; i < dirListing.length; i++) {
-            if (new File(request.getPath() + "/" + dirListing[i]).isDirectory()) {
-                directories.put(Integer.toString(jsonDirCounter), dirListing[i]);
-                jsonDirCounter ++;
-            } else if (new File(dirListing[i]).isFile()) {
-                files.put(Integer.toString(jsonFileCounter), dirListing[i]);
-                jsonFileCounter ++;
-            }
-        }
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        JSONObject content = new JSONObject();
-        content.put("directories", directories);
-        content.put("files", files);
-        return content.toJSONString().getBytes();
+    private byte[] createJSONContent(String[] dirListing) {
+        String open = "{ contents: [";
+        String jsonDirListing = createJsondirListing(dirListing);
+        String close = "] }";
+        String jsonContent = open + jsonDirListing + close;
+        return jsonContent.getBytes();
     }
 
-    private String format(String[] dirListing, Request request) {
+    private String createJsondirListing(String[] dirListing) {
+        String jsonString = String.join(", ", dirListing);
+        return jsonString;
+    }
+
+    private byte[] createHTMLContent(String[] dirListing) {
         String doctypeTag = "<!DOCTYPE html>\n";
         String htmlTag = "<html>\n";
-        String htmlContent = createHTMLContent(dirListing, request);
-        String htmlBody = "<head></head><body>\n<ol>\n" + htmlContent + "</ol>\n<body>\n</html>";
+        String dirLinks = createDirLinks(dirListing);
+        String htmlBody = "<head></head><body>\n<ol>\n" + dirLinks + "</ol>\n<body>\n</html>";
         String htmlPage = doctypeTag + htmlTag + htmlBody;
-        return htmlPage;
+        return htmlPage.getBytes();
     }
 
-    private String createHTMLContent(String[] dirListing, Request request) {
+    private String createDirLinks(String[] dirListing) {
         String HTMLContent = "";
         for (int i = 0; i < dirListing.length; i++) {
             HTMLContent += "<li><a href=\""+ "/" + dirListing[i] +"\">" + dirListing[i] + "</a></li>\n";
