@@ -34,6 +34,7 @@ public class DirHandler implements Handler {
             String formattedDirListing = format(dirListing, request);
             data = formattedDirListing.getBytes();
        // }
+        System.out.println(new String(data));
         return builder.body(data).reasonPhrase().version(request.getVersion()).build();
     }
 
@@ -68,7 +69,7 @@ public class DirHandler implements Handler {
         String doctypeTag = "<!DOCTYPE html>\n";
         String htmlTag = "<html>\n";
         String htmlContent = createHTMLContent(dirListing, request);
-        String htmlBody = "<body>\n<ol>\n" + htmlContent + "</ol>\n<body>\n</html>";
+        String htmlBody = "<head></head><body>\n<ol>\n" + htmlContent + "</ol>\n<body>\n</html>";
         String htmlPage = doctypeTag + htmlTag + htmlBody;
         return htmlPage;
     }
@@ -76,7 +77,7 @@ public class DirHandler implements Handler {
     private String createHTMLContent(String[] dirListing, Request request) {
         String HTMLContent = "";
         for (int i = 0; i < dirListing.length; i++) {
-            HTMLContent += "<li><a href=\""+ dirListing[i] +"\">" + dirListing[i] +"</a></li>\n";
+            HTMLContent += "<li><a href=\""+ "/" + dirListing[i] +"\">" + dirListing[i] + "</a></li>\n";
         }
         return HTMLContent;
     }

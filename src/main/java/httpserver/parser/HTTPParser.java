@@ -87,6 +87,7 @@ public class HTTPParser implements Parser {
 
 
     private void parseHeaders(String header, Request.RequestBuilder builder) {
+        System.out.println(header);
         String[] splitHeader = header.split(":");
         builder.headers(splitHeader[0], splitHeader[1].trim());
     }
