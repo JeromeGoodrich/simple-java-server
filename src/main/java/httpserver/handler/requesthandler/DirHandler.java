@@ -34,7 +34,6 @@ public class DirHandler implements Handler {
             String formattedDirListing = format(dirListing, request);
             data = formattedDirListing.getBytes();
        // }
-        System.out.println(new String(data));
         return builder.body(data).reasonPhrase().version(request.getVersion()).build();
     }
 

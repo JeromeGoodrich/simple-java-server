@@ -27,7 +27,6 @@ public class FormDataHandler implements Handler {
     }
 
     private Response handlePostPut(Request request) {
-        System.out.println(request.getBody());
         this.data = request.getBody();
         return new ResponseBuilder(200)
                 .reasonPhrase()
