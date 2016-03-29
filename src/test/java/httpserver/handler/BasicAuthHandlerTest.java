@@ -1,5 +1,6 @@
-package httpserver;
+package httpserver.handler;
 
+import httpserver.RequestLogger;
 import httpserver.handler.requesthandler.BasicAuthHandler;
 import httpserver.handler.requesthandler.Handler;
 import httpserver.request.Request;

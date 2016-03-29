@@ -2,7 +2,6 @@ package httpserver.handler.requesthandler;
 
 import httpserver.request.Request;
 import httpserver.response.Response;
-import httpserver.response.ResponseBuilder;
 
 
 public class FormDataHandler implements Handler {
@@ -20,7 +19,7 @@ public class FormDataHandler implements Handler {
 
     private Response handleDelete(Request request) {
         this.data = null;
-        return new ResponseBuilder(200)
+        return new Response.ResponseBuilder(200)
                 .reasonPhrase()
                 .version(request.getVersion())
                 .build();
@@ -28,7 +27,7 @@ public class FormDataHandler implements Handler {
 
     private Response handlePostPut(Request request) {
         this.data = request.getBody();
-        return new ResponseBuilder(200)
+        return new Response.ResponseBuilder(200)
                 .reasonPhrase()
                 .version(request.getVersion())
                 .build();
@@ -36,13 +35,13 @@ public class FormDataHandler implements Handler {
 
     private Response handleGet(Request request) {
         if (data != null) {
-            return new ResponseBuilder(200)
+            return new Response.ResponseBuilder(200)
                 .reasonPhrase()
                 .version(request.getVersion())
                 .body(this.data.getBytes())
                 .build();
         } else {
-            return new ResponseBuilder(200)
+            return new Response.ResponseBuilder(200)
                 .reasonPhrase()
                 .version(request.getVersion())
                 .build();

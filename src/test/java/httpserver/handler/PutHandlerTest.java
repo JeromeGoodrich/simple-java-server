@@ -1,7 +1,7 @@
-package httpserver;
+package httpserver.handler;
 
 import httpserver.handler.requesthandler.Handler;
-import httpserver.handler.requesthandler.RedirectHandler;
+import httpserver.handler.requesthandler.PutHandler;
 import httpserver.request.Request;
 import httpserver.response.Response;
 import org.junit.Test;
@@ -9,23 +9,24 @@ import org.junit.Test;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class RedirectHandlerTest {
+public class PutHandlerTest {
 
     @Test
     public void willHandleTest() {
-        Handler handler = new RedirectHandler();
+        Handler handler = new PutHandler();
         Request request = new Request.RequestBuilder()
-                .method("GET")
+                .method("PUT")
                 .version("HTTP/1.1")
-                .path("redirect")
+                .path("file1")
                 .build();
 
         assertThat(handler.willHandle(request.getMethod(),request.getPath()), is(true));
+
     }
 
     @Test
     public void willNotHandleTest() {
-        Handler handler = new RedirectHandler();
+        Handler handler = new PutHandler();
         Request request = new Request.RequestBuilder()
                 .method("GET")
                 .version("HTTP/1.1")
@@ -35,17 +36,15 @@ public class RedirectHandlerTest {
     }
 
     @Test
-    public void RedirectHandlerTest() {
-        Handler handler = new RedirectHandler();
+    public void putHandlerTest() {
+        Handler handler = new PutHandler();
         Request request = new Request.RequestBuilder()
-                .method("GET")
+                .method("PUT")
                 .version("HTTP/1.1")
-                .path("redirect")
+                .path("file1")
                 .build();
         Response response = handler.handle(request);
 
-        assertThat(response.getStatusCode(), is(302));
-        assertThat(response.getHeaderValue("Location"), is("http://localhost:5000/"));
+        assertThat(response.getStatusCode(), is(200));
     }
-
 }

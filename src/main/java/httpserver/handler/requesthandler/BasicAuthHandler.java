@@ -3,7 +3,6 @@ package httpserver.handler.requesthandler;
 import httpserver.Base64Decoder;
 import httpserver.request.Request;
 import httpserver.response.Response;
-import httpserver.response.ResponseBuilder;
 
 import java.io.*;
 
@@ -26,7 +25,7 @@ public class BasicAuthHandler implements Handler {
     }
 
     private Response accessDenied(Request request) {
-        ResponseBuilder builder = new ResponseBuilder(401);
+        Response.ResponseBuilder builder = new Response.ResponseBuilder(401);
         builder.addHeader("WWW-Authenticate", "Basic realm=\"Camelot\"");
         return builder.version(request.getVersion()).reasonPhrase().build();
     }
@@ -46,7 +45,7 @@ public class BasicAuthHandler implements Handler {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return new ResponseBuilder(200).reasonPhrase().body(bytes).version(request.getVersion()).build();
+        return new Response.ResponseBuilder(200).reasonPhrase().body(bytes).version(request.getVersion()).build();
     }
 
     public boolean willHandle(String method, String path) {

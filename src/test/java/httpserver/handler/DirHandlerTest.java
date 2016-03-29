@@ -1,4 +1,4 @@
-package httpserver;
+package httpserver.handler;
 
 import httpserver.handler.requesthandler.DirHandler;
 import httpserver.handler.requesthandler.Handler;

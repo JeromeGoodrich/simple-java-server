@@ -3,14 +3,13 @@ package httpserver.handler.requesthandler;
 
 import httpserver.request.Request;
 import httpserver.response.Response;
-import httpserver.response.ResponseBuilder;
 
 import java.util.Map;
 
 public class ParamsHandler implements Handler {
 
     public Response handle(Request request) {
-        ResponseBuilder builder = new ResponseBuilder(200);
+        Response.ResponseBuilder builder = new Response.ResponseBuilder(200);
         byte[] data = responseParams(request.getParams());
         return builder.reasonPhrase().version(request.getVersion()).body(data).build();
     }

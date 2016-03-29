@@ -14,7 +14,7 @@ public class MockHandler implements Handler {
 
     public Response handle(Request request) {
         callsToHandle ++;
-        return new MockResponse(request.getRawRequest());
+        return new Response.ResponseBuilder(200).build();
     }
 
     public boolean willHandle(String method, String path) {

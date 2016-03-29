@@ -2,10 +2,7 @@ package httpserver.handler.requesthandler;
 
 import httpserver.request.Request;
 import httpserver.response.Response;
-import httpserver.response.ResponseBuilder;
-import org.json.simple.JSONObject;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 
 public class DirHandler implements Handler {
@@ -20,7 +17,7 @@ public class DirHandler implements Handler {
         byte[] data;
         File dir = new File(rootDir);
         String[] dirListing = dir.list();
-        ResponseBuilder builder = new ResponseBuilder(200);
+        Response.ResponseBuilder builder = new Response.ResponseBuilder(200);
         if (request.getHeader("Accept") != null && request.getHeader("Accept").equals("application/json")) {
             data = createJSONContent(dirListing);
             builder.addHeader("Content-Type", "application/json");

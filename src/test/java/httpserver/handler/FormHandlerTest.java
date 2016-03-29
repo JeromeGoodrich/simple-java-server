@@ -1,10 +1,9 @@
-package httpserver;
+package httpserver.handler;
 
 import httpserver.handler.requesthandler.FormDataHandler;
 import httpserver.handler.requesthandler.Handler;
 import httpserver.request.Request;
 import httpserver.response.Response;
-import junit.framework.Assert;
 import org.junit.Test;
 
 import static junit.framework.TestCase.assertEquals;

@@ -2,7 +2,6 @@ package httpserver.handler.requesthandler;
 
 import httpserver.request.Request;
 import httpserver.response.Response;
-import httpserver.response.ResponseBuilder;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -63,14 +62,14 @@ public class FileHandler implements Handler {
     private Response handlePartialContent(Request request) {
         String rawRange = request.getHeader("Range");
         byte[] bytes = readPartiallyFromFile(rootDir + request.getPath(), rawRange);
-        return new ResponseBuilder(206).version(request.getVersion()).reasonPhrase().body(bytes).build();
+        return new Response.ResponseBuilder(206).version(request.getVersion()).reasonPhrase().body(bytes).build();
     }
 
     private Response handleFile(Request request) {
         byte[] bytes = null;
         String mimeType = URLConnection.guessContentTypeFromName(request.getPath());
         if (mimeType == null) mimeType = "text/plain";
-        ResponseBuilder builder = new ResponseBuilder(200);
+        Response.ResponseBuilder builder = new Response.ResponseBuilder(200);
         builder.addHeader("Content-Type", mimeType);
         try {
             bytes = Files.readAllBytes(Paths.get(rootDir + request.getPath()));
@@ -78,7 +77,7 @@ public class FileHandler implements Handler {
             e.printStackTrace();
         }
         builder.addHeader("Content-Length", Integer.toString(bytes.length));
-        if (builder.headers.get("Content-Type").equals("application/pdf") && Integer.parseInt(builder.headers.get("Content-Length")) > 10485760) {
+        if (builder.getHeader("Content-Type").equals("application/pdf") && Integer.parseInt(builder.getHeader("Content-Length")) > 10485760) {
             builder.addHeader("Content-Disposition", "attachment; filename=\"big-pdf.pdf\"");
         }
         return builder.body(bytes).reasonPhrase().version(request.getVersion()).build();
@@ -92,7 +91,7 @@ public class FileHandler implements Handler {
                 return handleFile(request);
             }
         } else {
-            ResponseBuilder builder = new ResponseBuilder(405);
+            Response.ResponseBuilder builder = new Response.ResponseBuilder(405);
             return builder.reasonPhrase().version(request.getVersion()).build();
         }
     }

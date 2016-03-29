@@ -2,7 +2,6 @@ package httpserver.handler.requesthandler;
 
 import httpserver.request.Request;
 import httpserver.response.Response;
-import httpserver.response.ResponseBuilder;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -19,7 +18,7 @@ public class PatchHandler implements Handler {
 
     public Response handle(Request request) {
         String requestEtag = request.getHeader("If-Match");
-        ResponseBuilder builder = new ResponseBuilder(204);
+        Response.ResponseBuilder builder = new Response.ResponseBuilder(204);
         String fileName = rootDir + request.getPath();
         String patchContent = request.getBody();
         writeToFile(fileName, patchContent);

@@ -1,4 +1,4 @@
-package httpserver;
+package httpserver.handler;
 
 import httpserver.handler.requesthandler.Handler;
 import httpserver.handler.requesthandler.ParamsHandler;
