@@ -13,10 +13,6 @@ public class RedirectHandler implements Handler {
     }
 
     public boolean willHandle(String method, String path) {
-        if (path.equals("redirect")) {
-            return true;
-        } else {
-            return false;
-        }
+        return (path.equals("redirect"));
     }
 }

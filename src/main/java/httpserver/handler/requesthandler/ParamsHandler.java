@@ -28,7 +28,6 @@ public class ParamsHandler implements Handler {
 
 
     public boolean willHandle(String method, String path) {
-        if (path.contains("parameters")) return true;
-        return false;
+        return (method.equals("GET") && path.contains("parameters"));
     }
 }

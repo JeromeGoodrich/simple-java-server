@@ -13,10 +13,6 @@ public class OptionsHandler implements Handler {
     }
 
     public boolean willHandle(String method, String path) {
-        if (method.equals("OPTIONS")) {
-            return true;
-        } else {
-            return false;
-        }
+        return (method.equals("OPTIONS"));
     }
 }

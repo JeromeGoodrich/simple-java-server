@@ -9,11 +9,9 @@ import java.util.List;
 
 public class Router implements Handler {
 
-    private final String rootDir;
     private final List<Handler> handlers;
 
     public Router(final String rootDir) {
-        this.rootDir = rootDir;
         this.handlers = new ArrayList<Handler>() {
             {
                 add(new BasicAuthHandler());
@@ -26,10 +24,11 @@ public class Router implements Handler {
                 add(new OptionsHandler());
                 add(new RedirectHandler());
                 add(new ParamsHandler());
-                add(new NotFoundHandler(rootDir));
+                add(new NotFoundHandler());
             }
         };
     }
+
     public Response handle(Request request) {
         Response response = null;
         RequestLogger logger = new RequestLogger();

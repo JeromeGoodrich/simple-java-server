@@ -7,15 +7,10 @@ import httpserver.response.ResponseBuilder;
 public class PutHandler implements Handler {
 
     public Response handle(Request request) {
-        ResponseBuilder builder = new ResponseBuilder(200);
-        return builder.reasonPhrase().version(request.getVersion()).build();
+        return new ResponseBuilder(200).reasonPhrase().version(request.getVersion()).build();
     }
 
     public boolean willHandle(String method, String path) {
-        if (method.equals("PUT")) {
-            return true;
-        } else {
-            return false;
-        }
+        return (method.equals("PUT"));
     }
 }
