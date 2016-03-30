@@ -1,11 +1,13 @@
-package httpserver.handler.requesthandler;
+package httpserver.handler;
 
+import httpserver.RequestLogger;
 import httpserver.request.Request;
 import httpserver.response.Response;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.logging.Level;
 
 
 public class PatchHandler implements Handler {
@@ -34,7 +36,7 @@ public class PatchHandler implements Handler {
             writer.flush();
             writer.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            RequestLogger.logger.log(Level.INFO, "The file can't be foun", e);
         }
     }
 

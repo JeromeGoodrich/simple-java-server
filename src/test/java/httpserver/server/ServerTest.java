@@ -1,4 +1,4 @@
-package httpserver;
+package httpserver.server;
 
 import httpserver.mocks.MockClientSocket;
 import httpserver.mocks.MockServerListener;

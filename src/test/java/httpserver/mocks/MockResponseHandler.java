@@ -1,13 +1,12 @@
 package httpserver.mocks;
 
-import httpserver.handler.responsehandler.ResponseHandler;
 import httpserver.response.Response;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-public class MockResponseHandler implements ResponseHandler {
+public class MockResponseHandler {
 
     public String outputString;
     private int callsToHandle;

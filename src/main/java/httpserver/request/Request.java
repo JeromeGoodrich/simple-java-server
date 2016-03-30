@@ -9,6 +9,7 @@ public class Request {
     private final String path;
     private final String version;
     private final String body;
+    private final String logInfo;
     private final Map<String, String> headers;
     private final Map<String, String> params;
 
@@ -17,6 +18,7 @@ public class Request {
         private String path;
         private String version;
         private String body;
+        private String logInfo;
         private Map<String, String> headers = new HashMap<String, String>();
         private Map<String, String> params = new HashMap<String, String>();
 
@@ -51,10 +53,14 @@ public class Request {
             return this;
         }
 
+        public RequestBuilder logInfo(String requestContents) {
+            this.logInfo = requestContents;
+            return this;
+        }
+
         public Request build() {
             return new Request(this);
         }
-
 
     }
 
@@ -65,6 +71,7 @@ public class Request {
         headers = builder.headers;
         body = builder.body;
         params = builder.params;
+        logInfo = builder.logInfo;
     }
 
     public String getMethod() {
@@ -87,11 +94,11 @@ public class Request {
         return this.body;
     }
 
-    public InputStream getRawRequest() {
-        return null;
+    public Map<String, String> getParams() {
+        return this.params;
     }
 
-    public Map<String, String> getParams() {
-        return params;
+    public String getLogInfo() {
+        return this.logInfo;
     }
 }

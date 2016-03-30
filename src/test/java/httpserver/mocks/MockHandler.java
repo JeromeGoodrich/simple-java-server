@@ -1,6 +1,6 @@
 package httpserver.mocks;
 
-import httpserver.handler.requesthandler.Handler;
+import httpserver.handler.Handler;
 import httpserver.request.Request;
 import httpserver.response.Response;
 

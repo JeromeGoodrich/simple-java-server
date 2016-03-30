@@ -1,22 +1,19 @@
 package httpserver.server;
 
-import httpserver.handler.requesthandler.Handler;
-import httpserver.handler.responsehandler.ResponseHandler;
+import httpserver.handler.Handler;
 import httpserver.parser.Parser;
 
 public class HttpServiceFactory implements ServiceFactory {
 
-    private Handler requestHandler;
+    private Handler handler;
     private Parser parser;
-    private ResponseHandler responseHandler;
 
-    public HttpServiceFactory(Handler requestHandler, Parser parser, ResponseHandler responseHandler) {
-        this.requestHandler = requestHandler;
+    public HttpServiceFactory(Handler requestHandler, Parser parser) {
+        this.handler = requestHandler;
         this.parser = parser;
-        this.responseHandler = responseHandler;
     }
 
     public Runnable createService(ClientConnection clientSocket) {
-        return new HttpService(requestHandler, parser, responseHandler, clientSocket);
+        return new HttpService(handler, parser, clientSocket);
     }
 }

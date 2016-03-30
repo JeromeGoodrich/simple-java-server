@@ -1,8 +1,5 @@
 package httpserver.handler;
 
-import httpserver.handler.requesthandler.FileHandler;
-import httpserver.handler.requesthandler.Handler;
-import httpserver.handler.requesthandler.PatchHandler;
 import httpserver.request.Request;
 import httpserver.response.Response;
 import org.junit.Test;

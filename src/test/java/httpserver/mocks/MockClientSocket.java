@@ -18,7 +18,7 @@ public class MockClientSocket implements ClientConnection {
     }
 
     public OutputStream getOutputStream(){
-        return null;
+        return new ByteArrayOutputStream();
     }
 
     public void close() {

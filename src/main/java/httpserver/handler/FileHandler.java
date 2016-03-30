@@ -1,5 +1,6 @@
-package httpserver.handler.requesthandler;
+package httpserver.handler;
 
+import httpserver.RequestLogger;
 import httpserver.request.Request;
 import httpserver.response.Response;
 
@@ -10,6 +11,7 @@ import java.io.IOException;
 import java.net.URLConnection;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.logging.Level;
 
 public class FileHandler implements Handler {
 
@@ -52,9 +54,9 @@ public class FileHandler implements Handler {
             inputStream.read(fileContent, 0, range);
             inputStream.close();
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            RequestLogger.logger.log(Level.INFO, "The file can't be found", e);
         } catch (IOException e) {
-            e.printStackTrace();
+            RequestLogger.logger.log(Level.INFO, "IOEXception raised", e);
         }
         return fileContent;
     }
@@ -74,7 +76,7 @@ public class FileHandler implements Handler {
         try {
             bytes = Files.readAllBytes(Paths.get(rootDir + request.getPath()));
         } catch (IOException e) {
-            e.printStackTrace();
+            RequestLogger.logger.log(Level.INFO, "The file can't be found", e);
         }
         builder.addHeader("Content-Length", Integer.toString(bytes.length));
         if (builder.getHeader("Content-Type").equals("application/pdf") && Integer.parseInt(builder.getHeader("Content-Length")) > 10485760) {

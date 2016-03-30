@@ -1,4 +1,4 @@
-package httpserver;
+package httpserver.server;
 
 import httpserver.mocks.MockClientSocket;
 import httpserver.mocks.MockHandler;
@@ -24,15 +24,14 @@ public class HttpServiceTest {
         MockClientSocket socket = new MockClientSocket(inputStream);
         MockHandler requestHandler = new MockHandler();
         MockParser parser = new MockParser();
-        MockResponseHandler responseHandler = new MockResponseHandler();
-        HttpServiceFactory factory = new HttpServiceFactory(requestHandler, parser, responseHandler);
+        HttpServiceFactory factory = new HttpServiceFactory(requestHandler, parser);
         Runnable service = factory.createService(socket);
         service.run();
         assertThat(parser.getCallsToParse(), is(1));
         assertThat(socket.getInputStream(), is(inputStream));
         assertThat(parser.parse(socket.getInputStream()), instanceOf(Request.class));
         assertThat(requestHandler.getCallsToHandle(), is(1));
-        assertThat(responseHandler.getCallsToHandle(), is(1));
+        //assertThat(responseHandler.getCallsToHandle(), is(1));
         //assert on argument passed to handle, and parse
         // mockSocket.getInputStream for handle for instance
         //add exception case

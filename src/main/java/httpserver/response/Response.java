@@ -1,6 +1,8 @@
 package httpserver.response;
 
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -84,6 +86,22 @@ public class Response {
 
     public Map<String, String> getHeaders() {
         return headers;
+    }
+
+    public void sendToClient(OutputStream out) throws IOException {
+        String statusLine = getVersion() + " " + getStatusCode() + " " + getReasonPhrase() + "\r\n";
+        String headers = "";
+        for(Map.Entry<String, String> entry : getHeaders().entrySet()) {
+            String key = entry.getKey();
+            String value = entry.getValue();
+            headers += key + ": " + value + "\r\n";
+        }
+        String formattedResponse = statusLine + headers + "\r\n";
+        byte[] bytes = formattedResponse.getBytes();
+        out.write(bytes);
+        if (getBody() != null) out.write(getBody());
+        out.flush();
+        out.close();
     }
 
 }

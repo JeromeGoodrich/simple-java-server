@@ -1,4 +1,4 @@
-package httpserver.handler.requesthandler;
+package httpserver.handler;
 
 import httpserver.RequestLogger;
 import httpserver.request.Request;
@@ -31,8 +31,6 @@ public class Router implements Handler {
 
     public Response handle(Request request) {
         Response response = null;
-        RequestLogger logger = new RequestLogger();
-        logger.log(request);
         for (Handler handler : handlers) {
             if (handler.willHandle(request.getMethod(), request.getPath())) {
                 response = handler.handle(request);

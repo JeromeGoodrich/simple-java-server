@@ -1,11 +1,11 @@
 package httpserver.handler;
 
 import httpserver.RequestLogger;
-import httpserver.handler.requesthandler.BasicAuthHandler;
-import httpserver.handler.requesthandler.Handler;
 import httpserver.request.Request;
 import httpserver.response.Response;
 import org.junit.Test;
+
+import java.util.logging.Level;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
@@ -28,27 +28,26 @@ public class BasicAuthHandlerTest {
     }
 
     @Test
-    public void basicAuthAuthorizedTest() {
+    public void basicAuthWrongCredentialsTest() {
         Handler handler = new BasicAuthHandler();
-        Request request1 = new Request.RequestBuilder()
+        Request request = new Request.RequestBuilder()
                 .method("GET")
                 .version("HTTP/1.1")
-                .path("log")
+                .path("logs")
+                .headers("Authorization","Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ==")
                 .build();
-        Request request2 = new Request.RequestBuilder()
-                .method("GET")
-                .version("HTTP/1.1")
-                .path("these")
-                .build();
-        Request request3 = new Request.RequestBuilder()
-                .method("GET")
-                .version("HTTP/1.1")
-                .path("requests")
-                .build();
-        RequestLogger logger = new RequestLogger();
-            logger.log(request1);
-            logger.log(request2);
-            logger.log(request3);
+        Response response = handler.handle(request);
+
+        assertThat(response.getStatusCode(), is(401));
+    }
+
+    @Test
+    public void basicAuthAuthorizedTest() {
+        RequestLogger.init();
+        Handler handler = new BasicAuthHandler();
+        RequestLogger.logger.log(Level.INFO, "GET /log HTTP/1.1");
+        RequestLogger.logger.log(Level.INFO, "GET /these HTTP/1.1");
+        RequestLogger.logger.log(Level.INFO, "GET /requests HTTP/1.1");
 
         Request request = new Request.RequestBuilder()
                 .method("GET")
@@ -62,6 +61,7 @@ public class BasicAuthHandlerTest {
         assertThat(new String(response.getBody()), containsString("GET /log HTTP/1.1"));
         assertThat(new String(response.getBody()), containsString("GET /these HTTP/1.1"));
         assertThat(new String(response.getBody()), containsString("GET /requests HTTP/1.1"));
+        RequestLogger.clearLogs("logs.txt");
     }
 
     @Test
@@ -88,3 +88,4 @@ public class BasicAuthHandlerTest {
         assertThat(handler.willHandle(request.getMethod(), request.getPath()), is(false));
     }
 }
+

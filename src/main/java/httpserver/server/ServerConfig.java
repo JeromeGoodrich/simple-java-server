@@ -24,7 +24,7 @@ public class ServerConfig {
     private void setRootDir() {
         if (args[2].equals("-d")) {
             rootDir = args[3];
-        } else if (!(System.getenv("PUBLIC_DIR").equals(null))) {
+        } else if (System.getenv("PUBLIC_DIR") != null) {
             rootDir = System.getenv("PUBLIC_DIR");
         } else {
             System.getProperty("user.dir");

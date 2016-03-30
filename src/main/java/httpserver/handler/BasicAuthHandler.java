@@ -1,6 +1,7 @@
-package httpserver.handler.requesthandler;
+package httpserver.handler;
 
 import httpserver.Base64Decoder;
+import httpserver.RequestLogger;
 import httpserver.request.Request;
 import httpserver.response.Response;
 
@@ -31,20 +32,7 @@ public class BasicAuthHandler implements Handler {
     }
 
     private Response accessGranted(Request request) {
-        byte[] bytes = null;
-        File file = new File("logs.txt");
-        try {
-            FileInputStream inputStream = new FileInputStream(file);
-            int fileLength = (int) file.length();
-            bytes = new byte[fileLength];
-            inputStream.read(bytes, 0, fileLength);
-            inputStream.close();
-            new FileWriter(file).write("");
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        byte[] bytes = RequestLogger.accessLogs("logs.txt");
         return new Response.ResponseBuilder(200).reasonPhrase().body(bytes).version(request.getVersion()).build();
     }
 

@@ -1,5 +1,6 @@
 package httpserver.parser;
 
+import httpserver.RequestLogger;
 import httpserver.request.Request;
 
 import java.io.IOException;
@@ -7,6 +8,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
 
 public class HTTPParser implements Parser {
 
@@ -19,7 +21,7 @@ public class HTTPParser implements Parser {
                 if ((char) charRead == '\n') break ;
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            RequestLogger.logger.log(Level.INFO, "The file can't be foun", e);
         }
         return stringBuilder.toString();
     }
@@ -113,14 +115,18 @@ public class HTTPParser implements Parser {
         parseRequestLine(requestLine, builder);
         if (requestLine.contains("POST")|| requestLine.contains("PATCH") || requestLine.contains("PUT")) bodyRequired = true;
 
+        String headers = "";
         do {
             header = readLine(reader);
             if (header.trim().isEmpty()) break;
             parseHeaders(header, builder);
+            headers += header;
             if (header.contains("Content-Length")) {
                 contentLength = setContentLength(header);
             }
         } while (true);
+
+        builder.logInfo(requestLine + headers);
 
         if (bodyRequired) {
             char[] body = new char[1024];
@@ -128,7 +134,7 @@ public class HTTPParser implements Parser {
                 reader.read(body, 0, contentLength);
                 parseBody(body, builder);
             } catch (IOException e) {
-                e.printStackTrace();
+                RequestLogger.logger.log(Level.INFO, "The file can't be foun", e);
             }
 
         }
