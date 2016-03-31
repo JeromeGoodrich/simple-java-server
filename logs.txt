@@ -1,4 +1,0 @@
-Mar 30, 2016 2:45:25 PM httpserver.RequestLogger log
-INFO: request1
-Mar 30, 2016 2:45:25 PM httpserver.RequestLogger log
-INFO: request2

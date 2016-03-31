@@ -15,7 +15,7 @@ public class PutHandlerTest {
         Request request = new Request.RequestBuilder()
                 .method("PUT")
                 .version("HTTP/1.1")
-                .path("file1")
+                .path("/file1")
                 .build();
 
         assertThat(handler.willHandle(request.getMethod(),request.getPath()), is(true));
@@ -28,7 +28,7 @@ public class PutHandlerTest {
         Request request = new Request.RequestBuilder()
                 .method("GET")
                 .version("HTTP/1.1")
-                .path("file1")
+                .path("/file1")
                 .build();
         assertThat(handler.willHandle(request.getMethod(),request.getPath()), is(false));
     }
@@ -39,7 +39,7 @@ public class PutHandlerTest {
         Request request = new Request.RequestBuilder()
                 .method("PUT")
                 .version("HTTP/1.1")
-                .path("file1")
+                .path("/file1")
                 .build();
         Response response = handler.handle(request);
 

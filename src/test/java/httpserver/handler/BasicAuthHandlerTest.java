@@ -20,7 +20,7 @@ public class BasicAuthHandlerTest {
         Request request = new Request.RequestBuilder()
                 .method("GET")
                 .version("HTTP/1.1")
-                .path("logs")
+                .path("/logs")
                 .build();
         Response response = handler.handle(request);
 
@@ -35,7 +35,7 @@ public class BasicAuthHandlerTest {
         Request request = new Request.RequestBuilder()
                 .method("GET")
                 .version("HTTP/1.1")
-                .path("logs")
+                .path("/logs")
                 .headers("Authorization","Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ==")
                 .build();
         Response response = handler.handle(request);
@@ -55,7 +55,7 @@ public class BasicAuthHandlerTest {
                 .method("GET")
                 .version("HTTP/1.1")
                 .headers("Authorization", "Basic YWRtaW46aHVudGVyMg==")
-                .path("logs")
+                .path("/logs")
                 .build();
         Response response = handler.handle(request);
 
@@ -72,7 +72,7 @@ public class BasicAuthHandlerTest {
         Request request = new Request.RequestBuilder()
                 .method("GET")
                 .version("HTTP/1.1")
-                .path("logs")
+                .path("/logs")
                 .build();
 
         assertThat(handler.willHandle(request.getMethod(), request.getPath()), is(true));

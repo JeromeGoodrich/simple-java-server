@@ -32,7 +32,7 @@ public class HTTPParser implements Parser {
         if (splitRequestLine[1].equals("/")) {
             builder.path(splitRequestLine[1]);
         } else {
-            builder.path(splitRequestLine[1].replaceFirst("/", ""));
+            builder.path(splitRequestLine[1]);
             if (splitRequestLine[1].contains("parameters")) {
                 parseParams(splitRequestLine[1], builder);
 

@@ -26,7 +26,7 @@ public class FileHandlerTest {
         Request request = new Request.RequestBuilder()
                 .method("GET")
                 .version("HTTP/1.1")
-                .path("file1")
+                .path("/file1")
                 .build();
 
         assertThat(handler.willHandle(request.getMethod(), request.getPath()), is(true));
@@ -38,7 +38,7 @@ public class FileHandlerTest {
         Request request = new Request.RequestBuilder()
                 .method("GET")
                 .version("HTTP/1.1")
-                .path("not-a-file")
+                .path("/not-a-file")
                 .build();
 
         assertThat(handler.willHandle(request.getMethod(), request.getPath()), is(false));
@@ -50,7 +50,7 @@ public class FileHandlerTest {
         Request request = new Request.RequestBuilder()
                 .method("GET")
                 .version("HTTP/1.1")
-                .path("file1")
+                .path("/file1")
                 .build();
         Response response = handler.handle(request);
 
@@ -66,7 +66,7 @@ public class FileHandlerTest {
         Request request = new Request.RequestBuilder()
                 .method("GET")
                 .version("HTTP/1.1")
-                .path("image.jpeg")
+                .path("/image.jpeg")
                 .build();
         Response response = handler.handle(request);
 
@@ -82,7 +82,7 @@ public class FileHandlerTest {
         Request request = new Request.RequestBuilder()
                 .method("GET")
                 .version("HTTP/1.1")
-                .path("pdf-sample.pdf")
+                .path("/pdf-sample.pdf")
                 .build();
         Response response = handler.handle(request);
 
@@ -98,7 +98,7 @@ public class FileHandlerTest {
         Request request = new Request.RequestBuilder()
                 .method("GET")
                 .version("HTTP/1.1")
-                .path("big-pdf.pdf")
+                .path("/big-pdf.pdf")
                 .build();
         Response response = handler.handle(request);
 
@@ -116,7 +116,7 @@ public class FileHandlerTest {
         Request request = new Request.RequestBuilder()
                 .method("HEAD")
                 .version("HTTP/1.1")
-                .path("partial_content.txt")
+                .path("/partial_content.txt")
                 .build();
         Response response = handler.handle(request);
 
@@ -130,7 +130,7 @@ public class FileHandlerTest {
                 .method("GET")
                 .version("HTTP/1.1")
                 .headers("Range", "bytes=0-4")
-                .path("partial_content.txt")
+                .path("/partial_content.txt")
                 .build();
         Response response = handler.handle(request);
 
@@ -145,7 +145,7 @@ public class FileHandlerTest {
                 .method("GET")
                 .version("HTTP/1.1")
                 .headers("Range", "bytes=-6")
-                .path("partial_content.txt")
+                .path("/partial_content.txt")
                 .build();
         Response response = handler.handle(request);
 
@@ -160,7 +160,7 @@ public class FileHandlerTest {
                 .method("GET")
                 .version("HTTP/1.1")
                 .headers("Range", "bytes=4-")
-                .path("partial_content.txt")
+                .path("/partial_content.txt")
                 .build();
         Response response = handler.handle(request);
 

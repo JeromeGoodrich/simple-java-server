@@ -12,6 +12,6 @@ public class RedirectHandler implements Handler {
     }
 
     public boolean willHandle(String method, String path) {
-        return (path.equals("redirect"));
+        return (path.equals("/redirect"));
     }
 }

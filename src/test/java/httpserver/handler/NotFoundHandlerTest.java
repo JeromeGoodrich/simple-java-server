@@ -16,7 +16,7 @@ public class NotFoundHandlerTest {
         Request request = new Request.RequestBuilder()
                 .method("GET")
                 .version("HTTP/1.1")
-                .path("notapath")
+                .path("/notapath")
                 .build();
         Response response = handler.handle(request);
 

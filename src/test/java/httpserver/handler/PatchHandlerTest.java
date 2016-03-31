@@ -19,7 +19,7 @@ public class PatchHandlerTest {
         Request request = new Request.RequestBuilder()
                 .method("PATCH")
                 .version("HTTP/1.1")
-                .path("patch-content.txt")
+                .path("/patch-content.txt")
                 .build();
         assertThat(handler.willHandle(request.getMethod(), request.getPath()), is(true));
     }
@@ -43,7 +43,7 @@ public class PatchHandlerTest {
                 .version("HTTP/1.1")
                 .headers("If-Match","1")
                 .body("patched-content")
-                .path("patch-content.txt")
+                .path("/patch-content.txt")
                 .build();
         Response response = handler.handle(request);
 
@@ -55,7 +55,7 @@ public class PatchHandlerTest {
                 .method("GET")
                 .version("HTTP/1.1")
                 .headers("If-Match","1")
-                .path("patch-content.txt")
+                .path("/patch-content.txt")
                 .build();
         Response getResponse = fileHandler.handle(getRequest);
 

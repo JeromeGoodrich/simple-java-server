@@ -16,7 +16,7 @@ public class OldFormHandlerTest {
         Request request = new Request.RequestBuilder()
                 .method("GET")
                 .version("HTTP/1.1")
-                .path("oldform")
+                .path("/oldform")
                 .build();
         assertThat(handler.willHandle(request.getMethod(), request.getPath()), is(true));
     }
@@ -27,7 +27,7 @@ public class OldFormHandlerTest {
         Request request = new Request.RequestBuilder()
                 .method("GET")
                 .version("HTTP/1.1")
-                .path("form")
+                .path("/form")
                 .build();
         assertThat(handler.willHandle(request.getMethod(), request.getPath()), is(false));
     }
@@ -38,7 +38,7 @@ public class OldFormHandlerTest {
         Request request = new Request.RequestBuilder()
                 .method("GET")
                 .version("HTTP/1.1")
-                .path("oldform")
+                .path("/oldform")
                 .build();
         Response response = handler.handle(request);
         assertThat(response.getStatusCode(), is(200));
@@ -51,7 +51,7 @@ public class OldFormHandlerTest {
                 .method("POST")
                 .version("HTTP/1.1")
                 .body("firstname=jerome&lastname=goodrich")
-                .path("oldform")
+                .path("/oldform")
                 .build();
         Response response = handler.handle(request);
         assertThat(response.getStatusCode(), is(200));

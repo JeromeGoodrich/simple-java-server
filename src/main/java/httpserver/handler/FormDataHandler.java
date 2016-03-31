@@ -49,6 +49,6 @@ public class FormDataHandler implements Handler {
     }
 
     public boolean willHandle(String method, String path) {
-        return path.equals("form");
+        return path.equals("/form");
     }
 }

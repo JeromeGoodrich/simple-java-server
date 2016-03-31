@@ -15,7 +15,7 @@ public class RedirectHandlerTest {
         Request request = new Request.RequestBuilder()
                 .method("GET")
                 .version("HTTP/1.1")
-                .path("redirect")
+                .path("/redirect")
                 .build();
 
         assertThat(handler.willHandle(request.getMethod(),request.getPath()), is(true));
@@ -27,7 +27,7 @@ public class RedirectHandlerTest {
         Request request = new Request.RequestBuilder()
                 .method("GET")
                 .version("HTTP/1.1")
-                .path("file1")
+                .path("/file1")
                 .build();
         assertThat(handler.willHandle(request.getMethod(),request.getPath()), is(false));
     }
@@ -38,7 +38,7 @@ public class RedirectHandlerTest {
         Request request = new Request.RequestBuilder()
                 .method("GET")
                 .version("HTTP/1.1")
-                .path("redirect")
+                .path("/redirect")
                 .build();
         Response response = handler.handle(request);
 

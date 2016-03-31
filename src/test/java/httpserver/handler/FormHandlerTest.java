@@ -14,7 +14,7 @@ public class FormHandlerTest {
         Request request = new Request.RequestBuilder()
                 .method("POST")
                 .version("HTTP/1.1")
-                .path("form")
+                .path("/form")
                 .body("data=fatcat")
                 .build();
 
@@ -27,7 +27,7 @@ public class FormHandlerTest {
         Request request = new Request.RequestBuilder()
                 .method("POST")
                 .version("HTTP/1.1")
-                .path("foo")
+                .path("/foo")
                 .build();
 
         assertEquals(false, handler.willHandle(request.getMethod(), request.getPath()));
@@ -39,7 +39,7 @@ public class FormHandlerTest {
         Request postRequest = new Request.RequestBuilder()
                 .method("POST")
                 .version("HTTP/1.1")
-                .path("form")
+                .path("/form")
                 .body("data=fatcat")
                 .build();
         Response postResponse = handler.handle(postRequest);
@@ -49,7 +49,7 @@ public class FormHandlerTest {
         Request getRequest = new Request.RequestBuilder()
                 .method("GET")
                 .version("HTTP/1.1")
-                .path("form")
+                .path("/form")
                 .build();
 
         Response getResponse = handler.handle(getRequest);
@@ -64,7 +64,7 @@ public class FormHandlerTest {
         Request putRequest = new Request.RequestBuilder()
                 .method("PUT")
                 .version("HTTP/1.1")
-                .path("form")
+                .path("/form")
                 .body("data=heathcliff")
                 .build();
         Response putResponse = handler.handle(putRequest);
@@ -74,7 +74,7 @@ public class FormHandlerTest {
         Request getRequest = new Request.RequestBuilder()
                 .method("GET")
                 .version("HTTP/1.1")
-                .path("form")
+                .path("/form")
                 .build();
         Response getResponse = handler.handle(getRequest);
 
@@ -83,7 +83,7 @@ public class FormHandlerTest {
         Request deleteRequest = new Request.RequestBuilder()
                 .method("DELETE")
                 .version("HTTP/1.1")
-                .path("form")
+                .path("/form")
                 .build();
         Response deleteResponse = handler.handle(deleteRequest);
 
@@ -92,7 +92,7 @@ public class FormHandlerTest {
         Request newGetRequest = new Request.RequestBuilder()
                 .method("GET")
                 .version("HTTP/1.1")
-                .path("form")
+                .path("/form")
                 .build();
         Response newGetResponse = handler.handle(newGetRequest);
 

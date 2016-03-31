@@ -43,6 +43,6 @@ public class BasicAuthHandler implements Handler {
     }
 
     public boolean willHandle(String method, String path) {
-        return (path.equals("logs"));
+        return (path.equals("/logs"));
     }
 }

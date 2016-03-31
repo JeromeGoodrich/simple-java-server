@@ -29,7 +29,7 @@ public class DirHandlerTest {
         Request request = new Request.RequestBuilder()
                 .method("GET")
                 .version("HTTP/1.1")
-                .path("jpg-sample.jpeg")
+                .path("/jpg-sample.jpeg")
                 .build();
         assertThat(handler.willHandle(request.getMethod(), request.getPath()), is(false));
     }

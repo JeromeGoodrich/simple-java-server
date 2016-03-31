@@ -36,7 +36,7 @@ public class HTTPParserTest {
         Request request = parser.parse(input);
 
         assertThat(request.getMethod(), is("GET"));
-        assertThat(request.getPath(), is("src/test/fixtures"));
+        assertThat(request.getPath(), is("/src/test/fixtures"));
         assertThat(request.getVersion(), is("HTTP/1.1"));
         assertThat(request.getHeader("Host"), is("www.example.com"));
         assertThat(request.getHeader("Accept"), is("*/*"));
@@ -51,7 +51,7 @@ public class HTTPParserTest {
 
         assertThat(request.getMethod(), is("POST"));
         assertThat(request.getVersion(), is("HTTP/1.1"));
-        assertThat(request.getPath(), is("form"));
+        assertThat(request.getPath(), is("/form"));
         assertThat(request.getHeader("Host"), is("www.example.com"));
         assertThat(request.getHeader("Content-Length"), is("31"));
         assertThat(request.getBody(), containsString("firstname=hello&lastname=jerome"));

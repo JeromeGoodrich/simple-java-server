@@ -40,7 +40,7 @@ public class OldFormHandler implements Handler {
     }
 
     public boolean willHandle(String method, String path) {
-        return path.equals("oldform");
+        return path.equals("/oldform");
     }
 
 }

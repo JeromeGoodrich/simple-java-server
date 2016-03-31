@@ -26,7 +26,7 @@ public class OptionsHandlerTest {
         Request request = new Request.RequestBuilder()
                 .method("GET")
                 .version("HTTP/1.1")
-                .path("hello_world")
+                .path("/hello_world")
                 .build();
         assertThat(handler.willHandle(request.getMethod(), request.getPath()), is(false));
     }

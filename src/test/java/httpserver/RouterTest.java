@@ -18,13 +18,13 @@ public class RouterTest {
     @Test
     public void testSelectHandler() {
         List<Handler> handlers = new ArrayList<>();
-        handlers.add(new FakeHandler("foo", 1000));
-        handlers.add(new FakeHandler("bar", 500));
+        handlers.add(new FakeHandler("/foo", 1000));
+        handlers.add(new FakeHandler("/bar", 500));
         Router router = new Router(handlers);
         Request request = new Request.RequestBuilder()
                 .method("GET")
                 .version("HTTP/1.1")
-                .path("foo")
+                .path("/foo")
                 .build();
         Response response = router.handle(request);
 
