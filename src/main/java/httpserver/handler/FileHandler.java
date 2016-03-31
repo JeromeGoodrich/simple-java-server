@@ -102,7 +102,6 @@ public class FileHandler implements Handler {
 
 
     public boolean willHandle(String method, String path) {
-        String fileName = rootDir + path.replaceFirst("/", "");
-        return new File(fileName).isFile();
+        return new File(rootDir + path).isFile();
     }
 }

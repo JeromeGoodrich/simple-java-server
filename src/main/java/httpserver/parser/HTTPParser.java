@@ -27,7 +27,6 @@ public class HTTPParser implements Parser {
     }
 
     private void parseRequestLine(String requestLine, Request.RequestBuilder builder) {
-        System.out.println(requestLine);
         String[] splitRequestLine = requestLine.split(" ");
         builder.method(splitRequestLine[0]);
         if (splitRequestLine[1].equals("/")) {
