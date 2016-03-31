@@ -1,44 +1,39 @@
 package httpserver;
 
-import java.io.*;
-import java.util.logging.FileHandler;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.logging.SimpleFormatter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.logging.*;
 
 public class RequestLogger {
 
-    private final String fileLocation;
+    private final LogHandlerCreator handlerCreator;
+    private final Handler handler;
 
-    public RequestLogger(String fileLocation) {
-        this.fileLocation = fileLocation;
+    public RequestLogger(LogHandlerCreator handlerCreator) {
+        this.handlerCreator = handlerCreator;
+        this.handler = handlerCreator.createFileHandler();
         Logger requestLogger = Logger.getLogger("");
-        SimpleFormatter simpleFormatter = new SimpleFormatter();
-        FileHandler requests = null;
-        try {
-            requests = new FileHandler(fileLocation);
-        } catch (IOException e) {
-            requestLogger.log(Level.INFO,"IO Exception", e);
-        }
-        requests.setFormatter(simpleFormatter);
-        requestLogger.addHandler(requests);
+        requestLogger.addHandler(handler);
         requestLogger.setLevel(Level.INFO);
     }
 
     public void log(Level level, String logContents) {
         Logger logger = Logger.getLogger(RequestLogger.class.getName());
         logger.log(level,logContents);
+        handler.close();
     }
 
     public void error(Level level, String logContents, Exception e) {
         Logger logger = Logger.getLogger(RequestLogger.class.getName());
         logger.log(level, logContents, e);
-
+        handler.close();
     }
 
     public byte[] accessLogs() {
         byte[] bytes = null;
-        File file = new File(fileLocation);
+        File file = new File(handlerCreator.getLogFilename());
         try {
             FileInputStream inputStream = new FileInputStream(file);
             int fileLength = (int) file.length();

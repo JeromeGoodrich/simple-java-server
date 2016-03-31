@@ -1,5 +1,6 @@
 package httpserver.handler;
 
+import httpserver.LogHandlerCreator;
 import httpserver.RequestLogger;
 import httpserver.request.Request;
 import httpserver.response.Response;
@@ -50,7 +51,9 @@ public class PatchHandlerTest {
         assertThat(response.getStatusCode(), is(204));
         assertThat(response.getHeaderValue("ETag"), is("1"));
 
-        Handler fileHandler = new FileHandler(rootDir, new RequestLogger("testlog.txt"));
+        LogHandlerCreator lhc = new LogHandlerCreator("test.log");
+        RequestLogger logger = new RequestLogger(lhc);
+        Handler fileHandler = new FileHandler(rootDir, logger);
         Request getRequest = new Request.RequestBuilder()
                 .method("GET")
                 .version("HTTP/1.1")

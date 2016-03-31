@@ -1,5 +1,7 @@
 package httpserver.server;
 
+import httpserver.LogHandlerCreator;
+import httpserver.RequestLogger;
 import httpserver.mocks.MockClientSocket;
 import httpserver.mocks.MockHandler;
 import httpserver.mocks.MockResponseHandler;
@@ -22,18 +24,23 @@ public class HttpServiceTest {
         byte[] bytes = new byte [1024];
         InputStream inputStream = new ByteArrayInputStream(bytes);
         MockClientSocket socket = new MockClientSocket(inputStream);
+        LogHandlerCreator lhc = new LogHandlerCreator("test.log");
+        RequestLogger logger = new RequestLogger(lhc);
         MockHandler requestHandler = new MockHandler();
         MockParser parser = new MockParser();
-        HttpServiceFactory factory = new HttpServiceFactory(requestHandler, parser);
+        HttpServiceFactory factory = new HttpServiceFactory(requestHandler, parser, logger);
         Runnable service = factory.createService(socket);
+
+        assertThat(parser.getCallsToParse(), is(0));
+        assertThat(requestHandler.getCallsToHandle(), is(0));
+        assertThat(socket.isClosed(), is(false));
+
         service.run();
+
         assertThat(parser.getCallsToParse(), is(1));
         assertThat(socket.getInputStream(), is(inputStream));
         assertThat(parser.parse(socket.getInputStream()), instanceOf(Request.class));
         assertThat(requestHandler.getCallsToHandle(), is(1));
-        //assertThat(responseHandler.getCallsToHandle(), is(1));
-        //assert on argument passed to handle, and parse
-        // mockSocket.getInputStream for handle for instance
-        //add exception case
+        assertThat(socket.isClosed(), is(true));
     }
 }

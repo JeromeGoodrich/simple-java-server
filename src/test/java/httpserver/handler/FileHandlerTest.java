@@ -1,5 +1,6 @@
 package httpserver.handler;
 
+import httpserver.LogHandlerCreator;
 import httpserver.RequestLogger;
 import httpserver.request.Request;
 import httpserver.response.Response;
@@ -18,7 +19,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class FileHandlerTest {
 
     private final String rootDir = System.getProperty("user.dir") + "/src/test/fixtures/";
-    private final RequestLogger logger = new RequestLogger("testlog.txt");
+    private final LogHandlerCreator lhc = new LogHandlerCreator("test.log");
+    private final RequestLogger logger = new RequestLogger(lhc);
 
     @Test
     public void willHandleTrueTest() {

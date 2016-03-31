@@ -1,5 +1,6 @@
 package httpserver.handler;
 
+import httpserver.LogHandlerCreator;
 import httpserver.RequestLogger;
 import httpserver.request.Request;
 import httpserver.response.Response;
@@ -13,9 +14,11 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class BasicAuthHandlerTest {
 
+    private final LogHandlerCreator lhc = new LogHandlerCreator("./test.log");
+    private final RequestLogger logger = new RequestLogger(lhc);
+
     @Test
     public void basicAuthUnauthorizedTest() {
-        RequestLogger logger = new RequestLogger("testlog.txt");
         Handler handler = new BasicAuthHandler(logger);
         Request request = new Request.RequestBuilder()
                 .method("GET")
@@ -30,7 +33,6 @@ public class BasicAuthHandlerTest {
 
     @Test
     public void basicAuthWrongCredentialsTest() {
-        RequestLogger logger = new RequestLogger("testlog.txt");
         Handler handler = new BasicAuthHandler(logger);
         Request request = new Request.RequestBuilder()
                 .method("GET")
@@ -45,7 +47,6 @@ public class BasicAuthHandlerTest {
 
     @Test
     public void basicAuthAuthorizedTest() {
-        RequestLogger logger = new RequestLogger("testlog.txt");
         Handler handler = new BasicAuthHandler(logger);
         logger.log(Level.INFO, "GET /log HTTP/1.1");
         logger.log(Level.INFO, "GET /these HTTP/1.1");
@@ -67,7 +68,6 @@ public class BasicAuthHandlerTest {
 
     @Test
     public void willHandleTrueTest() {
-        RequestLogger logger = new RequestLogger("testlog.txt");
         Handler handler = new BasicAuthHandler(logger);
         Request request = new Request.RequestBuilder()
                 .method("GET")
@@ -80,7 +80,6 @@ public class BasicAuthHandlerTest {
 
     @Test
     public void willHandleFalseTest() {
-        RequestLogger logger = new RequestLogger("testlog.txt");
         Handler handler = new BasicAuthHandler(logger);
         Request request = new Request.RequestBuilder()
                 .method("GET")

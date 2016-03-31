@@ -2,6 +2,7 @@ package httpserver;
 
 import org.junit.Test;
 
+import java.io.IOException;
 import java.util.logging.Level;
 
 import static org.hamcrest.CoreMatchers.containsString;
@@ -12,12 +13,15 @@ public class RequestLoggerTest {
 
     @Test
     public void initAccessAndClearLogsTest() {
-        RequestLogger logger = new RequestLogger("testlog.txt");
+        LogHandlerCreator logHandlerCreator = new LogHandlerCreator("test.log");
+        RequestLogger logger = new RequestLogger(logHandlerCreator);
         logger.log(Level.INFO, "request1");
         logger.log(Level.INFO,"request2");
+        logger.error(Level.INFO, "Exception Raised", new Exception());
         byte[] logData = logger.accessLogs();
 
         assertThat(new String(logData), containsString("request1"));
         assertThat(new String(logData), containsString("request2"));
+        assertThat(new String(logData), containsString("Exception Raised"));
     }
 }

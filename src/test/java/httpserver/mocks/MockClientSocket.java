@@ -7,6 +7,7 @@ import java.io.*;
 public class MockClientSocket implements ClientConnection {
 
     private InputStream inputStream;
+    private boolean closed;
 
     public MockClientSocket(InputStream inputStream) {
         this.inputStream = inputStream;
@@ -22,10 +23,10 @@ public class MockClientSocket implements ClientConnection {
     }
 
     public void close() {
-
+        closed = true;
     }
 
     public boolean isClosed() {
-        return false;
+        return closed;
     }
 }

@@ -15,24 +15,6 @@ public class Router implements Handler {
         this.handlers = handlers;
     }
 
-    public Router(final String rootDir) {
-        this.handlers = new ArrayList<Handler>() {
-            {
-                add(new BasicAuthHandler(new RequestLogger("logs.txt")));
-                add(new DirHandler(rootDir));
-                add(new PatchHandler(rootDir));
-                add(new FileHandler(rootDir, new RequestLogger("logs.txt")));
-                add(new OldFormHandler());
-                add(new FormDataHandler());
-                add(new PutHandler());
-                add(new OptionsHandler());
-                add(new RedirectHandler());
-                add(new ParamsHandler());
-                add(new NotFoundHandler());
-            }
-        };
-    }
-
     public Response handle(Request request) {
         Response response = null;
         for (Handler handler : handlers) {
