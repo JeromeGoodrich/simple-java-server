@@ -1,9 +1,8 @@
 package httpserver.server;
 
-import httpserver.RequestLogger;
+import httpserver.logger.RequestLogger;
 import httpserver.handler.Handler;
 import httpserver.parser.Parser;
-import httpserver.request.Request;
 
 public class HttpServiceFactory implements ServiceFactory {
 

@@ -1,6 +1,6 @@
 package httpserver.handler;
 
-import httpserver.RequestLogger;
+import httpserver.logger.RequestLogger;
 import httpserver.request.Request;
 import httpserver.response.Response;
 

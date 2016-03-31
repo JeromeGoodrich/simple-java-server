@@ -1,7 +1,7 @@
 package httpserver.server;
 
-import httpserver.LogHandlerCreator;
-import httpserver.RequestLogger;
+import httpserver.logger.LogHandlerCreator;
+import httpserver.logger.RequestLogger;
 import httpserver.handler.*;
 import httpserver.parser.HTTPParser;
 

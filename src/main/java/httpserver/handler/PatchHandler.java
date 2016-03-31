@@ -1,13 +1,11 @@
 package httpserver.handler;
 
-import httpserver.RequestLogger;
 import httpserver.request.Request;
 import httpserver.response.Response;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.logging.Level;
 
 
 public class PatchHandler implements Handler {

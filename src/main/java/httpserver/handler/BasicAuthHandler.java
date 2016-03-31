@@ -1,11 +1,9 @@
 package httpserver.handler;
 
-import httpserver.Base64Decoder;
-import httpserver.RequestLogger;
+import httpserver.helpers.Base64Decoder;
+import httpserver.logger.RequestLogger;
 import httpserver.request.Request;
 import httpserver.response.Response;
-
-import java.io.*;
 
 public class BasicAuthHandler implements Handler {
 

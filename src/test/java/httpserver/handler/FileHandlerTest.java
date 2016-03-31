@@ -1,15 +1,10 @@
 package httpserver.handler;
 
-import httpserver.LogHandlerCreator;
-import httpserver.RequestLogger;
+import httpserver.logger.LogHandlerCreator;
+import httpserver.logger.RequestLogger;
 import httpserver.request.Request;
 import httpserver.response.Response;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
-
-import java.io.FileNotFoundException;
-import java.io.IOException;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;

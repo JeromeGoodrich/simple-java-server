@@ -1,16 +1,8 @@
-Mar 31, 2016 3:49:15 PM httpserver.RequestLogger log
+Mar 31, 2016 4:14:04 PM httpserver.logger.RequestLogger log
 INFO: request1
-Mar 31, 2016 3:52:31 PM httpserver.RequestLogger log
-INFO: request1
-Mar 31, 2016 3:56:18 PM httpserver.RequestLogger log
-INFO: request1
-Mar 31, 2016 3:56:46 PM httpserver.RequestLogger log
-INFO: request1
-Mar 31, 2016 3:58:22 PM httpserver.RequestLogger log
-INFO: request1
-Mar 31, 2016 3:58:22 PM httpserver.RequestLogger log
+Mar 31, 2016 4:14:04 PM httpserver.logger.RequestLogger log
 INFO: null
-Mar 31, 2016 3:58:27 PM httpserver.RequestLogger log
+Mar 31, 2016 4:15:02 PM httpserver.logger.RequestLogger log
 INFO: request1
-Mar 31, 2016 3:58:27 PM httpserver.RequestLogger log
+Mar 31, 2016 4:15:02 PM httpserver.logger.RequestLogger log
 INFO: null

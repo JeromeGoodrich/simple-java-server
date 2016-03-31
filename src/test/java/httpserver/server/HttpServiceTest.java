@@ -1,13 +1,11 @@
 package httpserver.server;
 
-import httpserver.LogHandlerCreator;
-import httpserver.RequestLogger;
+import httpserver.logger.LogHandlerCreator;
+import httpserver.logger.RequestLogger;
 import httpserver.mocks.MockClientSocket;
 import httpserver.mocks.MockHandler;
-import httpserver.mocks.MockResponseHandler;
 import httpserver.mocks.MockParser;
 import httpserver.request.Request;
-import httpserver.server.*;
 import org.junit.Test;
 
 import java.io.ByteArrayInputStream;

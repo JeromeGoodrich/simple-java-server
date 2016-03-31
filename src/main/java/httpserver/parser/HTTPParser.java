@@ -1,6 +1,5 @@
 package httpserver.parser;
 
-import httpserver.RequestLogger;
 import httpserver.request.Request;
 
 import java.io.IOException;
@@ -8,7 +7,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Level;
 
 public class HTTPParser implements Parser {
 

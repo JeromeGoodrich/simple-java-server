@@ -1,7 +1,7 @@
 package httpserver.handler;
 
-import httpserver.LogHandlerCreator;
-import httpserver.RequestLogger;
+import httpserver.logger.LogHandlerCreator;
+import httpserver.logger.RequestLogger;
 import httpserver.request.Request;
 import httpserver.response.Response;
 import org.junit.Test;
