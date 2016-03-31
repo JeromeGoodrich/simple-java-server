@@ -1,5 +1,6 @@
 package httpserver.handler;
 
+import httpserver.RequestLogger;
 import httpserver.request.Request;
 import httpserver.response.Response;
 import org.junit.Test;
@@ -10,9 +11,10 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class PatchHandlerTest {
 
+    private final String rootDir = System.getProperty("user.dir") + "/src/test/fixtures";
+
     @Test
     public void willHandleTest() {
-        String rootDir = "/Users/admin/Documents/apprenticeship/java_server/cob_spec/public/";
         Handler handler = new PatchHandler(rootDir) ;
         Request request = new Request.RequestBuilder()
                 .method("PATCH")
@@ -24,7 +26,6 @@ public class PatchHandlerTest {
 
     @Test
     public void willnotHandleTest() {
-        String rootDir = "/Users/admin/Documents/apprenticeship/java_server/cob_spec/public/";
         Handler handler = new PatchHandler(rootDir);
         Request request = new Request.RequestBuilder()
                 .method("GET")
@@ -36,7 +37,6 @@ public class PatchHandlerTest {
 
     @Test
     public void PatchHandlerTest() {
-        String rootDir = "/Users/admin/Documents/apprenticeship/java_server/cob_spec/public/";
         Handler handler = new PatchHandler(rootDir);
         Request request = new Request.RequestBuilder()
                 .method("PATCH")
@@ -50,7 +50,7 @@ public class PatchHandlerTest {
         assertThat(response.getStatusCode(), is(204));
         assertThat(response.getHeaderValue("ETag"), is("1"));
 
-        Handler fileHandler = new FileHandler(rootDir);
+        Handler fileHandler = new FileHandler(rootDir, new RequestLogger("testlog.txt"));
         Request getRequest = new Request.RequestBuilder()
                 .method("GET")
                 .version("HTTP/1.1")

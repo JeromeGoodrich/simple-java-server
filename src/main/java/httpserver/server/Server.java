@@ -18,12 +18,9 @@ public class Server {
 
     }
 
-
-
     public void startServer() throws IOException {
         Runtime.getRuntime().addShutdownHook(new Thread() {
             public void run() {
-                    RequestLogger.clearLogs("logs.txt");
                     pool.shutdown();
             }
         });

@@ -1,0 +1,10 @@
+Mar 30, 2016 10:24:17 PM httpserver.RequestLogger log
+INFO: request1
+Mar 30, 2016 10:24:17 PM httpserver.RequestLogger log
+INFO: request2
+Mar 30, 2016 10:24:17 PM httpserver.RequestLogger log
+INFO: GET /log HTTP/1.1
+Mar 30, 2016 10:24:17 PM httpserver.RequestLogger log
+INFO: GET /these HTTP/1.1
+Mar 30, 2016 10:24:17 PM httpserver.RequestLogger log
+INFO: GET /requests HTTP/1.1

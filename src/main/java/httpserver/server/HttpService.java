@@ -25,18 +25,16 @@ public class HttpService implements Runnable {
         try {
 
             Request request = parser.parse(socket.getInputStream());
-            //log requestLine and headers
-            RequestLogger.logger.log(Level.INFO, request.getLogInfo());
             Response response = handler.handle(request);
             response.sendToClient(socket.getOutputStream());
 
         } catch (Exception e) {
-            RequestLogger.logger.log(Level.INFO, "The file can't be foun", e);
+            e.printStackTrace();
         } finally {
             try {
                 socket.close();
             } catch (IOException e) {
-                RequestLogger.logger.log(Level.INFO, "The file can't be foun", e);
+                e.printStackTrace();
             }
         }
     }

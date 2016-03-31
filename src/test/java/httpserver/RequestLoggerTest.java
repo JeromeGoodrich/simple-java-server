@@ -12,18 +12,12 @@ public class RequestLoggerTest {
 
     @Test
     public void initAccessAndClearLogsTest() {
-        String logLocation = "logs.txt";
-        RequestLogger.init();
-        RequestLogger.logger.log(Level.INFO, "request1");
-        RequestLogger.logger.log(Level.INFO,"request2");
-        byte[] logData = RequestLogger.accessLogs(logLocation);
+        RequestLogger logger = new RequestLogger("testlog.txt");
+        logger.log(Level.INFO, "request1");
+        logger.log(Level.INFO,"request2");
+        byte[] logData = logger.accessLogs();
 
         assertThat(new String(logData), containsString("request1"));
         assertThat(new String(logData), containsString("request2"));
-
-        RequestLogger.clearLogs(logLocation);
-        byte[] emptyData = RequestLogger.accessLogs(logLocation);
-
-        assertThat(new String(emptyData), is(""));
     }
 }

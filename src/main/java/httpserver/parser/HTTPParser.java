@@ -21,7 +21,7 @@ public class HTTPParser implements Parser {
                 if ((char) charRead == '\n') break ;
             }
         } catch (Exception e) {
-            RequestLogger.logger.log(Level.INFO, "The file can't be foun", e);
+            e.printStackTrace();
         }
         return stringBuilder.toString();
     }
@@ -134,7 +134,7 @@ public class HTTPParser implements Parser {
                 reader.read(body, 0, contentLength);
                 parseBody(body, builder);
             } catch (IOException e) {
-                RequestLogger.logger.log(Level.INFO, "The file can't be foun", e);
+                e.printStackTrace();
             }
 
         }

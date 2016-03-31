@@ -9,6 +9,12 @@ import java.io.*;
 
 public class BasicAuthHandler implements Handler {
 
+    private final RequestLogger logger;
+
+    public BasicAuthHandler(RequestLogger logger) {
+        this.logger = logger;
+    }
+
     public Response handle(Request request) {
         if (request.getHeader("Authorization") != null) {
             Base64Decoder decoder = new Base64Decoder();
@@ -32,7 +38,7 @@ public class BasicAuthHandler implements Handler {
     }
 
     private Response accessGranted(Request request) {
-        byte[] bytes = RequestLogger.accessLogs("logs.txt");
+        byte[] bytes = logger.accessLogs();
         return new Response.ResponseBuilder(200).reasonPhrase().body(bytes).version(request.getVersion()).build();
     }
 

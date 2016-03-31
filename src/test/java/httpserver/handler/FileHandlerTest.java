@@ -1,8 +1,14 @@
 package httpserver.handler;
 
+import httpserver.RequestLogger;
 import httpserver.request.Request;
 import httpserver.response.Response;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
@@ -11,10 +17,12 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class FileHandlerTest {
 
+    private final String rootDir = System.getProperty("user.dir") + "/src/test/fixtures/";
+    private final RequestLogger logger = new RequestLogger("testlog.txt");
+
     @Test
     public void willHandleTrueTest() {
-        String rootDir = "/Users/admin/Documents/apprenticeship/java_server/cob_spec/public/";
-        Handler handler = new FileHandler(rootDir);
+        Handler handler = new FileHandler(rootDir, logger);
         Request request = new Request.RequestBuilder()
                 .method("GET")
                 .version("HTTP/1.1")
@@ -26,8 +34,7 @@ public class FileHandlerTest {
 
     @Test
     public void willHandleFalseTest() {
-        String rootDir = "/Users/admin/Documents/apprenticeship/java_server/cob_spec/public/";
-        Handler handler = new FileHandler(rootDir);
+        Handler handler = new FileHandler(rootDir, logger);
         Request request = new Request.RequestBuilder()
                 .method("GET")
                 .version("HTTP/1.1")
@@ -39,8 +46,7 @@ public class FileHandlerTest {
 
     @Test
     public void handleFileTest() {
-        String rootDir = "/Users/admin/Documents/apprenticeship/java_server/cob_spec/public/";
-        Handler handler = new FileHandler(rootDir);
+        Handler handler = new FileHandler(rootDir, logger);
         Request request = new Request.RequestBuilder()
                 .method("GET")
                 .version("HTTP/1.1")
@@ -56,8 +62,7 @@ public class FileHandlerTest {
 
     @Test
     public void handleImageTest() {
-        String rootDir = "/Users/admin/Documents/apprenticeship/java_server/cob_spec/public/";
-        Handler handler = new FileHandler(rootDir);
+        Handler handler = new FileHandler(rootDir, logger);
         Request request = new Request.RequestBuilder()
                 .method("GET")
                 .version("HTTP/1.1")
@@ -73,8 +78,7 @@ public class FileHandlerTest {
 
     @Test
     public void handleSmallPDFTest() {
-        String rootDir = "/Users/admin/Documents/apprenticeship/java_server/cob_spec/public/";
-        Handler handler = new FileHandler(rootDir);
+        Handler handler = new FileHandler(rootDir, logger);
         Request request = new Request.RequestBuilder()
                 .method("GET")
                 .version("HTTP/1.1")
@@ -90,8 +94,7 @@ public class FileHandlerTest {
 
     @Test
     public void handleBigPDFTest() {
-        String rootDir = "/Users/admin/Documents/apprenticeship/java_server/cob_spec/public/";
-        Handler handler = new FileHandler(rootDir);
+        Handler handler = new FileHandler(rootDir, logger);
         Request request = new Request.RequestBuilder()
                 .method("GET")
                 .version("HTTP/1.1")
@@ -109,8 +112,7 @@ public class FileHandlerTest {
 
     @Test
     public void handleMethodNotAllowed() {
-        String rootDir = "/Users/admin/Documents/apprenticeship/java_server/cob_spec/public/";
-        Handler handler = new FileHandler(rootDir);
+        Handler handler = new FileHandler(rootDir, logger);
         Request request = new Request.RequestBuilder()
                 .method("HEAD")
                 .version("HTTP/1.1")
@@ -123,8 +125,7 @@ public class FileHandlerTest {
 
     @Test
     public void handlePartialContentTest() {
-        String rootDir = "/Users/admin/Documents/apprenticeship/java_server/cob_spec/public/";
-        Handler handler = new FileHandler(rootDir);
+        Handler handler = new FileHandler(rootDir, logger);
         Request request = new Request.RequestBuilder()
                 .method("GET")
                 .version("HTTP/1.1")
@@ -139,8 +140,7 @@ public class FileHandlerTest {
 
     @Test
     public void handlePartialContentTestNoRangeStart() {
-        String rootDir = "/Users/admin/Documents/apprenticeship/java_server/cob_spec/public/";
-        Handler handler = new FileHandler(rootDir);
+        Handler handler = new FileHandler(rootDir, logger);
         Request request = new Request.RequestBuilder()
                 .method("GET")
                 .version("HTTP/1.1")
@@ -155,8 +155,7 @@ public class FileHandlerTest {
 
     @Test
     public void handlePartialContentTestNoRangeEnd() {
-        String rootDir = "/Users/admin/Documents/apprenticeship/java_server/cob_spec/public/";
-        Handler handler = new FileHandler(rootDir);
+        Handler handler = new FileHandler(rootDir, logger);
         Request request = new Request.RequestBuilder()
                 .method("GET")
                 .version("HTTP/1.1")
@@ -168,4 +167,21 @@ public class FileHandlerTest {
         assertThat(response.getStatusCode(), is(206));
         assertThat(new String(response.getBody()), is(" is a file that contains text to read part of in order to fulfill a 206.\n"));
     }
+
+//    @Rule
+//    public ExpectedException thrown = ExpectedException.none();
+//
+//    @Test
+//    public void testFileNotFoundException() {
+//        thrown.expect(NullPointerException.class);
+//        Handler handler = new FileHandler(rootDir, logger);
+//        Request request = new Request.RequestBuilder()
+//                .method("GET")
+//                .version("HTTP/1.1")
+//                .path("/")
+//                .build();
+//        Response response = handler.handle(request);
+//
+//        assertThat(new String(logger.accessLogs()), containsString("FileNotFoundException"));
+//    }
 }

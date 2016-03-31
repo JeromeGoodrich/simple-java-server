@@ -16,9 +16,11 @@ import java.util.logging.Level;
 public class FileHandler implements Handler {
 
     private final String rootDir;
+    private final RequestLogger logger;
 
-    public FileHandler(String rootDir) {
+    public FileHandler(String rootDir, RequestLogger logger) {
         this.rootDir = rootDir;
+        this.logger = logger;
     }
 
     private byte[] readPartiallyFromFile(String fileName, String rawRange) {
@@ -54,9 +56,9 @@ public class FileHandler implements Handler {
             inputStream.read(fileContent, 0, range);
             inputStream.close();
         } catch (FileNotFoundException e) {
-            RequestLogger.logger.log(Level.INFO, "The file can't be found", e);
+            logger.error(Level.INFO, "File can not be located", e);
         } catch (IOException e) {
-            RequestLogger.logger.log(Level.INFO, "IOEXception raised", e);
+            logger.error(Level.INFO, "IO Exception",e);
         }
         return fileContent;
     }
@@ -76,7 +78,7 @@ public class FileHandler implements Handler {
         try {
             bytes = Files.readAllBytes(Paths.get(rootDir + request.getPath()));
         } catch (IOException e) {
-            RequestLogger.logger.log(Level.INFO, "The file can't be found", e);
+            e.printStackTrace();
         }
         builder.addHeader("Content-Length", Integer.toString(bytes.length));
         if (builder.getHeader("Content-Type").equals("application/pdf") && Integer.parseInt(builder.getHeader("Content-Length")) > 10485760) {

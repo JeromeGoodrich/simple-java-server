@@ -36,7 +36,7 @@ public class PatchHandler implements Handler {
             writer.flush();
             writer.close();
         } catch (IOException e) {
-            RequestLogger.logger.log(Level.INFO, "The file can't be foun", e);
+            e.printStackTrace();
         }
     }
 

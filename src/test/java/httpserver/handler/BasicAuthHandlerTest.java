@@ -15,7 +15,8 @@ public class BasicAuthHandlerTest {
 
     @Test
     public void basicAuthUnauthorizedTest() {
-        Handler handler = new BasicAuthHandler();
+        RequestLogger logger = new RequestLogger("testlog.txt");
+        Handler handler = new BasicAuthHandler(logger);
         Request request = new Request.RequestBuilder()
                 .method("GET")
                 .version("HTTP/1.1")
@@ -29,7 +30,8 @@ public class BasicAuthHandlerTest {
 
     @Test
     public void basicAuthWrongCredentialsTest() {
-        Handler handler = new BasicAuthHandler();
+        RequestLogger logger = new RequestLogger("testlog.txt");
+        Handler handler = new BasicAuthHandler(logger);
         Request request = new Request.RequestBuilder()
                 .method("GET")
                 .version("HTTP/1.1")
@@ -43,11 +45,11 @@ public class BasicAuthHandlerTest {
 
     @Test
     public void basicAuthAuthorizedTest() {
-        RequestLogger.init();
-        Handler handler = new BasicAuthHandler();
-        RequestLogger.logger.log(Level.INFO, "GET /log HTTP/1.1");
-        RequestLogger.logger.log(Level.INFO, "GET /these HTTP/1.1");
-        RequestLogger.logger.log(Level.INFO, "GET /requests HTTP/1.1");
+        RequestLogger logger = new RequestLogger("testlog.txt");
+        Handler handler = new BasicAuthHandler(logger);
+        logger.log(Level.INFO, "GET /log HTTP/1.1");
+        logger.log(Level.INFO, "GET /these HTTP/1.1");
+        logger.log(Level.INFO, "GET /requests HTTP/1.1");
 
         Request request = new Request.RequestBuilder()
                 .method("GET")
@@ -61,12 +63,12 @@ public class BasicAuthHandlerTest {
         assertThat(new String(response.getBody()), containsString("GET /log HTTP/1.1"));
         assertThat(new String(response.getBody()), containsString("GET /these HTTP/1.1"));
         assertThat(new String(response.getBody()), containsString("GET /requests HTTP/1.1"));
-        RequestLogger.clearLogs("logs.txt");
     }
 
     @Test
     public void willHandleTrueTest() {
-        Handler handler = new BasicAuthHandler();
+        RequestLogger logger = new RequestLogger("testlog.txt");
+        Handler handler = new BasicAuthHandler(logger);
         Request request = new Request.RequestBuilder()
                 .method("GET")
                 .version("HTTP/1.1")
@@ -78,7 +80,8 @@ public class BasicAuthHandlerTest {
 
     @Test
     public void willHandleFalseTest() {
-        Handler handler = new BasicAuthHandler();
+        RequestLogger logger = new RequestLogger("testlog.txt");
+        Handler handler = new BasicAuthHandler(logger);
         Request request = new Request.RequestBuilder()
                 .method("GET")
                 .version("HTTP/1.1")

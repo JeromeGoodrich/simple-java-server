@@ -11,13 +11,17 @@ public class Router implements Handler {
 
     private final List<Handler> handlers;
 
+    public Router(List<Handler> handlers) {
+        this.handlers = handlers;
+    }
+
     public Router(final String rootDir) {
         this.handlers = new ArrayList<Handler>() {
             {
-                add(new BasicAuthHandler());
+                add(new BasicAuthHandler(new RequestLogger("logs.txt")));
                 add(new DirHandler(rootDir));
                 add(new PatchHandler(rootDir));
-                add(new FileHandler(rootDir));
+                add(new FileHandler(rootDir, new RequestLogger("logs.txt")));
                 add(new OldFormHandler());
                 add(new FormDataHandler());
                 add(new PutHandler());

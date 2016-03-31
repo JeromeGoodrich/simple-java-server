@@ -10,7 +10,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class DirHandlerTest {
 
-    private final String rootDir = "/Users/admin/Documents/apprenticeship/java_server/cob_spec/public/";
+    private final String rootDir = System.getProperty("user.dir") + "/src/test/fixtures";
 
     @Test
     public void willHandleTrueTest() {
@@ -29,7 +29,7 @@ public class DirHandlerTest {
         Request request = new Request.RequestBuilder()
                 .method("GET")
                 .version("HTTP/1.1")
-                .path("image.jpeg")
+                .path("jpg-sample.jpeg")
                 .build();
         assertThat(handler.willHandle(request.getMethod(), request.getPath()), is(false));
     }

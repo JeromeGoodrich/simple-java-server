@@ -1,7 +1,5 @@
 package httpserver;
 
-import httpserver.request.Request;
-
 import java.io.*;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
@@ -10,35 +8,37 @@ import java.util.logging.SimpleFormatter;
 
 public class RequestLogger {
 
-    public final static Logger logger = Logger.getLogger(RequestLogger.class.getName());
+    private final String fileLocation;
 
-    private static FileHandler requests = null;
-
-    public static void init() {
-        try {
-            requests = new FileHandler("logs.txt");
-        } catch (SecurityException | IOException e) {
-            RequestLogger.logger.log(Level.INFO,"Exception Raised", e);
-        }
+    public RequestLogger(String fileLocation) {
+        this.fileLocation = fileLocation;
         Logger requestLogger = Logger.getLogger("");
         SimpleFormatter simpleFormatter = new SimpleFormatter();
+        FileHandler requests = null;
+        try {
+            requests = new FileHandler(fileLocation);
+        } catch (IOException e) {
+            requestLogger.log(Level.INFO,"IO Exception", e);
+        }
         requests.setFormatter(simpleFormatter);
-
         requestLogger.addHandler(requests);
         requestLogger.setLevel(Level.INFO);
     }
 
-    public static void clearLogs(String fileName) {
-        try {
-            new FileWriter(fileName).write("");
-        } catch (IOException e) {
-            RequestLogger.logger.log(Level.INFO, "IOException Raised", e);
-        }
+    public void log(Level level, String logContents) {
+        Logger logger = Logger.getLogger(RequestLogger.class.getName());
+        logger.log(level,logContents);
     }
 
-    public static byte[] accessLogs(String fileName) {
+    public void error(Level level, String logContents, Exception e) {
+        Logger logger = Logger.getLogger(RequestLogger.class.getName());
+        logger.log(level, logContents, e);
+
+    }
+
+    public byte[] accessLogs() {
         byte[] bytes = null;
-        File file = new File(fileName);
+        File file = new File(fileLocation);
         try {
             FileInputStream inputStream = new FileInputStream(file);
             int fileLength = (int) file.length();
