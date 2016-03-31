@@ -11,7 +11,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class PatchHandlerTest {
 
-    private final String rootDir = System.getProperty("user.dir") + "/src/test/fixtures";
+    private final String rootDir = System.getProperty("user.dir") + "/src/test/fixtures/";
 
     @Test
     public void willHandleTest() {
