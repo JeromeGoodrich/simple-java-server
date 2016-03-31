@@ -42,7 +42,7 @@ public class PatchHandlerTest {
                 .method("PATCH")
                 .version("HTTP/1.1")
                 .headers("If-Match","1")
-                .body("patched-content")
+                .body("patched content")
                 .path("/patch-content.txt")
                 .build();
         Response response = handler.handle(request);
@@ -60,6 +60,23 @@ public class PatchHandlerTest {
         Response getResponse = fileHandler.handle(getRequest);
 
         assertThat(getResponse.getStatusCode(), is(200));
-        assertThat(new String(getResponse.getBody()), containsString("patched-content"));
+        assertThat(new String(getResponse.getBody()), containsString("patched content"));
+        Request resetRequest = new Request.RequestBuilder()
+                .method("PATCH")
+                .version("HTTP/1.1")
+                .headers("If-Match","1")
+                .body("default content")
+                .path("/patch-content.txt")
+                .build();
+        handler.handle(resetRequest);
+        Request checkDefaultRequest = new Request.RequestBuilder()
+                .method("GET")
+                .version("HTTP/1.1")
+                .headers("If-Match","1")
+                .path("/patch-content.txt")
+                .build();
+        Response defaultResponse = fileHandler.handle(checkDefaultRequest);
+        assertThat(new String(defaultResponse.getBody()), containsString("default content"));
+
     }
 }
