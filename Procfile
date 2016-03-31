@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -jar target/httpserver-1.0-SNAPSHOT.jar -p 5000 -d ./src/test/fixtures
+web: java $JAVA_OPTS -jar target/httpserver-1.0-SNAPSHOT.jar -p 9000 -d ./src/test/fixtures
