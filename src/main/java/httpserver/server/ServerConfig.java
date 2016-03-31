@@ -15,7 +15,12 @@ public class ServerConfig {
 
     private void setPort() {
         if (args[0].equals("-p")){
-            port = Integer.parseInt(args[1]);
+            if (args[1].equals("5000")) {
+                port = Integer.parseInt(args[1]);
+            } else {
+                port = Integer.parseInt(System.getenv("PORT"));
+            }
+
         } else {
             port = Integer.parseInt(System.getenv("PORT"));
         }
