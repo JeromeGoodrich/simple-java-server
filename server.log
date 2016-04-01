@@ -12070,3 +12070,10 @@ Connection: Keep-Alive
 User-Agent: Apache-HttpClient/4.3.5 (java 1.5)
 Accept-Encoding: gzip,deflate
 
+Apr 01, 2016 8:12:26 AM httpserver.logger.RequestLogger log
+INFO: GET /logs HTTP/1.1
+Host: localhost:5000
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.3.5 (java 1.5)
+Accept-Encoding: gzip,deflate
+
