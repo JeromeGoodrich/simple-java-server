@@ -12077,3 +12077,9 @@ Connection: Keep-Alive
 User-Agent: Apache-HttpClient/4.3.5 (java 1.5)
 Accept-Encoding: gzip,deflate
 
+Apr 01, 2016 8:53:49 AM httpserver.logger.RequestLogger log
+INFO: GET /src HTTP/1.1
+Host: localhost:8080
+User-Agent: curl/7.43.0
+Accept: application/json
+

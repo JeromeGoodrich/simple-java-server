@@ -16,7 +16,6 @@ public class RealServerListener implements ServerListener{
         }
     }
 
-
     public ClientConnection accept() throws IOException {
         Socket socket = serverSocket.accept();
         return new ClientSocket(socket);
@@ -25,4 +24,5 @@ public class RealServerListener implements ServerListener{
     public boolean isOpen() {
         return true;
     }
+
 }
